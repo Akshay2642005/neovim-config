@@ -1,5 +1,6 @@
 return {
   'williamboman/mason.nvim',
+  cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUpdate', 'MasonLog' },
   event = 'BufReadPost',
   config = function()
     require('mason').setup {
@@ -10,8 +11,8 @@ return {
         height = 0.7,
         icons = {
           package_installed = '󰸞',
-          package_pending = '',
-          package_uninstalled = '',
+          package_pending = '',
+          package_uninstalled = '',
         },
       },
     }

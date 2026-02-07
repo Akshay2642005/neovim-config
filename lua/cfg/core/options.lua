@@ -1,3 +1,13 @@
+-- Performance optimizations (must be at the very top)
+vim.loader.enable() -- Enable byte-compiled lua cache
+
+-- Disable providers we don't use
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+
+-- Disable built-in plugins we don't need
 vim.g.editorconfig = false
 vim.g.loaded_gzip = 1
 vim.g.loaded_tarPlugin = 1
@@ -17,23 +27,45 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrwSettings = 1
 vim.g.loaded_netrwFileHandlers = 1
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
 vim.g.loaded_typecorr = 1
 vim.g.loaded_spellfile_plugin = 1
+vim.g.loaded_tutor_mode_plugin = 1
+vim.g.loaded_remote_plugins = 1
+vim.g.loaded_shada_plugin = 1
+vim.g.loaded_rplugin = 1
 
 -- for some reason vim (not neovim) loads a sql plugin for completion,
 -- this plugins maps <C-c>, this disabled that mapping
 vim.g.omni_sql_no_default_maps = 1
 
+-- Disable snacks animations for performance
 vim.g.snacks_animate = false
 
 local opt = vim.opt
 
--- opt.background = 'dark'
+-- Performance options
+opt.lazyredraw = false -- Don't use with noice.nvim
+opt.ttyfast = true     -- Faster terminal connection
+opt.synmaxcol = 240    -- Only highlight first 240 columns
+opt.redrawtime = 1500  -- Time for redrawing the display (ms)
+
+-- Reduce updatetime for faster CursorHold
+opt.updatetime = 200
+opt.timeoutlen = 400 -- Faster key sequence completion
+
+-- Reduce memory usage
+opt.history = 100     -- Reduce command history (default 10000)
+opt.undolevels = 1000 -- Reduce undo levels (was 10000)
+
+-- Disable backup and swap for speed
 opt.backup = false
+opt.writebackup = false
+opt.swapfile = false
+
+-- Enable undo persistence
+opt.undofile = true
+
+-- UI options
 opt.cmdheight = 1
 opt.completeitemalign = 'abbr,menu,kind'
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
@@ -52,22 +84,14 @@ vim.opt.fillchars = {
 }
 opt.foldcolumn = '0'
 opt.foldenable = true
--- opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldmethod = 'expr'
 opt.foldtext = ''
 opt.grepprg = 'rg --vimgrep'
--- opt.guifont = 'BlexMono Nerd Font Mono:h13'
 opt.ignorecase = true
--- opt.inccommand = 'split'
 opt.laststatus = 3
 opt.list = true
--- opt.listchars:append {
---     eol = '↲',
---     tab = '│ ',
---     trail = ' ',
--- }
 opt.mouse = 'a'
 opt.number = true
 opt.numberwidth = 1
@@ -92,14 +116,8 @@ opt.spelloptions = 'camel'
 opt.splitbelow = true
 opt.splitkeep = 'screen'
 opt.splitright = true
-opt.swapfile = false
 opt.tabstop = 2
-opt.timeoutlen = 800
-opt.undofile = true
-opt.undolevels = 10000
-opt.updatetime = 200
 opt.virtualedit = 'block'
--- opt.wildoptions = ''
 opt.winborder = 'single'
 opt.wrap = false
 
@@ -136,7 +154,4 @@ if vim.g.neovide then
         " use <c-r> to insert original character without triggering things like auto-pairs
         inoremap <c-r> <c-v>
     ]]
-
-  -- fzf looks weird without this
-  -- vim.fn.setcellwidths { { 0x2002, 0x2002, 2 } }
 end

@@ -187,24 +187,27 @@ return {
         configure = true,
       },
       git = { enabled = true },
-      image = {
-        enabled = true,
-        doc = {
-          enabled = false,
-        },
-      },
+      image = { enabled = false }, -- Disable for performance, enable if needed
       indent = {
         enabled = true,
         indent = {
           char = '│',
         },
         scope = {
-          enabled = true,
-          char = '│',
+          enabled = false, -- Disable scope for performance
         },
       },
       input = { enabled = false },
       notifier = { enabled = false },
+      quickfile = { enabled = true }, -- Fast file opening
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
+      animate = { enabled = false },
+      scroll = { enabled = false },
+      zen = { enabled = false },
+      dim = { enabled = false },
+      debug = { enabled = false },
+      profiler = { enabled = false },
       terminal = {
         win = {
           position = 'bottom',
@@ -295,10 +298,7 @@ return {
           },
         },
       },
-      scope = { enabled = false },
-      scroll = { enabled = false },
-      statuscolumn = { enabled = false },
-      words = { enabled = false },
+
     }
 
     vim.api.nvim_create_user_command('SnacksPickerFiles', function()

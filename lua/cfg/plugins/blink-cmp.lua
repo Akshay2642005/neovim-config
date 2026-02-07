@@ -19,89 +19,83 @@ return {
     dependencies = {
       'fang2hou/blink-copilot',
     },
-    config = function()
-      require('blink-cmp').setup {
-        keymap = {
-          ['<C-space>'] = {
-            'show',
-            'show_documentation',
-            'hide_documentation',
-          },
-          ['<C-e>'] = { 'hide' },
-          ['<CR>'] = { 'fallback' },
-
-          ['<Tab>'] = { 'snippet_forward', 'accept', 'select_next', 'fallback' },
-          ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
+    opts = {
+      keymap = {
+        ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+        ['<C-e>'] = { 'hide' },
+        ['<CR>'] = { 'fallback' },
+        ['<Tab>'] = { 'snippet_forward', 'accept', 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
+      },
+      completion = {
+        accept = {
+          resolve_timeout_ms = 50,
+          auto_brackets = { enabled = false },
         },
-        completion = {
-          accept = {
-            resolve_timeout_ms = 10000,
-            auto_brackets = {
-              enabled = false,
-            },
+        list = {
+          selection = {
+            auto_insert = true,
+            preselect = true,
           },
-          list = {
-            selection = {
-              auto_insert = true,
-              preselect = true,
-            },
-          },
-          ghost_text = {
-            enabled = true,
-          },
-          menu = {
-            auto_show = true,
-            border = 'none',
-            draw = {
-              columns = {
-                {
-                  'label',
-                  gap = 1,
-                },
-                { 'kind' },
-              },
-            },
-          },
-          documentation = {
-            auto_show = true,
-            auto_show_delay_ms = 0,
-            window = {
-              border = 'none',
-            },
+          max_items = 20,
+        },
+        ghost_text = { enabled = true },
+        menu = {
+          auto_show = true,
+          border = 'none',
+          draw = {
+            columns = { { 'label', gap = 1 }, { 'kind' } },
+            treesitter = { 'lsp' },
           },
         },
-        signature = {
-          trigger = {
-            enabled = true,
-          },
-          window = {
-            border = 'none',
-          },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 100,
+          window = { border = 'none' },
         },
-        appearance = {
-          use_nvim_cmp_as_default = false,
+      },
+      signature = {
+        enabled = true,
+        trigger = { enabled = true },
+        window = { border = 'none' },
+      },
+      appearance = {
+        use_nvim_cmp_as_default = false,
+      },
+      sources = {
+        default = { 'lsp', 'path', 'buffer', 'copilot' },
+        per_filetype = {
+          lua = { 'lsp', 'path', 'buffer' },
         },
-        sources = {
-          default = { 'lsp', 'path', 'buffer', 'copilot' },
-          providers = {
-            lsp = {
-              timeout_ms = 10000,
-            },
-            copilot = {
-              name = 'copilot',
-              module = 'blink-copilot',
-              score_offset = 100,
-              async = true,
-              opts = {
-                max_completions = 3,
-              },
+        providers = {
+          lsp = {
+            timeout_ms = 150,
+            score_offset = 90,
+            async = true,
+          },
+          path = {
+            timeout_ms = 50,
+            score_offset = 50,
+          },
+          buffer = {
+            timeout_ms = 50,
+            max_items = 3,
+            score_offset = 30,
+            min_keyword_length = 3,
+          },
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
+            score_offset = 80,
+            async = true,
+            timeout_ms = 300,
+            opts = {
+              max_completions = 1,
             },
           },
         },
-        cmdline = {
-          enabled = true,
-        },
-      }
-    end,
+      },
+      cmdline = { enabled = false },
+    },
   },
 }

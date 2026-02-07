@@ -231,3 +231,8 @@ end
 vim.keymap.set({ 'n', 't' }, '<A-d>', toggle_terminal, {
   desc = 'Toggle terminal',
 })
+
+
+vim.keymap.set('n', '<leader>e', '<CMD>lua require("oil").toggle_float()<CR>', {
+  desc = "Toggle File Explorer"
+})

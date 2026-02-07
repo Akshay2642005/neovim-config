@@ -1,9 +1,16 @@
 return {
   'nvim-treesitter/nvim-treesitter-context',
-  event = { 'BufReadPost', 'BufNewFile' },
-  config = function()
-    require('treesitter-context').setup()
-
-    -- pcall(vim.treesitter.query.set, 'tsx', 'context', '')
-  end,
+  event = 'VeryLazy',
+  opts = {
+    enable = true,
+    max_lines = 3,
+    min_window_height = 0,
+    line_numbers = true,
+    multiline_threshold = 20,
+    trim_scope = 'outer',
+    mode = 'cursor',
+    separator = nil,
+    zindex = 20,
+    on_attach = nil,
+  },
 }

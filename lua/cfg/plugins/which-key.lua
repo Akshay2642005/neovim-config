@@ -36,7 +36,6 @@ return {
       -- Top-level groups
       { '<leader>b',       group = 'Buffer' },
       { '<leader>c',       group = 'Code/Colorizer' },
-      { '<leader>d',       group = 'Debug' },
       { '<leader>f',       group = 'Find/Files' },
       { '<leader>g',       group = 'Git' },
       { '<leader>h',       group = 'Hunk/Git' },
@@ -46,25 +45,20 @@ return {
       { '<leader>o',       group = 'Organize' },
       { '<leader>q',       group = 'Session' },
       { '<leader>r',       group = 'Refresh/Rename' },
-      { '<leader>s',       group = 'Switch/Symbols' },
-      { '<leader>t',       group = 'Terminal/Tests' },
+      { '<leader>s',       group = 'Search/Switch' },
+      { '<leader>t',       group = 'Terminal/TODO' },
       { '<leader>w',       group = 'Workspace/Wrap' },
 
       -- Grapple group (semicolon prefix)
       { ';',               group = 'Grapple' },
-      { ';',               desc = 'Grapple toggle tag',     mode = 'n' },
       { ';;',              desc = 'Grapple open tags' },
       { ';1',              desc = 'Grapple tag 1' },
       { ';2',              desc = 'Grapple tag 2' },
       { ';3',              desc = 'Grapple tag 3' },
       { ';4',              desc = 'Grapple tag 4' },
       { ';5',              desc = 'Grapple tag 5' },
-      { ';6',              desc = 'Grapple tag 6' },
-      { ';7',              desc = 'Grapple tag 7' },
-      { ';8',              desc = 'Grapple tag 8' },
-      { ';9',              desc = 'Grapple tag 9' },
 
-      -- LSP-related keymaps (will show when LSP attaches)
+      -- LSP-related keymaps
       { 'g',               group = 'Go to' },
       { 'gd',              desc = 'Go to definition' },
       { 'gD',              desc = 'Go to declaration' },
@@ -78,21 +72,6 @@ return {
       -- Buffer group
       { '<leader>bd',      desc = 'Delete buffer' },
       { '<leader>bf',      desc = 'Find buffers' },
-
-      -- Debug group
-      { '<leader>db',      desc = 'Toggle breakpoint' },
-      { '<leader>dB',      desc = 'Conditional breakpoint' },
-      { '<leader>dc',      desc = 'Continue' },
-      { '<leader>dC',      desc = 'Run to cursor' },
-      { '<leader>di',      desc = 'Step into' },
-      { '<leader>do',      desc = 'Step over' },
-      { '<leader>dO',      desc = 'Step out' },
-      { '<leader>dp',      desc = 'Pause' },
-      { '<leader>dr',      desc = 'Toggle REPL' },
-      { '<leader>ds',      desc = 'Session' },
-      { '<leader>dt',      desc = 'Terminate' },
-      { '<leader>du',      desc = 'Toggle DAP UI' },
-      { '<leader>de',      desc = 'Eval expression' },
 
       -- Find/Files group
       { '<leader><space>', desc = 'Find files' },
@@ -143,14 +122,18 @@ return {
       { '<leader>qd',      desc = "Don't save session" },
       { '<leader>qS',      desc = 'Select session' },
 
-      -- Switch group
+      -- Search group
+      { '<leader>st',      desc = 'Search TODOs' },
+      { '<leader>sT',      desc = 'Search TODO/FIX/FIXME' },
       { '<leader>sb',      desc = 'Switch background' },
       { '<leader>sw',      desc = 'Switch wrap' },
       { '<leader>sds',     desc = 'Document symbols' },
       { '<leader>sws',     desc = 'Workspace symbols' },
 
-      -- Terminal group
+      -- Terminal/TODO group
       { '<leader>vt',      desc = 'Vertical terminal' },
+      { '<leader>tq',      desc = 'TODOs to quickfix' },
+      { '<leader>tl',      desc = 'TODOs to loclist' },
 
       -- Workspace group
       { '<leader>wa',      desc = 'Add workspace folder' },
@@ -166,7 +149,15 @@ return {
       { '<leader>D',       desc = 'Type definition' },
       { '<leader>rn',      desc = 'Rename symbol' },
 
-      -- Diagnostics navigation
+      -- Flash navigation
+      { 's',               desc = 'Flash',                  mode = { 'n', 'x', 'o' } },
+      { 'S',               desc = 'Flash Treesitter',       mode = { 'n', 'x', 'o' } },
+
+      -- TODO navigation
+      { ']t',              desc = 'Next TODO' },
+      { '[t',              desc = 'Previous TODO' },
+
+      -- Diagnostics/hunk navigation
       { '[c',              desc = 'Previous hunk' },
       { ']c',              desc = 'Next hunk' },
       { '[d',              desc = 'Previous diagnostic' },
@@ -176,7 +167,7 @@ return {
       { 'J',               desc = 'Hover documentation' },
       { 'K',               desc = 'Signature help' },
 
-      -- Terminal (C-/ is interpreted as C-_ on Windows)
+      -- Terminal
       { '<C-/>',           desc = 'Toggle terminal',        mode = { 'n', 't' } },
       { '<C-_>',           desc = 'Toggle terminal',        mode = { 'n', 't' } },
 
