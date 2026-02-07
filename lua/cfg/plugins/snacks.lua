@@ -100,73 +100,6 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
-  keys = {
-    {
-      '<C-/>',
-      function()
-        Snacks.terminal.toggle()
-      end,
-      mode = { 'n', 't' },
-      desc = 'Toggle terminal',
-    },
-    {
-      '<C-_>',
-      function()
-        Snacks.terminal.toggle()
-      end,
-      mode = { 'n', 't' },
-      desc = 'Toggle terminal',
-    },
-    {
-      '<leader>gg',
-      function()
-        Snacks.lazygit.open({
-          win = {
-            position = 'float',
-            border = 'single',
-            width = 0.9,
-            height = 0.9,
-          },
-        })
-      end,
-      desc = 'Lazygit',
-    },
-    {
-      '<leader>gl',
-      function()
-        Snacks.lazygit.log({
-          win = {
-            position = 'float',
-            border = 'single',
-            width = 0.9,
-            height = 0.9,
-          },
-        })
-      end,
-      desc = 'Lazygit log (cwd)',
-    },
-    {
-      '<leader>gf',
-      function()
-        Snacks.lazygit.log_file({
-          win = {
-            position = 'float',
-            border = 'single',
-            width = 0.9,
-            height = 0.9,
-          },
-        })
-      end,
-      desc = 'Lazygit log (current file)',
-    },
-    {
-      '<leader>gb',
-      function()
-        Snacks.git.blame_line()
-      end,
-      desc = 'Git blame line',
-    },
-  },
   cmd = {
     'SnacksPickerFiles',
     'SnacksPickerGitStatus',
@@ -187,19 +120,19 @@ return {
         configure = true,
       },
       git = { enabled = true },
-      image = { enabled = false }, -- Disable for performance, enable if needed
+      image = { enabled = false },
       indent = {
         enabled = true,
         indent = {
           char = '│',
         },
         scope = {
-          enabled = false, -- Disable scope for performance
+          enabled = false,
         },
       },
       input = { enabled = false },
       notifier = { enabled = false },
-      quickfile = { enabled = true }, -- Fast file opening
+      quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       words = { enabled = false },
       animate = { enabled = false },
@@ -298,7 +231,6 @@ return {
           },
         },
       },
-
     }
 
     vim.api.nvim_create_user_command('SnacksPickerFiles', function()

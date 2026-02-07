@@ -1,48 +1,9 @@
 return {
   'folke/todo-comments.nvim',
+  event = 'VeryLazy',
   cmd = { 'TodoQuickFix', 'TodoLocList', 'TodoTrouble' },
-  keys = {
-    {
-      ']t',
-      function()
-        require('todo-comments').jump_next()
-      end,
-      desc = 'Next TODO',
-    },
-    {
-      '[t',
-      function()
-        require('todo-comments').jump_prev()
-      end,
-      desc = 'Previous TODO',
-    },
-    {
-      '<leader>st',
-      function()
-        Snacks.picker.todo_comments()
-      end,
-      desc = 'Search TODOs',
-    },
-    {
-      '<leader>sT',
-      function()
-        Snacks.picker.todo_comments { keywords = { 'TODO', 'FIX', 'FIXME' } }
-      end,
-      desc = 'Search TODO/FIX/FIXME',
-    },
-    {
-      '<leader>tq',
-      '<cmd>TodoQuickFix<cr>',
-      desc = 'TODOs to quickfix',
-    },
-    {
-      '<leader>tl',
-      '<cmd>TodoLocList<cr>',
-      desc = 'TODOs to loclist',
-    },
-  },
   opts = {
-    signs = false, -- Disable signs for performance
+    signs = false,
     sign_priority = 8,
     keywords = {
       FIX = {
@@ -57,7 +18,7 @@ return {
       NOTE = { icon = ' ', color = 'hint', alt = { 'INFO' } },
     },
     highlight = {
-      multiline = false, -- Disable multiline for performance
+      multiline = false,
       before = '',
       keyword = 'wide',
       after = 'fg',

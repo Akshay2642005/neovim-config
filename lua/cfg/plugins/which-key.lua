@@ -175,13 +175,4 @@ return {
       { 'ih',              desc = 'Select hunk',            mode = { 'o', 'x' } },
     },
   },
-  keys = {
-    {
-      '<leader>?',
-      function()
-        require('which-key').show { global = false }
-      end,
-      desc = 'Buffer local keymaps',
-    },
-  },
 }

@@ -11,9 +11,7 @@ require 'cfg.core.keymaps'
 require 'cfg.core.autocmds'
 require 'cfg.core.commands'
 
--- UI components (can be deferred slightly)
-vim.schedule(function()
-  require 'cfg.core.statusline'
-  require 'cfg.core.winbar'
-  require 'cfg.core.terminalcolors'
-end)
+-- UI components (statusline needs to load after colorscheme)
+require 'cfg.core.statusline'
+require 'cfg.core.winbar'
+require 'cfg.core.terminalcolors'

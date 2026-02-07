@@ -1,18 +1,54 @@
 local statusline_augroup =
     vim.api.nvim_create_augroup('gmr_statusline', { clear = true })
 
--- Copilot highlight group
-local function set_copilot_hl()
-  local bg = vim.api.nvim_get_hl(0, { name = 'StatusLine' }).bg
+-- Statusline highlight groups
+local function set_statusline_hl()
+  -- Get the actual StatusLine background color
+  local statusline_hl = vim.api.nvim_get_hl(0, { name = 'StatusLine' })
+  local bg = statusline_hl.bg
+
+  -- Copilot
   vim.api.nvim_set_hl(0, 'StatusLineCopilot', { fg = '#6CC644', bg = bg })
   vim.api.nvim_set_hl(0, 'StatusLineCopilotInactive', { fg = '#555555', bg = bg })
+
+  -- Git - don't set bg to let it inherit from StatusLine
+  if vim.fn.hlexists('StatusLineMedium') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMedium' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineMedium', { fg = '#abb2bf', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineGitDiffAdded') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffAdded' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineGitDiffAdded', { fg = '#98c379', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineGitDiffChanged') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffChanged' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineGitDiffChanged', { fg = '#e5c07b', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineGitDiffRemoved') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffRemoved' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineGitDiffRemoved', { fg = '#e06c75', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineMode') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMode' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineMode', { fg = '#000000', bg = '#61afef', bold = true })
+  end
+  if vim.fn.hlexists('StatusLineLspError') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspError' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineLspError', { fg = '#e06c75', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineLspWarn') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspWarn' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineLspWarn', { fg = '#e5c07b', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineLspHint') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspHint' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineLspHint', { fg = '#98c379', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineLspInfo') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspInfo' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineLspInfo', { fg = '#61afef', bg = bg })
+  end
+  if vim.fn.hlexists('StatusLineLspMessages') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspMessages' })) then
+    vim.api.nvim_set_hl(0, 'StatusLineLspMessages', { fg = '#888888', bg = bg })
+  end
 end
 
-set_copilot_hl()
+set_statusline_hl()
 
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = statusline_augroup,
-  callback = set_copilot_hl,
+  callback = set_statusline_hl,
 })
 
 --- @type table<string, string>
@@ -70,17 +106,6 @@ local function get_lsp_diagnostics_count(severity)
   return count
 end
 
---- @param type string
---- @return integer
-local function get_git_diff(type)
-  local gsd = vim.b.gitsigns_status_dict
-  if gsd and gsd[type] then
-    return gsd[type]
-  end
-
-  return 0
-end
-
 --- @return string
 local function mode()
   local current_mode = vim.api.nvim_get_mode().mode
@@ -115,19 +140,6 @@ local function lsp_active()
   end
 
   return ''
-end
-
---- @return string
-local function copilot_status()
-  local space = '%#StatusLineMedium# %*'
-  local buf = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients { bufnr = buf, name = 'copilot' }
-
-  if #clients > 0 then
-    return space .. '%#StatusLineCopilot# %*'
-  end
-
-  return space .. '%#StatusLineCopilotInactive# %*'
 end
 
 --- @return string
@@ -244,81 +256,6 @@ local function lsp_status()
 end
 
 --- @return string
-local function git_diff_added()
-  local added = get_git_diff 'added'
-  if added > 0 then
-    return string.format('%%#StatusLineGitDiffAdded#+%s%%*', added)
-  end
-
-  return ''
-end
-
---- @return string
-local function git_diff_changed()
-  local changed = get_git_diff 'changed'
-  if changed > 0 then
-    return string.format('%%#StatusLineGitDiffChanged#~%s%%*', changed)
-  end
-
-  return ''
-end
-
---- @return string
-local function git_diff_removed()
-  local removed = get_git_diff 'removed'
-  if removed > 0 then
-    return string.format('%%#StatusLineGitDiffRemoved#-%s%%*', removed)
-  end
-
-  return ''
-end
-
---- @return string
-local function git_branch_icon()
-  return '%#StatusLineGitBranchIcon#%*'
-end
-
---- @return string
-local function git_branch()
-  local branch = vim.b.gitsigns_head
-
-  if branch == '' or branch == nil then
-    return ''
-  end
-
-  return string.format('%%#StatusLineMedium#%s%%*', branch)
-end
-
---- @return string
-local function full_git()
-  local full = ''
-  local space = '%#StatusLineMedium# %*'
-
-  local branch = git_branch()
-  if branch ~= '' then
-    local icon = git_branch_icon()
-    full = full .. space .. icon .. space .. branch .. space
-  end
-
-  local added = git_diff_added()
-  if added ~= '' then
-    full = full .. added .. space
-  end
-
-  local changed = git_diff_changed()
-  if changed ~= '' then
-    full = full .. changed .. space
-  end
-
-  local removed = git_diff_removed()
-  if removed ~= '' then
-    full = full .. removed .. space
-  end
-
-  return full
-end
-
---- @return string
 local function file_percentage()
   local current_line = vim.api.nvim_win_get_cursor(0)[1]
   local lines = vim.api.nvim_buf_line_count(0)
@@ -376,8 +313,7 @@ StatusLine.active = function()
 
   local statusline = {
     mode(),
-    copilot_status(),
-    full_git(),
+    -- full_git(),
     '%=',
     '%=',
     '%S ',
@@ -389,7 +325,6 @@ StatusLine.active = function()
     lsp_active(),
     python_env(),
     file_percentage(),
-    total_lines(),
   }
 
   return table.concat(statusline)

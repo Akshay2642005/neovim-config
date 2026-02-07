@@ -233,6 +233,14 @@ vim.keymap.set({ 'n', 't' }, '<A-d>', toggle_terminal, {
 })
 
 
-vim.keymap.set('n', '<leader>e', '<CMD>lua require("oil").toggle_float()<CR>', {
-  desc = "Toggle File Explorer"
+vim.keymap.set('n', '<leader>e', function()
+  require('oil').toggle_float()
+end, {
+  desc = 'Toggle Oil file explorer',
+})
+
+vim.keymap.set('n', '-', function()
+  require('oil').open()
+end, {
+  desc = 'Open parent directory',
 })
