@@ -117,6 +117,34 @@ return {
       mode = { 'n', 't' },
       desc = 'Toggle terminal',
     },
+    {
+      '<leader>gg',
+      function()
+        Snacks.lazygit()
+      end,
+      desc = 'Lazygit',
+    },
+    {
+      '<leader>gl',
+      function()
+        Snacks.lazygit.log()
+      end,
+      desc = 'Lazygit log (cwd)',
+    },
+    {
+      '<leader>gf',
+      function()
+        Snacks.lazygit.log_file()
+      end,
+      desc = 'Lazygit log (current file)',
+    },
+    {
+      '<leader>gb',
+      function()
+        Snacks.git.blame_line()
+      end,
+      desc = 'Git blame line',
+    },
   },
   cmd = {
     'SnacksPickerFiles',
@@ -133,6 +161,14 @@ return {
     require('snacks').setup {
       bigfile = { enabled = true },
       dashboard = { enabled = false },
+      lazygit = {
+        enabled = true,
+        configure = true,
+        win = {
+          style = 'lazygit',
+        },
+      },
+      git = { enabled = true },
       image = {
         enabled = true,
         doc = {
