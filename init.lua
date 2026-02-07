@@ -1,0 +1,8 @@
+require 'cfg.core.options'
+require 'cfg.core.keymaps'
+require 'cfg.core.autocmds'
+require 'cfg.core.commands'
+require 'cfg.core.statusline'
+require 'cfg.core.winbar'
+require 'cfg.core.terminalcolors'
+require 'cfg.lazy'
