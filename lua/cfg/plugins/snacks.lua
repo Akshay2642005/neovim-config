@@ -120,21 +120,42 @@ return {
     {
       '<leader>gg',
       function()
-        Snacks.lazygit()
+        Snacks.lazygit.open({
+          win = {
+            position = 'float',
+            border = 'single',
+            width = 0.9,
+            height = 0.9,
+          },
+        })
       end,
       desc = 'Lazygit',
     },
     {
       '<leader>gl',
       function()
-        Snacks.lazygit.log()
+        Snacks.lazygit.log({
+          win = {
+            position = 'float',
+            border = 'single',
+            width = 0.9,
+            height = 0.9,
+          },
+        })
       end,
       desc = 'Lazygit log (cwd)',
     },
     {
       '<leader>gf',
       function()
-        Snacks.lazygit.log_file()
+        Snacks.lazygit.log_file({
+          win = {
+            position = 'float',
+            border = 'single',
+            width = 0.9,
+            height = 0.9,
+          },
+        })
       end,
       desc = 'Lazygit log (current file)',
     },
@@ -164,12 +185,6 @@ return {
       lazygit = {
         enabled = true,
         configure = true,
-        win = {
-          style = 'float',
-          border = 'single',
-          width = 0.9,
-          height = 0.9,
-        },
       },
       git = { enabled = true },
       image = {
