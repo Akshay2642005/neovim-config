@@ -36,14 +36,15 @@ return {
       -- Top-level groups
       { '<leader>b',       group = 'Buffer' },
       { '<leader>c',       group = 'Code/Colorizer' },
-      { '<leader>d',       group = 'Diagnostics' },
+      { '<leader>d',       group = 'Debug' },
       { '<leader>f',       group = 'Find/Files' },
       { '<leader>g',       group = 'Git' },
-      { '<leader>h',       group = 'Help' },
+      { '<leader>h',       group = 'Hunk/Git' },
       { '<leader>i',       group = 'Inlay Hints' },
       { '<leader>l',       group = 'LSP/Live Grep' },
       { '<leader>n',       group = 'No Highlight' },
       { '<leader>o',       group = 'Organize' },
+      { '<leader>q',       group = 'Session' },
       { '<leader>r',       group = 'Refresh/Rename' },
       { '<leader>s',       group = 'Switch/Symbols' },
       { '<leader>t',       group = 'Terminal/Tests' },
@@ -78,9 +79,20 @@ return {
       { '<leader>bd',      desc = 'Delete buffer' },
       { '<leader>bf',      desc = 'Find buffers' },
 
-      -- Diagnostics group
-      { '<leader>dd',      desc = 'Buffer diagnostics' },
-      { '<C-w>d',          desc = 'Show diagnostic float' },
+      -- Debug group
+      { '<leader>db',      desc = 'Toggle breakpoint' },
+      { '<leader>dB',      desc = 'Conditional breakpoint' },
+      { '<leader>dc',      desc = 'Continue' },
+      { '<leader>dC',      desc = 'Run to cursor' },
+      { '<leader>di',      desc = 'Step into' },
+      { '<leader>do',      desc = 'Step over' },
+      { '<leader>dO',      desc = 'Step out' },
+      { '<leader>dp',      desc = 'Pause' },
+      { '<leader>dr',      desc = 'Toggle REPL' },
+      { '<leader>ds',      desc = 'Session' },
+      { '<leader>dt',      desc = 'Terminate' },
+      { '<leader>du',      desc = 'Toggle DAP UI' },
+      { '<leader>de',      desc = 'Eval expression' },
 
       -- Find/Files group
       { '<leader><space>', desc = 'Find files' },
@@ -89,11 +101,29 @@ return {
       { '<leader>fc',      desc = 'Fold close' },
 
       -- Git group
+      { '<leader>gg',      desc = 'Lazygit' },
+      { '<leader>gl',      desc = 'Lazygit log (cwd)' },
+      { '<leader>gf',      desc = 'Lazygit log (file)' },
+      { '<leader>gb',      desc = 'Git blame line' },
       { '<leader>gs',      desc = 'Git status' },
+
+      -- Hunk/Git group (gitsigns)
+      { '<leader>hs',      desc = 'Stage hunk' },
+      { '<leader>hr',      desc = 'Reset hunk' },
+      { '<leader>hS',      desc = 'Stage buffer' },
+      { '<leader>hR',      desc = 'Reset buffer' },
+      { '<leader>hu',      desc = 'Undo stage hunk' },
+      { '<leader>hp',      desc = 'Preview hunk' },
+      { '<leader>hi',      desc = 'Preview hunk inline' },
+      { '<leader>hb',      desc = 'Blame line' },
+      { '<leader>hB',      desc = 'Toggle line blame' },
+      { '<leader>hd',      desc = 'Diff this' },
+      { '<leader>hD',      desc = 'Diff this ~' },
+      { '<leader>ht',      group = 'Toggle' },
+      { '<leader>htd',     desc = 'Toggle deleted' },
 
       -- Help group
       { '<leader>hh',      desc = 'Help tags' },
-      { '<leader>ht',      desc = 'Horizontal terminal' },
 
       -- Inlay hints
       { '<leader>ih',      desc = 'Toggle inlay hints' },
@@ -106,6 +136,12 @@ return {
 
       -- Organize imports
       { '<leader>oi',      desc = 'Organize imports' },
+
+      -- Session group
+      { '<leader>qs',      desc = 'Restore session' },
+      { '<leader>ql',      desc = 'Restore last session' },
+      { '<leader>qd',      desc = "Don't save session" },
+      { '<leader>qS',      desc = 'Select session' },
 
       -- Switch group
       { '<leader>sb',      desc = 'Switch background' },
@@ -125,13 +161,14 @@ return {
       -- Misc
       { '<leader>ch',      desc = 'Toggle cmdheight' },
       { '<leader>e',       desc = 'File explorer' },
-      { '<leader>q',       desc = 'Quickfix diagnostics' },
       { '<leader>y',       desc = 'Yank to clipboard',      mode = { 'n', 'v' } },
       { '<leader>Y',       desc = 'Yank line to clipboard' },
       { '<leader>D',       desc = 'Type definition' },
       { '<leader>rn',      desc = 'Rename symbol' },
 
       -- Diagnostics navigation
+      { '[c',              desc = 'Previous hunk' },
+      { ']c',              desc = 'Next hunk' },
       { '[d',              desc = 'Previous diagnostic' },
       { ']d',              desc = 'Next diagnostic' },
 
@@ -142,6 +179,9 @@ return {
       -- Terminal (C-/ is interpreted as C-_ on Windows)
       { '<C-/>',           desc = 'Toggle terminal',        mode = { 'n', 't' } },
       { '<C-_>',           desc = 'Toggle terminal',        mode = { 'n', 't' } },
+
+      -- Text object for hunk
+      { 'ih',              desc = 'Select hunk',            mode = { 'o', 'x' } },
     },
   },
   keys = {

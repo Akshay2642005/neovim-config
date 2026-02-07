@@ -165,7 +165,10 @@ return {
         enabled = true,
         configure = true,
         win = {
-          style = 'lazygit',
+          style = 'float',
+          border = 'single',
+          width = 0.9,
+          height = 0.9,
         },
       },
       git = { enabled = true },
