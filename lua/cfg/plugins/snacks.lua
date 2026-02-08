@@ -125,9 +125,10 @@ return {
         enabled = true,
         indent = {
           char = '│',
+          blank = ' '
         },
         scope = {
-          enabled = false,
+          enabled = true,
         },
       },
       input = { enabled = false },

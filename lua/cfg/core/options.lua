@@ -91,7 +91,7 @@ opt.foldtext = ''
 opt.grepprg = 'rg --vimgrep'
 opt.ignorecase = true
 opt.laststatus = 3
-opt.list = true
+opt.list = false
 opt.mouse = 'a'
 opt.number = true
 opt.numberwidth = 1
@@ -120,7 +120,6 @@ opt.tabstop = 2
 opt.virtualedit = 'block'
 opt.winborder = 'single'
 opt.wrap = false
-opt.expandtab = true
 
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 
