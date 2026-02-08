@@ -1,6 +1,7 @@
 return {
   'cbochs/grapple.nvim',
   lazy = false,
+  event = 'BufReadPost',
   config = function()
     local grapple = require('grapple')
 
