@@ -49,4 +49,96 @@ function M.pumvisible()
   return tonumber(vim.fn.pumvisible()) ~= 0
 end
 
+--- Floating selector used by vim.ui.select and others
+--- @param items table
+--- @param opts table|nil
+--- @param on_choice fun(item:any)
+function M.floating_select(items, opts, on_choice)
+  opts = opts or {}
+
+  if not items or vim.tbl_isempty(items) then
+    on_choice(nil)
+    return
+  end
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  local width = math.floor(vim.o.columns * 0.5)
+
+  local max_height = math.floor(vim.o.lines * 0.4)
+  local height = math.min(#items, max_height)
+
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    width = width,
+    height = height,
+    style = 'minimal',
+    border = 'single', -- Lazy-style
+    title = opts.prompt or '',
+    title_pos = 'center',
+  })
+
+  vim.bo[buf].buftype = 'nofile'
+  vim.bo[buf].modifiable = true
+  vim.bo[buf].bufhidden = 'wipe'
+
+  local lines = {}
+  local pad = #tostring(#items)
+
+  for i, item in ipairs(items) do
+    local text = opts.format_item and opts.format_item(item) or tostring(item)
+    lines[i] = string.format("%" .. pad .. "d. %s", i, text)
+  end
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.bo[buf].modifiable = false
+  vim.wo[win].cursorline = true
+  vim.wo[win].wrap = false
+
+  local function close()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end
+
+  vim.keymap.set('n', '<Esc>', close, { buffer = buf })
+  vim.keymap.set('n', 'q', close, { buffer = buf })
+  vim.keymap.set('n', '<CR>', function()
+    local idx = vim.fn.line('.')
+    close()
+    on_choice(items[idx])
+  end, { buffer = buf })
+end
+
+vim.ui.select = function(items, opts, on_choice)
+  M.floating_select(items, opts, on_choice)
+end
+
+--- Open persistence.nvim session picker
+function M.select_session()
+  local ok, persistence = pcall(require, 'persistence')
+  if not ok then
+    vim.notify('persistence.nvim not found', vim.log.levels.ERROR)
+    return
+  end
+
+  local sessions = persistence.list()
+  if vim.tbl_isempty(sessions) then
+    vim.notify('No sessions found', vim.log.levels.INFO)
+    return
+  end
+
+  M.floating_select(sessions, {
+    prompt = 'Sessions',
+    format_item = function(session)
+      return session.name
+    end,
+  }, function(session)
+    if session then
+      persistence.load({ session = session })
+    end
+  end)
+end
+
 return M

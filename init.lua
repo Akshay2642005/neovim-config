@@ -1,6 +1,6 @@
 -- Optimize startup: load options first (includes vim.loader.enable())
 require 'cfg.core.options'
-
+require 'cfg.core.utils'
 -- Load lazy.nvim and plugins (this should be early)
 require 'cfg.lazy'
 
