@@ -164,3 +164,32 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'astro' },
   command = 'setlocal iskeyword-=-',
 })
+
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "grapple",
+  callback = function(ev)
+    local opts = { buffer = ev.buf, silent = true }
+    local function cycle_next()
+      local line = vim.fn.line(".")
+      local last = vim.fn.line("$")
+
+      if line >= last then
+        vim.cmd("normal! gg")
+      else
+        vim.cmd("normal! j")
+      end
+    end
+    local function cycle_prev()
+      local line = vim.fn.line(".")
+
+      if line <= 1 then
+        vim.cmd("normal! G")
+      else
+        vim.cmd("normal! k")
+      end
+    end
+    vim.keymap.set("n", "<Tab>", cycle_next, opts)
+    vim.keymap.set("n", "<S-Tab>", cycle_prev, opts)
+  end,
+})

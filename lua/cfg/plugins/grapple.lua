@@ -5,6 +5,8 @@ return {
     local grapple = require('grapple')
 
     grapple.setup {
+      scope = "git",
+      quick_select = false,
       tag_title = function(scope)
         return vim.fn.fnamemodify(scope.id, ':t')
       end,
@@ -38,6 +40,19 @@ return {
       },
     }
 
+    local MAX_TAGS = 9
+
+    local function trim_grapple()
+      local tags = grapple.tags()
+      if #tags <= MAX_TAGS then
+        return
+      end
+
+      -- remove oldest first
+      for i = 1, #tags - MAX_TAGS do
+        grapple.untag({ path = tags[i].path })
+      end
+    end
     -- Autocmd to automatically add open buffers to grapple
     vim.api.nvim_create_autocmd('BufEnter', {
       group = vim.api.nvim_create_augroup('GrappleAutoTag', { clear = true }),
@@ -59,6 +74,7 @@ return {
         -- Tag the buffer if not already tagged
         if not grapple.exists { path = path } then
           grapple.tag { path = path }
+          trim_grapple()
         end
       end,
     })
