@@ -1,5 +1,5 @@
 local statusline_augroup =
-    vim.api.nvim_create_augroup('gmr_statusline', { clear = true })
+    vim.api.nvim_create_augroup('cfg_statusline', { clear = true })
 
 -- Statusline highlight groups
 local function set_statusline_hl()

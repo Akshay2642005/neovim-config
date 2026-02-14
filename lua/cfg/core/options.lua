@@ -33,6 +33,7 @@ vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_remote_plugins = 1
 vim.g.loaded_shada_plugin = 1
 vim.g.loaded_rplugin = 1
+vim.o.winbar = ""
 
 -- for some reason vim (not neovim) loads a sql plugin for completion,
 -- this plugins maps <C-c>, this disabled that mapping
@@ -66,7 +67,7 @@ opt.swapfile = false
 opt.undofile = true
 
 -- UI options
-opt.cmdheight = 1
+opt.cmdheight = 0
 opt.completeitemalign = 'abbr,menu,kind'
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.conceallevel = 3
@@ -90,7 +91,7 @@ opt.foldmethod = 'expr'
 opt.foldtext = ''
 opt.grepprg = 'rg --vimgrep'
 opt.ignorecase = true
-opt.laststatus = 3
+opt.laststatus = 0
 opt.list = false
 opt.mouse = 'a'
 opt.number = true
@@ -98,13 +99,12 @@ opt.numberwidth = 1
 opt.pumheight = 10
 opt.relativenumber = true
 opt.scrolloff = 2
-opt.shell = 'powershell'
 opt.shiftwidth = 2
 opt.softtabstop = 2
 opt.showcmd = true
 opt.showcmdloc = 'statusline'
 opt.showmode = false
-opt.showtabline = 1
+opt.showtabline = 0
 opt.sidescroll = 3
 opt.sidescrolloff = 3
 opt.signcolumn = 'yes'
@@ -123,9 +123,21 @@ opt.wrap = false
 
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 
+if vim.fn.has("win32") == 1 then
+  vim.opt.shell = "pwsh" -- or "powershell" depending on what you have installed
+  vim.opt.shellcmdflag =
+  "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+  vim.opt.shellredir = "2>&1 | Out-File -Encoding UTF8 %s"
+  vim.opt.shellpipe = "| Out-File -Encoding UTF8 %s"
+  vim.opt.shellquote = ""
+  vim.opt.shellxquote = ""
+end
+
 if vim.g.neovide then
   opt.linespace = -1
 
+  vim.g.neovide_title_background_color = "#0e0e0e"
+  vim.g.neovide_title_text_color = "#0e0e0e"
   -- emulate alacritty font rendering
   vim.g.neovide_text_gamma = 0.8
   vim.g.neovide_text_contrast = 0.1
@@ -134,9 +146,10 @@ if vim.g.neovide then
   vim.g.neovide_padding_top = 5
   vim.g.neovide_padding_left = 4
 
-  -- disable blur
-  vim.g.neovide_window_blurred = false
+  -- enable blur
+  vim.g.neovide_window_blurred = true
   vim.g.neovide_floating_shadow = false
+  vim.g.neovide_decorations = "none"
 
   -- other options
   vim.g.neovide_hide_mouse_when_typing = true

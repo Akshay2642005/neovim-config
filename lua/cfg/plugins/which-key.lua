@@ -125,6 +125,7 @@ return {
       -- Search group
       { '<leader>st',      desc = 'Search TODOs' },
       { '<leader>sT',      desc = 'Search TODO/FIX/FIXME' },
+
       { '<leader>sb',      desc = 'Switch background' },
       { '<leader>sw',      desc = 'Switch wrap' },
       { '<leader>sds',     desc = 'Document symbols' },

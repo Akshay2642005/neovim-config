@@ -126,9 +126,23 @@ local get_navic = function()
   return ''
 end
 
+
+
 local function excludes()
+  local is_term = vim.bo.buftype == 'terminal' or string.find(vim.fn.bufname(), '^term://') ~= nil
+  if is_term then
+    vim.opt_local.winbar = "" -- Force BLANK. 'nil' causes "1: Administrator"
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = "no"
+    return true
+  end
   if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
-    vim.opt_local.winbar = nil
+    if vim.bo.filetype == "" then
+      vim.opt_local.winbar = ""
+    else
+      vim.opt_local.winbar = nil
+    end
     return true
   end
   return false

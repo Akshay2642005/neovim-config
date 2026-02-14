@@ -141,4 +141,10 @@ function M.select_session()
   end)
 end
 
+function M.reload_config()
+  local config = vim.fn.stdpath("config") .. "/init.lua"
+  vim.cmd("source " .. config)
+  vim.notify("Config reloaded!", vim.log.levels.INFO)
+end
+
 return M

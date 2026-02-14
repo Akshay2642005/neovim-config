@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd('BufReadPost', {
   group = vim.api.nvim_create_augroup(
-    'gmr_jump_to_the_last_known_cursor_position',
+    'cfg_jump_to_the_last_known_cursor_position',
     { clear = true }
   ),
   pattern = { '*' },
@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 vim.api.nvim_create_autocmd('VimLeave', {
   group = vim.api.nvim_create_augroup(
-    'gmr_restore_cursor_shape_on_exit',
+    'cfg_restore_cursor_shape_on_exit',
     { clear = true }
   ),
   pattern = { '*' },
@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd('VimLeave', {
 
 vim.api.nvim_create_autocmd('TermOpen', {
   group = vim.api.nvim_create_augroup(
-    'gmr_clean_term_mode',
+    'cfg_clean_term_mode',
     { clear = true }
   ),
   pattern = { '*' },
@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup(
-    'gmr_json_conceal_level_0',
+    'cfg_json_conceal_level_0',
     { clear = true }
   ),
   desc = 'Disable conceallevel and spell for JSON and JSONC',
@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('gmr_close_with_q', { clear = true }),
+  group = vim.api.nvim_create_augroup('cfg_close_with_q', { clear = true }),
   desc = 'Close with <q>',
   pattern = {
     'help',
@@ -73,9 +73,27 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.api.nvim_create_autocmd('CmdlineEnter', {
+  group = vim.api.nvim_create_augroup(
+    'cfg_cmdheight_1_on_cmdlineenter',
+    { clear = true }
+  ),
+  desc = 'Don\'t hide the status line when typing a command',
+  command = ':set cmdheight=1',
+})
+
+vim.api.nvim_create_autocmd('CmdlineLeave', {
+  group = vim.api.nvim_create_augroup(
+    'cfg_cmdheight_0_on_cmdlineleave',
+    { clear = true }
+  ),
+  desc = 'Hide cmdline when not typing a command',
+  command = ':set cmdheight=0',
+})
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup(
-    'gmr_highlight_on_yank',
+    'cfg_highlight_on_yank',
     { clear = true }
   ),
   desc = 'Highlight on yank',
@@ -86,7 +104,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
 --     group = vim.api.nvim_create_augroup(
---         'gmr_lsp_attach_conflicts',
+--         'cfg_lsp_attach_conflicts',
 --         { clear = true }
 --     ),
 --     desc = 'Prevent tsserver and volar conflict',
@@ -110,7 +128,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.api.nvim_create_autocmd('BufWinEnter', {
   group = vim.api.nvim_create_augroup(
-    'gmr_avoid_comment_new_line',
+    'cfg_avoid_comment_new_line',
     { clear = true }
   ),
   desc = 'Avoid comment on new line',
@@ -119,7 +137,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 
 vim.api.nvim_create_autocmd('VimResized', {
   group = vim.api.nvim_create_augroup(
-    'gmr_consistent_size_buffers',
+    'cfg_consistent_size_buffers',
     { clear = true }
   ),
   desc = 'Keep consistent size for buffers',
@@ -128,7 +146,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup(
-    'gmr_config_for_markdown',
+    'cfg_config_for_markdown',
     { clear = true }
   ),
   pattern = { 'markdown' },
@@ -140,7 +158,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = vim.api.nvim_create_augroup(
-    'gmr_hide_message_after_write',
+    'cfg_hide_message_after_write',
     { clear = true }
   ),
   desc = 'Get rid of message after writing a file',
@@ -149,7 +167,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('gmr_nowrap', { clear = true }),
+  group = vim.api.nvim_create_augroup('cfg_nowrap', { clear = true }),
   desc = 'No wrap in these filetypes',
   pattern = { 'checkhealth' },
   command = ':set nowrap',
@@ -157,7 +175,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup(
-    'gmr_remove_char_from_iskeyword',
+    'cfg_remove_char_from_iskeyword',
     { clear = true }
   ),
   desc = 'Remove - fro iskeyword option',

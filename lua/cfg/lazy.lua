@@ -1,22 +1,33 @@
+--- This module sets up and configures lazy loading for Neovim plugins using the 'lazy.nvim' manager.
+--- It initializes the plugin specifications, ensures the 'lazy.nvim' manager is installed,
+--- and configures various options for plugin loading, updates, and performance improvements.
+
+--- Container for plugin specifications.
+--- Each entry contains an import path for a plugin module.
 local plugin_specs = {} --- @type LazySpecImport[]
 
---- @param plugin string
+--- Adds a plugin specification to the table of plugin specifications.
+--- @param plugin string The module path of the plugin to add as a lazy-loaded plugin.
 local function add(plugin)
+  --- Define a plugin specification with the given module path.
   local spec = { import = plugin } --- @type LazySpecImport
+
+  --- Add the specification to the list of plugin specifications.
   table.insert(plugin_specs, spec)
 end
 
+-- Plugin imports; these can be customized as needed for the user's configuration.
 add 'cfg.plugins.autopairs'
 add 'cfg.plugins.autotag'
 add 'cfg.plugins.blink-cmp'
 add 'cfg.plugins.colorizer'
-add 'cfg.plugins.colorschemes.cold'
-add 'cfg.plugins.colorschemes.base16-nvim'
+add 'cfg.plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly
+-- add 'cfg.plugins.colorschemes.base16-nvim'  -- Example of a disabled plugin
 add 'cfg.plugins.flash'
 add 'cfg.plugins.formatter'
 add 'cfg.plugins.grapple'
 add 'cfg.plugins.gitsigns'
-add 'cfg.plugins.jdtls'
+-- add 'cfg.plugins.jdtls'  -- Example of a disabled plugin
 add 'cfg.plugins.lsp'
 add 'cfg.plugins.mason'
 add 'cfg.plugins.mini-surround'
@@ -31,9 +42,14 @@ add 'cfg.plugins.undotree'
 add 'cfg.plugins.web-devicons'
 add 'cfg.plugins.zen-mode'
 add 'cfg.plugins.which-key'
+add 'cfg.plugins.avante'
+add 'cfg.plugins.alpha'
 
+--- Compute the installation path for 'lazy.nvim'.
+--- This is used to ensure the plugin manager itself is installed locally.
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
+--- Check if 'lazy.nvim' is installed, and install it if necessary.
 if not vim.uv.fs_stat(lazypath) then
   vim.fn.system {
     'git',
@@ -45,35 +61,37 @@ if not vim.uv.fs_stat(lazypath) then
   }
 end
 
+--- Prepend 'lazy.nvim' installation path to Neovim's runtime path.
 vim.opt.rtp:prepend(lazypath)
 
+--- Configure and initialize 'lazy.nvim' with the specified plugin specifications.
 require('lazy').setup(plugin_specs, {
   defaults = {
-    lazy = true, -- Lazy load all plugins by default
+    lazy = true, -- Lazy load all plugins by default for speed.
   },
   ui = {
-    border = 'single',
-    backdrop = 100,
+    border = 'single', -- Use a single-line border for plugin manager UI.
+    backdrop = 100,    -- Set backdrop transparency for UI.
   },
   checker = {
-    enabled = false, -- Don't check for updates automatically
-    notify = false,
+    enabled = false, -- Disable automatic update checking by default.
+    notify = false,  -- Suppress update notifications.
   },
   change_detection = {
-    enabled = false, -- Don't auto-reload on config change
-    notify = false,
+    enabled = false, -- Disable auto-reloading on configuration changes.
+    notify = false,  -- Suppress change detection notifications.
   },
   install = {
-    colorscheme = { 'cold' }, -- Try to load colorscheme on install
+    colorscheme = { 'cold' }, -- Attempt to load the 'cold' colorscheme during installation.
   },
   performance = {
     cache = {
-      enabled = true,      -- Enable caching
+      enabled = true,      -- Enable caching to improve startup times.
     },
-    reset_packpath = true, -- Reset packpath to improve startup
+    reset_packpath = true, -- Reset default package paths to optimize startup performance.
     rtp = {
-      reset = true,        -- Reset runtimepath for better startup
-      disabled_plugins = {
+      reset = true,        -- Reset runtime paths for improved startup consistency.
+      disabled_plugins = { -- List of default plugins disabled for better performance.
         '2html_plugin',
         'bugreport',
         'compiler',

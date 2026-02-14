@@ -16,6 +16,10 @@ local layout_normal = {
         border = 'solid',
       },
     },
+    win = {
+      input = { wo = { winbar = "" } },
+      list = { wo = { winbar = "" } },
+    }
   },
 }
 
@@ -44,6 +48,11 @@ local function get_layout_preview_image(width_preview)
           border = 'solid',
         },
       },
+      win = {
+        input = { wo = { winbar = "" } },
+        list = { wo = { winbar = "" } },
+        preview = { wo = { winbar = "" } },
+      }
     },
   }
 end
@@ -100,6 +109,73 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  keys = {
+    {
+      '<C-/>',
+      function()
+        Snacks.terminal.toggle()
+      end,
+      mode = { 'n', 't' },
+      desc = 'Toggle terminal',
+    },
+    {
+      '<C-_>',
+      function()
+        Snacks.terminal.toggle()
+      end,
+      mode = { 'n', 't' },
+      desc = 'Toggle terminal',
+    },
+    {
+      '<leader>gg',
+      function()
+        Snacks.lazygit.open({
+          win = {
+            position = 'float',
+            border = 'single',
+            width = 0.9,
+            height = 0.9,
+          },
+        })
+      end,
+      desc = 'Lazygit',
+    },
+    {
+      '<leader>gl',
+      function()
+        Snacks.lazygit.log({
+          win = {
+            position = 'float',
+            border = 'single',
+            width = 0.9,
+            height = 0.9,
+          },
+        })
+      end,
+      desc = 'Lazygit log (cwd)',
+    },
+    {
+      '<leader>gf',
+      function()
+        Snacks.lazygit.log_file({
+          win = {
+            position = 'float',
+            border = 'single',
+            width = 0.9,
+            height = 0.9,
+          },
+        })
+      end,
+      desc = 'Lazygit log (current file)',
+    },
+    {
+      '<leader>gb',
+      function()
+        Snacks.git.blame_line()
+      end,
+      desc = 'Git blame line',
+    },
+  },
   cmd = {
     'SnacksPickerFiles',
     'SnacksPickerGitStatus',
@@ -120,20 +196,19 @@ return {
         configure = true,
       },
       git = { enabled = true },
-      image = { enabled = false },
+      image = { enabled = false }, -- Disable for performance, enable if needed
       indent = {
         enabled = true,
         indent = {
           char = '│',
-          blank = ' '
         },
         scope = {
-          enabled = true,
+          enabled = false, -- Disable scope for performance
         },
       },
       input = { enabled = false },
       notifier = { enabled = false },
-      quickfile = { enabled = true },
+      quickfile = { enabled = true }, -- Fast file opening
       statuscolumn = { enabled = false },
       words = { enabled = false },
       animate = { enabled = false },
@@ -144,14 +219,13 @@ return {
       profiler = { enabled = false },
       terminal = {
         win = {
-          position = 'bottom',
+          position = "bottom",
           height = 0.4,
-          border = 'top',
-          title_pos = '',
+          border = 'none',
           wo = {
-            winbar = '',
-            winhighlight = 'Normal:Normal,WinBar:Normal,WinBarNC:Normal',
-            statusline = '',
+            winbar = "",
+            winhighlight = "",
+            statusline = "",
             number = false,
             relativenumber = false,
             signcolumn = 'no',
@@ -232,6 +306,7 @@ return {
           },
         },
       },
+
     }
 
     vim.api.nvim_create_user_command('SnacksPickerFiles', function()
@@ -321,11 +396,18 @@ return {
       {}
     )
 
-    -- Disable winbar for terminal buffers
-    vim.api.nvim_create_autocmd('TermOpen', {
+    vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter", "WinEnter" }, {
+      pattern = { "term://*", "snacks_terminal" }, -- Covers standard terms and Snacks terminals
       callback = function()
-        vim.opt_local.winbar = ''
-        vim.opt_local.statusline = ''
+        vim.schedule(function()
+          if vim.bo.buftype == "terminal" then
+            vim.opt_local.winbar = nil      -- Kills the top bar path
+            vim.opt_local.statusline = nil  -- Kills the bottom status line (if any)
+            vim.opt_local.number = false    -- Kills the "1" line number
+            vim.opt_local.relativenumber = false
+            vim.opt_local.signcolumn = "no" -- Kills the left gutter
+          end
+        end)
       end,
     })
   end,

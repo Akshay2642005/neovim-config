@@ -71,6 +71,7 @@ vim.keymap.set('n', '<leader>nh', ':nohlsearch<cr>', {
   desc = 'Clear search highlight',
 })
 
+
 -- ============================================================================
 -- Text Objects (simulate ci{ ci( etc. with _ - . <)
 -- ============================================================================
@@ -135,7 +136,7 @@ vim.keymap.set('n', '<leader>vt', [[<cmd>vsplit | term<cr>A]], {
   desc = 'Open terminal (vertical split)',
 })
 
-vim.keymap.set('n', '<leader>ht', [[<cmd>split | term<cr>A]], {
+vim.keymap.set('n', '<leader>st', [[<cmd>split | term<cr>A]], {
   desc = 'Open terminal (horizontal split)',
 })
 
@@ -183,54 +184,20 @@ vim.keymap.set('x', '/', '<Esc>/\\%V', {
   desc = 'Search within visual selection',
 })
 
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {
+  desc = "Shift visual line down"
+})
+
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {
+  desc = "Shift visual line up"
+})
+
 vim.keymap.set('n', 'dd', function()
   if vim.fn.getline('.'):match '^%s*$' then
     return '"_dd'
   end
   return 'dd'
 end, { expr = true, desc = 'Delete line (no yank if empty)' })
-
--- ============================================================================
--- Toggle Terminal (persistent)
--- ============================================================================
----@type integer | nil
-local terminal_buf = nil
----@type integer | nil
-local terminal_win_id = nil
-
---- Opens the terminal in a horizontal split, or brings it back
---- into view if it already exists but is hidden.
-local function open_terminal()
-  if terminal_buf == nil or vim.fn.bufexists(terminal_buf) ~= 1 then
-    vim.cmd 'split | term'
-    terminal_win_id = vim.fn.win_getid()
-    terminal_buf = vim.fn.bufnr '%'
-  elseif terminal_win_id == nil or vim.fn.win_gotoid(terminal_win_id) ~= 1 then
-    vim.cmd('sb ' .. terminal_buf)
-    terminal_win_id = vim.fn.win_getid()
-  end
-  vim.cmd 'startinsert'
-end
-
---- Hides the terminal window if it is currently visible.
-local function hide_terminal()
-  if terminal_win_id ~= nil and vim.fn.win_gotoid(terminal_win_id) == 1 then
-    vim.cmd 'hide'
-  end
-end
-
---- Toggles the terminal window visibility.
-local function toggle_terminal()
-  if terminal_win_id ~= nil and vim.fn.win_gotoid(terminal_win_id) == 1 then
-    hide_terminal()
-  else
-    open_terminal()
-  end
-end
-
-vim.keymap.set({ 'n', 't' }, '<A-d>', toggle_terminal, {
-  desc = 'Toggle terminal',
-})
 
 
 vim.keymap.set('n', '<leader>e', function()
@@ -244,3 +211,6 @@ vim.keymap.set('n', '-', function()
 end, {
   desc = 'Open parent directory',
 })
+
+
+vim.keymap.set('n', '<leader>rc', require('cfg.core.utils').reload_config, { desc = 'Reload nvim config' })
