@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd('BufReadPost', {
   group = vim.api.nvim_create_augroup(
-    'cfg_jump_to_the_last_known_cursor_position',
+    'jump_to_the_last_known_cursor_position',
     { clear = true }
   ),
   pattern = { '*' },
@@ -209,5 +209,51 @@ vim.api.nvim_create_autocmd("FileType", {
     end
     vim.keymap.set("n", "<Tab>", cycle_next, opts)
     vim.keymap.set("n", "<S-Tab>", cycle_prev, opts)
+  end,
+})
+
+local shada_group = vim.api.nvim_create_augroup("ShadaManager", { clear = true })
+
+local function cleanup_shada()
+  local shada_path = vim.fn.expand("$LOCALAPPDATA/nvim-data/shada/")
+  local tmp_files = vim.fn.glob(shada_path .. "*.tmp*", true, true)
+  if #tmp_files > 0 then
+    for _, file in ipairs(tmp_files) do
+      pcall(os.remove, file)
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = shada_group,
+  callback = cleanup_shada,
+})
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  group = shada_group,
+  callback = cleanup_shada,
+})
+
+
+local function change_wezterm_bg(color)
+  -- We use the 'sed' or 'printf' style through a system call to ensure
+  -- the escape sequence is sent directly to the active terminal stdout.
+  local osc_seq = string.format("\27]11;%s\27\\", color)
+  vim.fn.chansend(vim.v.stderr, osc_seq)
+end
+
+local wez_group = vim.api.nvim_create_augroup("WeztermColors", { clear = true })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = wez_group,
+  callback = function()
+    change_wezterm_bg("#0e0e0e")
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimLeave", {
+  group = wez_group,
+  callback = function()
+    change_wezterm_bg("#000000")
   end,
 })

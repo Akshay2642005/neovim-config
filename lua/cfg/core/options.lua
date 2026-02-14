@@ -33,7 +33,7 @@ vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_remote_plugins = 1
 vim.g.loaded_shada_plugin = 1
 vim.g.loaded_rplugin = 1
-vim.o.winbar = ""
+-- vim.o.winbar = ""
 
 -- for some reason vim (not neovim) loads a sql plugin for completion,
 -- this plugins maps <C-c>, this disabled that mapping
@@ -153,9 +153,13 @@ if vim.g.neovide then
 
   -- other options
   vim.g.neovide_hide_mouse_when_typing = true
-
-  vim.g.neovide_cursor_animation_length = 0.1
-  vim.g.neovide_cursor_trail_size = 0.1
+  vim.g.neovide_position_animation_length = 0
+  vim.g.neovide_scroll_animation_length = 0
+  vim.g.neovide_scroll_animation_far_lines = 0
+  vim.g.neovide_progress_bar_enabled = false
+  vim.g.neovide_progress_bar_height = 0
+  vim.g.neovide_progress_bar_animation_speed = 0
+  vim.g.neovide_progress_bar_hide_delay = 0
 
   vim.cmd [[
         " system clipboard

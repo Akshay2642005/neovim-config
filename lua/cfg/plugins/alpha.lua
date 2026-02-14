@@ -25,7 +25,7 @@ return {
 
     -- Standard Alpha centering opts
     dashboard.opts.opts = {
-      margin = 5, -- Adjust this to move the whole block left or right (Horizontal Center)
+      margin = 4, -- Adjust this to move the whole block left or right (Horizontal Center)
       width = 40,
     }
     alpha.setup(dashboard.opts)
@@ -34,7 +34,7 @@ return {
       callback = function()
         local stats = require("lazy").stats()
         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-        dashboard.section.footer.val = "⚡ Neovim loaded in " .. ms .. "ms"
+        dashboard.section.footer.val = "Neovim loaded in " .. ms .. " ms"
         pcall(vim.cmd.AlphaRedraw)
       end,
     })

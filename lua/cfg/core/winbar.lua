@@ -24,24 +24,6 @@ local winbar_filetype_exclude = {
   '',
 }
 
--- Set up winbar highlight groups for git
-local function set_winbar_git_hl()
-  local winbar_hl = vim.api.nvim_get_hl(0, { name = 'WinBar' })
-  local bg = winbar_hl.bg
-
-  vim.api.nvim_set_hl(0, 'WinBarGitBranch', { fg = '#abb2bf', bg = bg })
-  vim.api.nvim_set_hl(0, 'WinBarGitDiffAdded', { fg = '#98c379', bg = bg })
-  vim.api.nvim_set_hl(0, 'WinBarGitDiffChanged', { fg = '#e5c07b', bg = bg })
-  vim.api.nvim_set_hl(0, 'WinBarGitDiffRemoved', { fg = '#e06c75', bg = bg })
-end
-
-set_winbar_git_hl()
-
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vim.api.nvim_create_augroup('winbar_git_hl', { clear = true }),
-  callback = set_winbar_git_hl,
-})
-
 local function get_filename()
   local filename = vim.fn.expand '%:.'
   local extension = vim.fn.expand '%:e'
@@ -80,22 +62,7 @@ local function get_git_status()
 
   -- Git branch
   if gsd.head and gsd.head ~= '' then
-    table.insert(parts, string.format('%%#WinBarGitBranch#%s%%*', gsd.head))
-  end
-
-  -- Git diff added
-  if gsd.added and gsd.added > 0 then
-    table.insert(parts, string.format('%%#WinBarGitDiffAdded#+%s%%*', gsd.added))
-  end
-
-  -- Git diff changed
-  if gsd.changed and gsd.changed > 0 then
-    table.insert(parts, string.format('%%#WinBarGitDiffChanged#~%s%%*', gsd.changed))
-  end
-
-  -- Git diff removed
-  if gsd.removed and gsd.removed > 0 then
-    table.insert(parts, string.format('%%#WinBarGitDiffRemoved#-%s%%*', gsd.removed))
+    table.insert(parts, string.format('%%*%%#WinBarGitBranch#%s%%*', gsd.head))
   end
 
   if #parts == 0 then
@@ -131,7 +98,7 @@ end
 local function excludes()
   local is_term = vim.bo.buftype == 'terminal' or string.find(vim.fn.bufname(), '^term://') ~= nil
   if is_term then
-    vim.opt_local.winbar = "" -- Force BLANK. 'nil' causes "1: Administrator"
+    vim.opt_local.winbar = ""
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.signcolumn = "no"
