@@ -1,6 +1,6 @@
 local running_kitty = os.getenv 'TERM' == 'xterm-kitty'
 
-local kitty = require 'cfg.configs.kitty'
+local kitty = require 'configs.kitty'
 
 -- ============================================================================
 -- Window Navigation
@@ -213,4 +213,4 @@ end, {
 })
 
 
-vim.keymap.set('n', '<leader>rc', require('cfg.core.utils').reload_config, { desc = 'Reload nvim config' })
+vim.keymap.set('n', '<leader>rc', require('core.utils').reload_config, { desc = 'Reload nvim config' })

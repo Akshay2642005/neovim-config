@@ -52,7 +52,7 @@ local config = {
     --- @param config? table
     ['workspace/executeCommand'] = function(err, result, context, config)
       if context.params.command == '_typescript.goToSourceDefinition' then
-        require('cfg.configs.lsp.handlers').go_to_definition(
+        require('configs.lsp.handlers').go_to_definition(
           err,
           result,
           context,

@@ -17,33 +17,33 @@ local function add(plugin)
 end
 
 -- Plugin imports; these can be customized as needed for the user's configuration.
-add 'cfg.plugins.autopairs'
-add 'cfg.plugins.autotag'
-add 'cfg.plugins.blink-cmp'
-add 'cfg.plugins.colorizer'
-add 'cfg.plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly
--- add 'cfg.plugins.colorschemes.base16-nvim'  -- Example of a disabled plugin
-add 'cfg.plugins.flash'
-add 'cfg.plugins.formatter'
-add 'cfg.plugins.grapple'
-add 'cfg.plugins.gitsigns'
--- add 'cfg.plugins.jdtls'  -- Example of a disabled plugin
-add 'cfg.plugins.lsp'
-add 'cfg.plugins.mason'
-add 'cfg.plugins.mini-surround'
-add 'cfg.plugins.oil'
-add 'cfg.plugins.persistence'
-add 'cfg.plugins.snacks'
-add 'cfg.plugins.todo-comments'
-add 'cfg.plugins.treesitter'
-add 'cfg.plugins.treesitter-context'
-add 'cfg.plugins.ts-comments'
-add 'cfg.plugins.undotree'
-add 'cfg.plugins.web-devicons'
-add 'cfg.plugins.zen-mode'
-add 'cfg.plugins.which-key'
-add 'cfg.plugins.avante'
-add 'cfg.plugins.alpha'
+add 'plugins.autopairs'
+add 'plugins.autotag'
+add 'plugins.blink-cmp'
+add 'plugins.colorizer'
+add 'plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly
+-- add 'plugins.colorschemes.black_white'
+add 'plugins.flash'
+add 'plugins.formatter'
+add 'plugins.grapple'
+add 'plugins.gitsigns'
+-- add 'plugins.jdtls'  -- Example of a disabled plugin
+add 'plugins.lsp'
+add 'plugins.mason'
+add 'plugins.mini-surround'
+add 'plugins.oil'
+add 'plugins.persistence'
+add 'plugins.snacks'
+add 'plugins.todo-comments'
+add 'plugins.treesitter'
+add 'plugins.treesitter-context'
+add 'plugins.ts-comments'
+add 'plugins.undotree'
+add 'plugins.web-devicons'
+add 'plugins.zen-mode'
+add 'plugins.which-key'
+add 'plugins.avante'
+add 'plugins.alpha'
 
 --- Compute the installation path for 'lazy.nvim'.
 --- This is used to ensure the plugin manager itself is installed locally.

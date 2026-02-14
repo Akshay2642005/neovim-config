@@ -65,18 +65,32 @@ modularity.
    |-- init.lua             # Entry point
    |-- lazy-lock.json       # Plugin versions lockfile
    `-- lua/
-       `-- cfg/
-           |-- core/        # Core settings
-           |   |-- options.lua      # Editor options (set first)
-           |   |-- keymaps/         # Keyboard mappings
-           |   `-- autocmds.lua     # Automatic commands
-           |-- plugins/     # Plugin specifications
-           `-- lazy.lua     # Plugin manager configuration
+       |-- core/            # Core settings and modules
+       |   |-- options.lua          # Editor options (set first)
+       |   |-- keymaps/             # Keyboard mappings (modular)
+       |   |-- autocmds.lua         # Automatic commands
+       |   |-- statusline.lua       # Statusline UI
+       |   |-- winbar.lua           # Winbar UI
+       |   |-- terminalcolors.lua   # Terminal color tweaks
+       |   |-- commands.lua         # Custom commands
+       |   |-- utils.lua            # Utility functions
+       |-- plugins/         # Plugin specifications and configs
+       |-- configs/         # Feature/language-specific configs (e.g. LSP, snippets)
+       |-- lazy-setup.lua   # Plugin manager configuration (required as 'lazy-setup')
 ```
 
 5. Key Bindings
 ---------------
 The `<Leader>` key is mapped to the Space bar.
+
+All internal `require` statements now use the new structure, e.g.:
+```
+require 'core.options'
+require 'core.keymaps'
+require 'plugins.treesitter'
+require 'configs.lsp'
+require 'lazy-setup'
+```
 
 General
 ~~~~~~~

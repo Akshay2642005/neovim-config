@@ -17,13 +17,13 @@ local lombok_path = jdtls_path .. '/lombok.jar'
 
 local jdtls = require 'jdtls'
 
-local lspconfiguser = require 'cfg.configs.lsp'
+local lspconfiguser = require 'configs.lsp'
 lspconfiguser.setup_diagnostic_config()
 
 local config = {
   cmd = {
     -- vim.fn.expand '~/.sdkman/candidates/java/21.*-tem/bin/java', -- or '/path/to/java17_or_newer/bin/java'
-    'java',     -- or '/path/to/java17_or_newer/bin/java'
+    'java', -- or '/path/to/java17_or_newer/bin/java'
 
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',

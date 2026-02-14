@@ -1,7 +1,7 @@
 local M = {}
 
 function M.install_automatically()
-  local utils = require 'cfg.core.utils'
+  local utils = require 'core.utils'
 
   if
       vim.uv.os_uname().sysname == 'Windows_NT'

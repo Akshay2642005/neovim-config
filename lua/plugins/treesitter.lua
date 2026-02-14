@@ -13,7 +13,7 @@ return {
   branch = 'main',
   build = ':TSUpdate',
   config = function()
-    local config_parsers = require 'cfg.configs.treesitter.parsers'
+    local config_parsers = require 'configs.treesitter.parsers'
     local parsers = config_parsers.install_automatically()
 
     vim.api.nvim_create_user_command('TSInstallAll', function()
@@ -22,7 +22,7 @@ return {
 
     vim.api.nvim_create_autocmd('FileType', {
       group = vim.api.nvim_create_augroup(
-        'cfg_start_treesitter',
+        'start_treesitter',
         { clear = true }
       ),
       callback = function(ev)

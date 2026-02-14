@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 vim.api.nvim_create_autocmd('VimLeave', {
   group = vim.api.nvim_create_augroup(
-    'cfg_restore_cursor_shape_on_exit',
+    'restore_cursor_shape_on_exit',
     { clear = true }
   ),
   pattern = { '*' },
@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd('VimLeave', {
 
 vim.api.nvim_create_autocmd('TermOpen', {
   group = vim.api.nvim_create_augroup(
-    'cfg_clean_term_mode',
+    'clean_term_mode',
     { clear = true }
   ),
   pattern = { '*' },
@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup(
-    'cfg_json_conceal_level_0',
+    'json_conceal_level_0',
     { clear = true }
   ),
   desc = 'Disable conceallevel and spell for JSON and JSONC',
@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('cfg_close_with_q', { clear = true }),
+  group = vim.api.nvim_create_augroup('close_with_q', { clear = true }),
   desc = 'Close with <q>',
   pattern = {
     'help',
@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('CmdlineEnter', {
   group = vim.api.nvim_create_augroup(
-    'cfg_cmdheight_1_on_cmdlineenter',
+    'cmdheight_1_on_cmdlineenter',
     { clear = true }
   ),
   desc = 'Don\'t hide the status line when typing a command',
@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd('CmdlineEnter', {
 
 vim.api.nvim_create_autocmd('CmdlineLeave', {
   group = vim.api.nvim_create_augroup(
-    'cfg_cmdheight_0_on_cmdlineleave',
+    'cmdheight_0_on_cmdlineleave',
     { clear = true }
   ),
   desc = 'Hide cmdline when not typing a command',
@@ -93,7 +93,7 @@ vim.api.nvim_create_autocmd('CmdlineLeave', {
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup(
-    'cfg_highlight_on_yank',
+    'highlight_on_yank',
     { clear = true }
   ),
   desc = 'Highlight on yank',
@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
 --     group = vim.api.nvim_create_augroup(
---         'cfg_lsp_attach_conflicts',
+--         'lsp_attach_conflicts',
 --         { clear = true }
 --     ),
 --     desc = 'Prevent tsserver and volar conflict',
@@ -128,7 +128,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.api.nvim_create_autocmd('BufWinEnter', {
   group = vim.api.nvim_create_augroup(
-    'cfg_avoid_comment_new_line',
+    'avoid_comment_new_line',
     { clear = true }
   ),
   desc = 'Avoid comment on new line',
@@ -137,7 +137,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 
 vim.api.nvim_create_autocmd('VimResized', {
   group = vim.api.nvim_create_augroup(
-    'cfg_consistent_size_buffers',
+    'consistent_size_buffers',
     { clear = true }
   ),
   desc = 'Keep consistent size for buffers',
@@ -146,7 +146,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup(
-    'cfg_config_for_markdown',
+    'config_for_markdown',
     { clear = true }
   ),
   pattern = { 'markdown' },
@@ -158,7 +158,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = vim.api.nvim_create_augroup(
-    'cfg_hide_message_after_write',
+    'hide_message_after_write',
     { clear = true }
   ),
   desc = 'Get rid of message after writing a file',
@@ -167,7 +167,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('cfg_nowrap', { clear = true }),
+  group = vim.api.nvim_create_augroup('nowrap', { clear = true }),
   desc = 'No wrap in these filetypes',
   pattern = { 'checkhealth' },
   command = ':set nowrap',
@@ -175,7 +175,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup(
-    'cfg_remove_char_from_iskeyword',
+    'remove_char_from_iskeyword',
     { clear = true }
   ),
   desc = 'Remove - fro iskeyword option',

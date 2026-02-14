@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 local M = {}
 
 --- @param client vim.lsp.Client
@@ -11,7 +12,7 @@ function M.on_attach(client, bufnr)
         self,
         method,
         params,
-        require('cfg.configs.lsp.handlers').go_to_definition,
+        require('configs.lsp.handlers').go_to_definition,
         bufnr_req
       )
     else
@@ -102,7 +103,7 @@ function M.on_attach(client, bufnr)
   end
 
   if client:supports_method 'textDocument/documentHighlight' then
-    local augroup = vim.api.nvim_create_augroup('cfg_lsp_document_highlight', { clear = false })
+    local augroup = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
 
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       group = augroup,

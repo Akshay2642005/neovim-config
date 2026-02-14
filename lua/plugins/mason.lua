@@ -18,7 +18,7 @@ return {
     }
 
     vim.api.nvim_create_user_command('MasonInstallAll', function()
-      local packages = require 'cfg.configs.mason.packages'
+      local packages = require 'configs.mason.packages'
       vim.cmd('MasonInstall ' .. table.concat(packages, ' '))
     end, {})
   end,
