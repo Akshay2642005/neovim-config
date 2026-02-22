@@ -46,7 +46,7 @@ function M.on_attach(client, bufnr)
   keymap(']d', function()
     vim.diagnostic.jump { count = 1, float = true }
   end, 'Next diagnostic')
-  keymap('<leader>q', vim.diagnostic.setloclist, 'Diagnostics to loclist')
+  keymap("<F2>", vim.diagnostic.setloclist, 'Diagnostics to loclist')
 
   -- ============================================================================
   -- Navigation
@@ -73,9 +73,9 @@ function M.on_attach(client, bufnr)
   -- ============================================================================
   -- Symbols
   -- ============================================================================
-  keymap('<leader>D', vim.lsp.buf.type_definition, 'Type definition')
-  keymap('<leader>sds', ':SnacksPickerLspDocumentSymbols<cr>', 'Document symbols')
-  keymap('<leader>sws', ':SnacksPickerLspWorkspaceSymbols<cr>', 'Workspace symbols')
+  keymap('<leader>cd', vim.lsp.buf.type_definition, 'Type definition')
+  keymap('<leader>cs', ':SnacksPickerLspDocumentSymbols<cr>', 'Document symbols')
+  keymap('<leader>cw', ':SnacksPickerLspWorkspaceSymbols<cr>', 'Workspace symbols')
 
   -- ============================================================================
   -- Refactoring
@@ -123,7 +123,7 @@ function M.on_attach(client, bufnr)
 
 
   if client:supports_method 'textDocument/inlayHint' then
-    keymap('<leader>ih', function()
+    keymap('<leader>ci', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, 'Toggle inlay hints')
   end

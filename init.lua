@@ -12,6 +12,6 @@ require 'core.autocmds'
 require 'core.commands'
 
 -- UI components (statusline needs to load after colorscheme)
-require 'core.statusline'
+require 'core.ui.statusline'
 require 'core.winbar'
 require 'core.terminalcolors'

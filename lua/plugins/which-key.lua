@@ -128,8 +128,8 @@ return {
 
       { '<leader>sb',      desc = 'Switch background' },
       { '<leader>sw',      desc = 'Switch wrap' },
-      { '<leader>sds',     desc = 'Document symbols' },
-      { '<leader>sws',     desc = 'Workspace symbols' },
+      { '<leader>cs',      desc = 'Document symbols' },
+      { '<leader>cw',      desc = 'Workspace symbols' },
 
       -- Terminal/TODO group
       { '<leader>vt',      desc = 'Vertical terminal' },

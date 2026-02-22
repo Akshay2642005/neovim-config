@@ -48,7 +48,7 @@ local opt = vim.opt
 opt.lazyredraw = false -- Don't use with noice.nvim
 opt.ttyfast = true     -- Faster terminal connection
 opt.synmaxcol = 240    -- Only highlight first 240 columns
-opt.redrawtime = 1500  -- Time for redrawing the display (ms)
+-- opt.redrawtime = 1500  -- Time for redrawing the display (ms)
 
 -- Reduce updatetime for faster CursorHold
 opt.updatetime = 200
@@ -98,15 +98,15 @@ opt.number = true
 opt.numberwidth = 1
 opt.pumheight = 10
 opt.relativenumber = true
-opt.scrolloff = 2
+opt.scrolloff = 0
 opt.shiftwidth = 2
 opt.softtabstop = 2
 opt.showcmd = true
 opt.showcmdloc = 'statusline'
 opt.showmode = false
 opt.showtabline = 0
-opt.sidescroll = 3
-opt.sidescrolloff = 3
+opt.sidescroll = 0
+opt.sidescrolloff = 0
 opt.signcolumn = 'yes'
 opt.smartcase = false
 opt.smartindent = true
@@ -172,3 +172,33 @@ if vim.g.neovide then
         inoremap <c-r> <c-v>
     ]]
 end
+
+
+--Rustacenvim
+
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+  },
+  -- LSP configuration
+  server = {
+    on_attach = function(client, bufnr)
+      -- you can also put keymaps in here
+    end,
+    default_settings = {
+      -- rust-analyzer language server configuration
+      ['rust-analyzer'] = {
+        checkOnSave = true,
+        cargo = {
+          allFeatures = true,
+        },
+        pairsocMacro = {
+          enabled = true
+        }
+      },
+    },
+  },
+  -- DAP configuration
+  dap = {
+  },
+}

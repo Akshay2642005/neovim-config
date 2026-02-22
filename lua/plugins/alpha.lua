@@ -6,13 +6,15 @@ return {
     local alpha = require("alpha")
     local dashboard = require("alpha.themes.dashboard")
     dashboard.section.buttons.val = {
-      dashboard.button("e", "    New file", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("f", "    Find file", ":SnacksPickerFiles<CR>"),
-      dashboard.button("b", "    Browse files", "<CMD>lua require('oil').toggle_float()<CR>"),
-      dashboard.button("s", "  󰁯  Select Session", [[<CMD>lua require("persistence").select()<CR>]]),
-      dashboard.button("l", "  󰒲  Lazy", ":Lazy<CR>"),
-      dashboard.button("q", "  󰅚  Quit", ":qa<CR>"),
+      dashboard.button("e", "   New file", ":ene <BAR> startinsert <CR>"),
+      dashboard.button("f", "   Find file", ":SnacksPickerFiles<CR>"),
+      dashboard.button("b", "   Browse files", "<CMD>lua require('oil').toggle_float()<CR>"),
+      dashboard.button("s", "   Select Session", [[<CMD>lua require("persistence").select()<CR>]]),
+      dashboard.button("l", "   Lazy", ":Lazy<CR>"),
+      dashboard.button("q", "   Quit", ":qa<CR>"),
     }
+
+    --[[ icons:    󰁯 󰒲 󰅚 ]] --
 
     dashboard.config.layout = {
       { type = "padding", val = 8 }, -- Increase this number to push text further down (Vertical Center)
@@ -25,7 +27,7 @@ return {
 
     -- Standard Alpha centering opts
     dashboard.opts.opts = {
-      margin = 4, -- Adjust this to move the whole block left or right (Horizontal Center)
+      margin = 0, -- Adjust this to move the whole block left or right (Horizontal Center)
       width = 40,
     }
     alpha.setup(dashboard.opts)

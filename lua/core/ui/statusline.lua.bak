@@ -1,5 +1,5 @@
-local statusline_augroup =
-    vim.api.nvim_create_augroup('statusline', { clear = true })
+local build_status = require("core.ui.build_status")
+local statusline_augroup = vim.api.nvim_create_augroup('statusline', { clear = true })
 
 -- Statusline highlight groups
 local function set_statusline_hl()
@@ -10,6 +10,11 @@ local function set_statusline_hl()
   -- Copilot
   vim.api.nvim_set_hl(0, 'StatusLineCopilot', { fg = '#6CC644', bg = bg })
   vim.api.nvim_set_hl(0, 'StatusLineCopilotInactive', { fg = '#555555', bg = bg })
+
+  -- OverSeer
+  vim.api.nvim_set_hl(0, "StatusLineBuildRunning", { fg = "#e5c07b", bg = bg })
+  vim.api.nvim_set_hl(0, "StatusLineBuildSuccess", { fg = "#98c379", bg = bg })
+  vim.api.nvim_set_hl(0, "StatusLineBuildFailure", { fg = "#e06c75", bg = bg })
 
   -- Git - don't set bg to let it inherit from StatusLine
   if vim.fn.hlexists('StatusLineMedium') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMedium' })) then
@@ -313,6 +318,7 @@ StatusLine.active = function()
 
   local statusline = {
     mode(),
+    build_status.component(),
     -- full_git(),
     '%=',
     '%=',

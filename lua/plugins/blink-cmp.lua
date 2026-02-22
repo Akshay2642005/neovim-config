@@ -1,8 +1,9 @@
 return {
   {
     'zbirenbaum/copilot.lua',
+    lazy = true,
     cmd = 'Copilot',
-    event = 'InsertEnter',
+    event = { 'VeryLazy', 'InsertEnter' },
     opts = {
       suggestion = { enabled = true },
       panel = { enabled = true },
@@ -14,7 +15,8 @@ return {
   },
   {
     'Saghen/blink.cmp',
-    event = 'InsertEnter',
+    event = { 'VeryLazy', 'InsertEnter' },
+    lazy = true,
     version = '*',
     dependencies = {
       'fang2hou/blink-copilot',

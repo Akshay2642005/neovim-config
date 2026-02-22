@@ -108,7 +108,8 @@ local layout_fullscreen_vertical = {
 return {
   'folke/snacks.nvim',
   priority = 1000,
-  lazy = false,
+  lazy = true,
+  event = { 'VeryLazy', 'VimEnter' },
   keys = {
     {
       '<C-/>',
@@ -202,11 +203,27 @@ return {
         indent = {
           char = '│',
         },
+        filter = function(buf)
+          -- 1. Ensure buf is a valid number
+          if not buf or type(buf) ~= "number" or not vim.api.nvim_buf_is_valid(buf) then
+            return false
+          end
+
+          -- 2. Safely get filetype and buftype
+          local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+          local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+
+          -- 3. Run the logic
+          return vim.g.snacks_indent ~= false
+              and vim.b[buf].snacks_indent ~= false
+              and bt == ""
+              and ft ~= "markdown"
+        end,
         scope = {
           enabled = false, -- Disable scope for performance
         },
       },
-      input = { enabled = false },
+      input = { enabled = true },
       notifier = { enabled = false },
       quickfile = { enabled = true }, -- Fast file opening
       statuscolumn = { enabled = false },
@@ -220,8 +237,10 @@ return {
       terminal = {
         win = {
           position = "bottom",
-          height = 0.4,
-          border = 'none',
+          height = 0.5,
+          border = 'single',
+          style = "terminal",
+          fixed = true,
           wo = {
             winbar = "",
             winhighlight = "",
@@ -234,7 +253,7 @@ return {
       },
       picker = {
         prompt = ' ',
-        ui_select = false,
+        ui_select = true,
         formatters = {
           file = {
             filename_first = true,
@@ -395,20 +414,5 @@ return {
       end,
       {}
     )
-
-    vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter", "WinEnter" }, {
-      pattern = { "term://*", "snacks_terminal" }, -- Covers standard terms and Snacks terminals
-      callback = function()
-        vim.schedule(function()
-          if vim.bo.buftype == "terminal" then
-            vim.opt_local.winbar = nil      -- Kills the top bar path
-            vim.opt_local.statusline = nil  -- Kills the bottom status line (if any)
-            vim.opt_local.number = false    -- Kills the "1" line number
-            vim.opt_local.relativenumber = false
-            vim.opt_local.signcolumn = "no" -- Kills the left gutter
-          end
-        end)
-      end,
-    })
   end,
 }

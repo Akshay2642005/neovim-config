@@ -22,11 +22,12 @@ add 'plugins.autotag'
 add 'plugins.blink-cmp'
 add 'plugins.colorizer'
 add 'plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly
--- add 'plugins.colorschemes.black_white'
+-- add 'plugins.colorschemes.base16'
 add 'plugins.flash'
 add 'plugins.formatter'
 add 'plugins.grapple'
 add 'plugins.gitsigns'
+
 -- add 'plugins.jdtls'  -- Example of a disabled plugin
 add 'plugins.lsp'
 add 'plugins.mason'
@@ -43,7 +44,10 @@ add 'plugins.web-devicons'
 add 'plugins.zen-mode'
 add 'plugins.which-key'
 add 'plugins.avante'
+add 'plugins.overseer'
 add 'plugins.alpha'
+add 'plugins.preview'
+
 
 --- Compute the installation path for 'lazy.nvim'.
 --- This is used to ensure the plugin manager itself is installed locally.
@@ -78,8 +82,8 @@ require('lazy').setup(plugin_specs, {
     notify = false,  -- Suppress update notifications.
   },
   change_detection = {
-    enabled = false, -- Disable auto-reloading on configuration changes.
-    notify = false,  -- Suppress change detection notifications.
+    enabled = true, -- Disable auto-reloading on configuration changes.
+    notify = false, -- Suppress change detection notifications.
   },
   install = {
     colorscheme = { 'cold' }, -- Attempt to load the 'cold' colorscheme during installation.

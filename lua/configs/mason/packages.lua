@@ -19,6 +19,7 @@ return {
   'gopls',
   'html-lsp',
   'htmx-lsp',
+  'haskell-language-server',
   'impl',
   'jdtls',
   'json-lsp',

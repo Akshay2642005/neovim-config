@@ -212,5 +212,11 @@ end, {
   desc = 'Open parent directory',
 })
 
+vim.keymap.set('n', '<A-t>', "<CMD>OverseerRun<CR>", { desc = 'Run Build Task' })
+vim.keymap.set('n', '<F5>', "<CMD>OverseerOpen<CR>", { desc = 'Toggle Task List' })
+
+
+
+vim.keymap.set('n', '<leader>dt', require('core.utils').setup_docker_mode, { desc = 'Toggle Docker Terminal' })
 
 vim.keymap.set('n', '<leader>rc', require('core.utils').reload_config, { desc = 'Reload nvim config' })

@@ -102,29 +102,29 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- vim.api.nvim_create_autocmd('LspAttach', {
---     group = vim.api.nvim_create_augroup(
---         'lsp_attach_conflicts',
---         { clear = true }
---     ),
---     desc = 'Prevent tsserver and volar conflict',
---     callback = function(args)
---         if not (args.data and args.data.client_id) then
---             return
---         end
---
---         local active_clients = vim.lsp.get_clients()
---         local client = vim.lsp.get_client_by_id(args.data.client_id)
---
---         if client ~= nil and client.name == 'volar' then
---             for _, c in ipairs(active_clients) do
---                 if c.name == 'tsserver' then
---                     c.stop()
---                 end
---             end
---         end
---     end,
--- })
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup(
+    'lsp_attach_conflicts',
+    { clear = true }
+  ),
+  desc = 'Prevent tsserver and volar conflict',
+  callback = function(args)
+    if not (args.data and args.data.client_id) then
+      return
+    end
+
+    local active_clients = vim.lsp.get_clients()
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+    if client ~= nil and client.name == 'volar' then
+      for _, c in ipairs(active_clients) do
+        if c.name == 'tsserver' then
+          c.stop(vim.Lsp.client)
+        end
+      end
+    end
+  end,
+})
 
 vim.api.nvim_create_autocmd('BufWinEnter', {
   group = vim.api.nvim_create_augroup(
@@ -224,10 +224,7 @@ local function cleanup_shada()
   end
 end
 
-vim.api.nvim_create_autocmd("VimEnter", {
-  group = shada_group,
-  callback = cleanup_shada,
-})
+
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
   group = shada_group,
@@ -235,9 +232,23 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 })
 
 
+local function cleanup_lsp_log()
+  local lsp_log_path = vim.fn.expand("$LOCALAPPDATA/nvim-data/")
+  local log_files = vim.fn.glob(lsp_log_path .. "lsp.log", true, true)
+  if #log_files > 0 then
+    for _, file in ipairs(log_files) do
+      pcall(os.remove, file)
+    end
+  end
+end
+
+
+vim.api.nvim_create_autocmd("VimLeave", {
+  group = vim.api.nvim_create_augroup("LogManager", { clear = true }),
+  callback = cleanup_lsp_log,
+})
+
 local function change_wezterm_bg(color)
-  -- We use the 'sed' or 'printf' style through a system call to ensure
-  -- the escape sequence is sent directly to the active terminal stdout.
   local osc_seq = string.format("\27]11;%s\27\\", color)
   vim.fn.chansend(vim.v.stderr, osc_seq)
 end
@@ -251,7 +262,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
-vim.api.nvim_create_autocmd("VimLeave", {
+vim.api.nvim_create_autocmd("VimLeavePre", {
   group = wez_group,
   callback = function()
     change_wezterm_bg("#000000")

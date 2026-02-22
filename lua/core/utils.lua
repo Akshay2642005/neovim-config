@@ -1,5 +1,7 @@
 local M = {}
 
+
+
 --- @param filename string
 --- @param text string
 function M.write_file(filename, text)
@@ -145,6 +147,34 @@ function M.reload_config()
   local config = vim.fn.stdpath("config") .. "/init.lua"
   vim.cmd("source " .. config)
   vim.notify("Config reloaded!", vim.log.levels.INFO)
+end
+
+function M.setup_docker_mode()
+  local marker = vim.fs.find({ "CargoLambda.toml" }, { upward = true, stop = vim.loop.os_homedir() })[1]
+  if not marker then
+    return
+  end
+  os.execute("docker compose up -d")
+  local status_ok, snacks = pcall(require, "snacks")
+  if status_ok then
+    snacks.config.terminal = snacks.config.terminal or {}
+    snacks.config.terminal.opts = snacks.config.terminal.opts or {}
+    snacks.config.terminal.opts.command = "docker compose exec -it builder /bin/bash"
+    local function run_docker_vsp(task_cmd)
+      vim.cmd("botright vnew | term " .. task_cmd)
+      local bufnr = vim.api.nvim_get_current_buf()
+      vim.keymap.set('t', 'q', [[<C-\><C-n>:bd!<CR>]], { buffer = bufnr, silent = true })
+      vim.keymap.set('n', 'q', ':bd!<CR>', { buffer = bufnr, silent = true })
+      vim.cmd("vertical resize 65")
+    end
+    vim.api.nvim_create_user_command('DockerBuild', function()
+      run_docker_vsp("docker compose run --rm builder cargo lambda build --release")
+    end, {})
+    vim.api.nvim_create_user_command('DockerDeploy', function()
+      run_docker_vsp("docker compose run --rm builder cargo lambda deploy")
+    end, {})
+    print("Lambda Docker Mode: Active")
+  end
 end
 
 return M

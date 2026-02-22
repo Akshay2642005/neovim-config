@@ -13,6 +13,7 @@ return {
   branch = 'main',
   build = ':TSUpdate',
   config = function()
+    vim.treesitter.language.register('json', 'jsonc')
     local config_parsers = require 'configs.treesitter.parsers'
     local parsers = config_parsers.install_automatically()
 
