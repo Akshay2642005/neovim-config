@@ -166,6 +166,10 @@ vim.keymap.set('n', '<leader>fc', '<cmd>foldclose<cr>', {
   desc = 'Close fold',
 })
 
+vim.keymap.set('n', '<leader>fC', '<cmd>foldopen<cr>', {
+  desc = 'Open fold',
+})
+
 vim.keymap.set('v', '<', '<gv', {
   desc = 'Indent left (stay in visual)',
 })

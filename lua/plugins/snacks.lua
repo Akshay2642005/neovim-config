@@ -1,418 +1,417 @@
 local layout_normal = {
-  layout = {
-    preview = false,
     layout = {
-      max_width = 70,
-      height = 0.8,
-      backdrop = false,
-      box = 'vertical',
-      {
-        win = 'input',
-        height = 1,
-        border = 'solid',
-      },
-      {
-        win = 'list',
-        border = 'solid',
-      },
+        preview = false,
+        layout = {
+            max_width = 70,
+            height = 0.8,
+            backdrop = false,
+            box = 'vertical',
+            {
+                win = 'input',
+                height = 1,
+                border = 'solid',
+            },
+            {
+                win = 'list',
+                border = 'solid',
+            },
+        },
+        win = {
+            input = { wo = { winbar = "" } },
+            list = { wo = { winbar = "" } },
+        }
     },
-    win = {
-      input = { wo = { winbar = "" } },
-      list = { wo = { winbar = "" } },
-    }
-  },
 }
 
 local function get_layout_preview_image(width_preview)
-  return {
-    layout = {
-      fullscreen = true,
-      layout = {
-        backdrop = false,
-        box = 'horizontal',
-        {
-          box = 'vertical',
-          {
-            win = 'input',
-            height = 1,
-            border = 'solid',
-          },
-          {
-            win = 'list',
-            border = 'solid',
-          },
+    return {
+        layout = {
+            fullscreen = true,
+            layout = {
+                backdrop = false,
+                box = 'horizontal',
+                {
+                    box = 'vertical',
+                    {
+                        win = 'input',
+                        height = 1,
+                        border = 'solid',
+                    },
+                    {
+                        win = 'list',
+                        border = 'solid',
+                    },
+                },
+                {
+                    win = 'preview',
+                    width = width_preview,
+                    border = 'solid',
+                },
+            },
+            win = {
+                input = { wo = { winbar = "" } },
+                list = { wo = { winbar = "" } },
+                preview = { wo = { winbar = "" } },
+            }
         },
-        {
-          win = 'preview',
-          width = width_preview,
-          border = 'solid',
-        },
-      },
-      win = {
-        input = { wo = { winbar = "" } },
-        list = { wo = { winbar = "" } },
-        preview = { wo = { winbar = "" } },
-      }
-    },
-  }
+    }
 end
 
 local layout_fullscreen_horizontal = {
-  layout = {
-    fullscreen = true,
     layout = {
-      backdrop = false,
-      box = 'vertical',
-      {
-        win = 'input',
-        height = 1,
-        border = 'solid',
-      },
-      { win = 'list', border = 'solid' },
-      {
-        win = 'preview',
-        height = 0.7,
-        border = 'vpad',
-      },
+        fullscreen = true,
+        layout = {
+            backdrop = false,
+            box = 'vertical',
+            {
+                win = 'input',
+                height = 1,
+                border = 'solid',
+            },
+            { win = 'list', border = 'solid' },
+            {
+                win = 'preview',
+                height = 0.7,
+                border = 'vpad',
+            },
+        },
     },
-  },
 }
 
 local layout_fullscreen_vertical = {
-  layout = {
-    fullscreen = true,
     layout = {
-      backdrop = false,
-      box = 'horizontal',
-      {
-        box = 'vertical',
-        {
-          win = 'input',
-          height = 1,
-          border = 'solid',
+        fullscreen = true,
+        layout = {
+            backdrop = false,
+            box = 'horizontal',
+            {
+                box = 'vertical',
+                {
+                    win = 'input',
+                    height = 1,
+                    border = 'solid',
+                },
+                {
+                    win = 'list',
+                    border = 'solid',
+                },
+            },
+            {
+                win = 'preview',
+                width = 0.6,
+                border = 'solid',
+            },
         },
-        {
-          win = 'list',
-          border = 'solid',
-        },
-      },
-      {
-        win = 'preview',
-        width = 0.6,
-        border = 'solid',
-      },
     },
-  },
 }
 
 return {
-  'folke/snacks.nvim',
-  priority = 1000,
-  lazy = true,
-  event = { 'VeryLazy', 'VimEnter' },
-  keys = {
-    {
-      '<C-/>',
-      function()
-        Snacks.terminal.toggle()
-      end,
-      mode = { 'n', 't' },
-      desc = 'Toggle terminal',
-    },
-    {
-      '<C-_>',
-      function()
-        Snacks.terminal.toggle()
-      end,
-      mode = { 'n', 't' },
-      desc = 'Toggle terminal',
-    },
-    {
-      '<leader>gg',
-      function()
-        Snacks.lazygit.open({
-          win = {
-            position = 'float',
-            border = 'single',
-            width = 0.9,
-            height = 0.9,
-          },
-        })
-      end,
-      desc = 'Lazygit',
-    },
-    {
-      '<leader>gl',
-      function()
-        Snacks.lazygit.log({
-          win = {
-            position = 'float',
-            border = 'single',
-            width = 0.9,
-            height = 0.9,
-          },
-        })
-      end,
-      desc = 'Lazygit log (cwd)',
-    },
-    {
-      '<leader>gf',
-      function()
-        Snacks.lazygit.log_file({
-          win = {
-            position = 'float',
-            border = 'single',
-            width = 0.9,
-            height = 0.9,
-          },
-        })
-      end,
-      desc = 'Lazygit log (current file)',
-    },
-    {
-      '<leader>gb',
-      function()
-        Snacks.git.blame_line()
-      end,
-      desc = 'Git blame line',
-    },
-  },
-  cmd = {
-    'SnacksPickerFiles',
-    'SnacksPickerGitStatus',
-    'SnacksPickerGrep',
-    'SnacksPickerHelp',
-    'SnacksPickerBuffers',
-    'SnacksPickerLspReferences',
-    'SnacksPickerLspImplementations',
-    'SnacksPickerLspDocumentSymbols',
-    'SnacksPickerLspWorkspaceSymbols',
-  },
-  config = function()
-    require('snacks').setup {
-      bigfile = { enabled = true },
-      dashboard = { enabled = false },
-      lazygit = {
-        enabled = true,
-        configure = true,
-      },
-      git = { enabled = true },
-      image = { enabled = false }, -- Disable for performance, enable if needed
-      indent = {
-        enabled = true,
-        indent = {
-          char = '│',
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = true,
+    event = { 'VeryLazy', 'VimEnter' },
+    keys = {
+        {
+            '<C-/>',
+            function()
+                Snacks.terminal.toggle()
+            end,
+            mode = { 'n', 't' },
+            desc = 'Toggle terminal',
         },
-        filter = function(buf)
-          -- 1. Ensure buf is a valid number
-          if not buf or type(buf) ~= "number" or not vim.api.nvim_buf_is_valid(buf) then
-            return false
-          end
-
-          -- 2. Safely get filetype and buftype
-          local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-          local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
-
-          -- 3. Run the logic
-          return vim.g.snacks_indent ~= false
-              and vim.b[buf].snacks_indent ~= false
-              and bt == ""
-              and ft ~= "markdown"
-        end,
-        scope = {
-          enabled = false, -- Disable scope for performance
+        {
+            '<C-_>',
+            function()
+                Snacks.terminal.toggle()
+            end,
+            mode = { 'n', 't' },
+            desc = 'Toggle terminal',
         },
-      },
-      input = { enabled = true },
-      notifier = { enabled = false },
-      quickfile = { enabled = true }, -- Fast file opening
-      statuscolumn = { enabled = false },
-      words = { enabled = false },
-      animate = { enabled = false },
-      scroll = { enabled = false },
-      zen = { enabled = false },
-      dim = { enabled = false },
-      debug = { enabled = false },
-      profiler = { enabled = false },
-      terminal = {
-        win = {
-          position = "bottom",
-          height = 0.5,
-          border = 'single',
-          style = "terminal",
-          fixed = true,
-          wo = {
-            winbar = "",
-            winhighlight = "",
-            statusline = "",
-            number = false,
-            relativenumber = false,
-            signcolumn = 'no',
-          },
+        {
+            '<leader>gg',
+            function()
+                Snacks.lazygit.open({
+                    win = {
+                        position = 'float',
+                        border = 'single',
+                        width = 0.9,
+                        height = 0.9,
+                    },
+                })
+            end,
+            desc = 'Lazygit',
         },
-      },
-      picker = {
-        prompt = ' ',
-        ui_select = true,
-        formatters = {
-          file = {
-            filename_first = true,
-            truncate = 100,
-          },
+        {
+            '<leader>gl',
+            function()
+                Snacks.lazygit.log({
+                    win = {
+                        position = 'float',
+                        border = 'single',
+                        width = 0.9,
+                        height = 0.9,
+                    },
+                })
+            end,
+            desc = 'Lazygit log (cwd)',
         },
-        previewers = {
-          diff = {
-            style = 'terminal',
-          },
+        {
+            '<leader>gf',
+            function()
+                Snacks.lazygit.log_file({
+                    win = {
+                        position = 'float',
+                        border = 'single',
+                        width = 0.9,
+                        height = 0.9,
+                    },
+                })
+            end,
+            desc = 'Lazygit log (current file)',
         },
-        win = {
-          input = {
-            keys = {
-              ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
-              ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
-              ['<c-x>'] = { 'edit_split', mode = { 'i', 'n' } },
-              ['<c-u>'] = {
-                'preview_scroll_up',
-                mode = { 'i', 'n' },
-              },
-              ['<c-d>'] = {
-                'preview_scroll_down',
-                mode = { 'i', 'n' },
-              },
+        {
+            '<leader>gb',
+            function()
+                Snacks.git.blame_line()
+            end,
+            desc = 'Git blame line',
+        },
+    },
+    cmd = {
+        'SnacksPickerFiles',
+        'SnacksPickerGitStatus',
+        'SnacksPickerGrep',
+        'SnacksPickerHelp',
+        'SnacksPickerBuffers',
+        'SnacksPickerLspReferences',
+        'SnacksPickerLspImplementations',
+        'SnacksPickerLspDocumentSymbols',
+        'SnacksPickerLspWorkspaceSymbols',
+    },
+    config = function()
+        require('snacks').setup {
+            bigfile = { enabled = false },
+            dashboard = { enabled = false },
+            lazygit = {
+                enabled = true,
+                configure = true,
             },
-          },
-        },
-        icons = {
-          kinds = {
-            Array = 'array',
-            Boolean = 'boolean',
-            Class = 'class',
-            Color = 'color',
-            Control = 'control',
-            Collapsed = 'collapsed',
-            Constant = 'constant',
-            Constructor = 'constructor',
-            Copilot = 'copilot',
-            Enum = 'enum',
-            EnumMember = 'enumMember',
-            Event = 'event',
-            Field = 'field',
-            File = 'file',
-            Folder = 'folder',
-            Function = 'function',
-            Interface = 'interface',
-            Key = 'key',
-            Keyword = 'keyword',
-            Method = 'method',
-            Module = 'module',
-            Namespace = 'namespace',
-            Null = 'null',
-            Number = 'number',
-            Object = 'object',
-            Operator = 'operator',
-            Package = 'package',
-            Property = 'property',
-            Reference = 'reference',
-            Snippet = 'snippet',
-            String = 'string',
-            Struct = 'struct',
-            Text = 'text',
-            TypeParameter = 'typeParameter',
-            Unit = 'unit',
-            Unknown = 'unknown',
-            Value = 'value',
-            Variable = 'variable',
-          },
-        },
-      },
-
-    }
-
-    vim.api.nvim_create_user_command('SnacksPickerFiles', function()
-      Snacks.picker.files(layout_normal)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerImages', function()
-      Snacks.picker.files(get_layout_preview_image(0.5))
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitBranches', function()
-      Snacks.picker.git_branches(layout_fullscreen_vertical)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitDiff', function()
-      Snacks.picker.git_diff(layout_fullscreen_vertical)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitFiles', function()
-      Snacks.picker.git_diff(layout_fullscreen_vertical)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitLog', function()
-      Snacks.picker.git_log(layout_fullscreen_vertical)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitLogFile', function()
-      Snacks.picker.git_log_file(layout_fullscreen_vertical)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitLogLine', function()
-      Snacks.picker.git_log_line(layout_fullscreen_vertical)
-    end, {})
-
-    vim.api.nvim_create_user_command('SnacksPickerGitStatus', function()
-      local config =
-          vim.tbl_deep_extend('force', layout_fullscreen_horizontal, {
-            win = {
-              input = {
-                keys = {
-                  ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
-                  ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+            git = { enabled = true },
+            image = { enabled = false }, -- Disable for performance, enable if needed
+            indent = {
+                width = 4,
+                enabled = true,
+                indent = {
+                    char = '│',
                 },
-              },
+                filter = function(buf)
+                    -- 1. Ensure buf is a valid number
+                    if not buf or type(buf) ~= "number" or not vim.api.nvim_buf_is_valid(buf) then
+                        return false
+                    end
+
+                    -- 2. Safely get filetype and buftype
+                    local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+                    local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+
+                    -- 3. Run the logic
+                    return vim.g.snacks_indent ~= false
+                        and vim.b[buf].snacks_indent ~= false
+                        and bt == ""
+                        and ft ~= "markdown"
+                end,
+                scope = {
+                    enabled = false, -- Disable scope for performance
+                },
             },
-          })
-      Snacks.picker.git_status(config)
-    end, {})
+            input = { enabled = true },
+            notifier = { enabled = false },
+            quickfile = { enabled = true }, -- Fast file opening
+            statuscolumn = { enabled = false },
+            words = { enabled = false },
+            animate = { enabled = false },
+            scroll = { enabled = false },
+            zen = { enabled = false },
+            dim = { enabled = false },
+            debug = { enabled = false },
+            profiler = { enabled = false },
+            terminal = {
+                win = {
+                    position = "bottom",
+                    height = 0.5,
+                    border = "vpad",
+                    style = "terminal",
+                    fixed = true,
+                    wo = {
+                        winbar = "",
+                        number = false,
+                        relativenumber = false,
+                        signcolumn = "no",
+                    },
+                },
+            },
+            picker = {
+                prompt = ' ',
+                ui_select = true,
+                formatters = {
+                    file = {
+                        filename_first = true,
+                        truncate = 100,
+                    },
+                },
+                previewers = {
+                    diff = {
+                        style = 'terminal',
+                    },
+                },
+                win = {
+                    input = {
+                        keys = {
+                            ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+                            ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+                            ['<c-x>'] = { 'edit_split', mode = { 'i', 'n' } },
+                            ['<c-u>'] = {
+                                'preview_scroll_up',
+                                mode = { 'i', 'n' },
+                            },
+                            ['<c-d>'] = {
+                                'preview_scroll_down',
+                                mode = { 'i', 'n' },
+                            },
+                        },
+                    },
+                },
+                icons = {
+                    kinds = {
+                        Array = 'array',
+                        Boolean = 'boolean',
+                        Class = 'class',
+                        Color = 'color',
+                        Control = 'control',
+                        Collapsed = 'collapsed',
+                        Constant = 'constant',
+                        Constructor = 'constructor',
+                        Copilot = 'copilot',
+                        Enum = 'enum',
+                        EnumMember = 'enumMember',
+                        Event = 'event',
+                        Field = 'field',
+                        File = 'file',
+                        Folder = 'folder',
+                        Function = 'function',
+                        Interface = 'interface',
+                        Key = 'key',
+                        Keyword = 'keyword',
+                        Method = 'method',
+                        Module = 'module',
+                        Namespace = 'namespace',
+                        Null = 'null',
+                        Number = 'number',
+                        Object = 'object',
+                        Operator = 'operator',
+                        Package = 'package',
+                        Property = 'property',
+                        Reference = 'reference',
+                        Snippet = 'snippet',
+                        String = 'string',
+                        Struct = 'struct',
+                        Text = 'text',
+                        TypeParameter = 'typeParameter',
+                        Unit = 'unit',
+                        Unknown = 'unknown',
+                        Value = 'value',
+                        Variable = 'variable',
+                    },
+                },
+            },
 
-    vim.api.nvim_create_user_command('SnacksPickerGrep', function()
-      Snacks.picker.grep(layout_fullscreen_horizontal)
-    end, {})
+        }
 
-    vim.api.nvim_create_user_command('SnacksPickerHelp', function()
-      Snacks.picker.help(layout_fullscreen_vertical)
-    end, {})
+        vim.api.nvim_create_user_command('SnacksPickerFiles', function()
+            Snacks.picker.files(layout_normal)
+        end, {})
 
-    vim.api.nvim_create_user_command('SnacksPickerBuffers', function()
-      Snacks.picker.buffers(layout_normal)
-    end, {})
+        vim.api.nvim_create_user_command('SnacksPickerImages', function()
+            Snacks.picker.files(get_layout_preview_image(0.5))
+        end, {})
 
-    vim.api.nvim_create_user_command('SnacksPickerLspReferences', function()
-      Snacks.picker.lsp_references(layout_fullscreen_horizontal)
-    end, {})
+        vim.api.nvim_create_user_command('SnacksPickerGitBranches', function()
+            Snacks.picker.git_branches(layout_fullscreen_vertical)
+        end, {})
 
-    vim.api.nvim_create_user_command(
-      'SnacksPickerLspImplementations',
-      function()
-        Snacks.picker.lsp_implementations(layout_fullscreen_horizontal)
-      end,
-      {}
-    )
+        vim.api.nvim_create_user_command('SnacksPickerGitDiff', function()
+            Snacks.picker.git_diff(layout_fullscreen_vertical)
+        end, {})
 
-    vim.api.nvim_create_user_command(
-      'SnacksPickerLspDocumentSymbols',
-      function()
-        Snacks.picker.lsp_symbols(layout_fullscreen_vertical)
-      end,
-      {}
-    )
+        vim.api.nvim_create_user_command('SnacksPickerGitFiles', function()
+            Snacks.picker.git_diff(layout_fullscreen_vertical)
+        end, {})
 
-    vim.api.nvim_create_user_command(
-      'SnacksPickerLspWorkspaceSymbols',
-      function()
-        Snacks.picker.lsp_workspace_symbols(layout_fullscreen_vertical)
-      end,
-      {}
-    )
-  end,
+        vim.api.nvim_create_user_command('SnacksPickerGitLog', function()
+            Snacks.picker.git_log(layout_fullscreen_vertical)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerGitLogFile', function()
+            Snacks.picker.git_log_file(layout_fullscreen_vertical)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerGitLogLine', function()
+            Snacks.picker.git_log_line(layout_fullscreen_vertical)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerGitStatus', function()
+            local config =
+                vim.tbl_deep_extend('force', layout_fullscreen_horizontal, {
+                    win = {
+                        input = {
+                            keys = {
+                                ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+                                ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+                            },
+                        },
+                    },
+                })
+            Snacks.picker.git_status(config)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerGrep', function()
+            Snacks.picker.grep(layout_fullscreen_horizontal)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerHelp', function()
+            Snacks.picker.help(layout_fullscreen_vertical)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerBuffers', function()
+            Snacks.picker.buffers(layout_normal)
+        end, {})
+
+        vim.api.nvim_create_user_command('SnacksPickerLspReferences', function()
+            Snacks.picker.lsp_references(layout_fullscreen_horizontal)
+        end, {})
+
+        vim.api.nvim_create_user_command(
+            'SnacksPickerLspImplementations',
+            function()
+                Snacks.picker.lsp_implementations(layout_fullscreen_horizontal)
+            end,
+            {}
+        )
+
+        vim.api.nvim_create_user_command(
+            'SnacksPickerLspDocumentSymbols',
+            function()
+                Snacks.picker.lsp_symbols(layout_fullscreen_vertical)
+            end,
+            {}
+        )
+
+        vim.api.nvim_create_user_command(
+            'SnacksPickerLspWorkspaceSymbols',
+            function()
+                Snacks.picker.lsp_workspace_symbols(layout_fullscreen_vertical)
+            end,
+            {}
+        )
+    end,
 }

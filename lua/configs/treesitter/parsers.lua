@@ -52,6 +52,7 @@ function M.install_automatically()
     'requirements',
     'rust',
     'scheme',
+    'elixir',
     'sql',
     'svelte',
     'toml',

@@ -1,6 +1,6 @@
-vim.opt_local.shiftwidth = 2
-vim.opt_local.tabstop = 2
-vim.opt_local.softtabstop = 2
+vim.opt_local.shiftwidth = 4
+vim.opt_local.tabstop = 4
+vim.opt_local.softtabstop = 4
 
 local esc = vim.api.nvim_replace_termcodes('<Esc>', true, true, true)
 local lhs_print = 'yoprintln!("'

@@ -78,6 +78,7 @@ return {
       { '<leader>ff',      desc = 'Find files' },
       { '<leader>fm',      desc = 'Format buffer',          mode = { 'n', 'v' } },
       { '<leader>fc',      desc = 'Fold close' },
+      { '<leader>fC',      desc = 'Fold open' },
 
       -- Git group
       { '<leader>gg',      desc = 'Lazygit' },
@@ -85,6 +86,7 @@ return {
       { '<leader>gf',      desc = 'Lazygit log (file)' },
       { '<leader>gb',      desc = 'Git blame line' },
       { '<leader>gs',      desc = 'Git status' },
+      { '<leader>gd',      desc = 'Git diff' },
 
       -- Hunk/Git group (gitsigns)
       { '<leader>hs',      desc = 'Stage hunk' },
@@ -109,7 +111,9 @@ return {
 
       -- Live grep
       { '<leader>lg',      desc = 'Live grep' },
-
+      { '<leader>ls',      desc = 'LSP Symbols' },
+      { '<leader>li',      desc = 'LSP Implementations' },
+      { '<leader>lr',      desc = 'LSP References' },
       -- No highlight
       { '<leader>nh',      desc = 'Clear search highlight' },
 

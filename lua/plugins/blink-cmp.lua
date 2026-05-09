@@ -22,6 +22,11 @@ return {
       'fang2hou/blink-copilot',
     },
     opts = {
+      enabled = function()
+        return not vim.list_contains({ 'AvanteInput' }, vim.bo.filetype)
+            and vim.bo.buftype ~= 'prompt'
+            and vim.b.completion ~= false
+      end,
       keymap = {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
         ['<C-e>'] = { 'hide' },
@@ -65,7 +70,7 @@ return {
         use_nvim_cmp_as_default = false,
       },
       sources = {
-        default = { 'lsp', 'path', 'buffer', 'copilot' },
+        default = { 'copilot', 'lsp', 'path', 'buffer' },
         per_filetype = {
           lua = { 'lsp', 'path', 'buffer' },
         },
@@ -90,9 +95,9 @@ return {
             module = 'blink-copilot',
             score_offset = 80,
             async = true,
-            timeout_ms = 300,
+            timeout_ms = 500,
             opts = {
-              max_completions = 1,
+              max_completions = 5,
             },
           },
         },

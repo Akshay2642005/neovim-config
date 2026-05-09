@@ -16,6 +16,11 @@ vim.keymap.set('n', '<leader>gs', ':SnacksPickerGitStatus<cr>', {
   desc = 'Git status',
 })
 
+vim.keymap.set('n', '<leader>gd', ':SnacksPickerGitDiff<cr>', {
+  silent = true,
+  desc = 'Git status',
+})
+
 vim.keymap.set('n', '<leader>lg', ':SnacksPickerGrep<cr>', {
   silent = true,
   desc = 'Live grep',
@@ -31,6 +36,19 @@ vim.keymap.set('n', '<leader>bf', ':SnacksPickerBuffers<cr>', {
   desc = 'Find buffers',
 })
 
+vim.keymap.set('n', '<leader>ls', ':SnacksPickerLspDocumentSymbols<cr>', {
+  silent = true,
+  desc = "LSP Symbols",
+})
+
+vim.keymap.set('n', '<leader>li', ':SnacksPickerLspImplementations<cr>', {
+  silent = true,
+  desc = "LSP Implementations",
+})
+vim.keymap.set('n', '<leader>li', ':SnacksPickerLspReferences<cr>', {
+  silent = true,
+  desc = "LSP Referennces",
+})
 -- ============================================================================
 -- Snacks Lazygit
 -- ============================================================================

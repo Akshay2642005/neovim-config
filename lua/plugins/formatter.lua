@@ -14,6 +14,7 @@ return {
       ['clang-format'] = mason_bin .. 'clang-format.CMD',
       prettier = mason_bin .. 'prettier.CMD',
       rustfmt = mason_bin .. 'rustfmt.CMD',
+      leptosfmt = vim.fn.expand('~') .. '\\.cargo\\bin\\leptosfmt.exe',
       ktlint = mason_bin .. 'ktlint.CMD',
       ruff = mason_bin .. 'ruff.CMD',
       buf = mason_bin .. 'buf.CMD',
@@ -71,6 +72,12 @@ return {
       args = { '--style={IndentWidth: 2}' },
     }
 
+    formatter_config['leptosfmt'] = {
+      command = 'leptosfmt',
+      args = { '--stdin', '--rustfmt' }, -- --rustfmt chains rustfmt after
+      stdin = true,
+    }
+
     require('conform').setup {
       notify_on_error = false,
       formatters = formatter_config,
@@ -110,7 +117,16 @@ return {
         proto = { 'buf' },
         python = { 'ruff' },
         ruby = { 'rubocop' },
-        rust = { 'rustfmt' },
+        rust = function(bufnr)
+          local found = vim.fs.find('leptosfmt.toml', {
+            upward = true,
+            path = vim.api.nvim_buf_get_name(bufnr),
+          })
+          if #found > 0 then
+            return { 'leptosfmt' }
+          end
+          return { 'rustfmt' }
+        end,
         scss = { 'prettierd', 'prettier', stop_after_first = true },
         sh = { 'shfmt' },
         bash = { 'shfmt' },

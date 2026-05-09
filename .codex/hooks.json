@@ -1,0 +1,1 @@
+{"hooks":{"PreToolUse":[{"hooks":[{"type":"command","command":"C:/Users/M S I/AppData/Local/nvim-data/lazy/code-preview.nvim/backends/codex/code-preview-diff.sh"}],"matcher":""}],"PostToolUse":[{"hooks":[{"type":"command","command":"C:/Users/M S I/AppData/Local/nvim-data/lazy/code-preview.nvim/backends/codex/code-close-diff.sh"}],"matcher":""}]}}

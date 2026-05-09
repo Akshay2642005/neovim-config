@@ -32,8 +32,8 @@ function M.component()
   if not progress.title then return '' end
 
   local msg = progress.title
-  if progress.message then msg = msg .. ' ' .. progress.message end
-  if progress.percentage then msg = msg .. ' ' .. progress.percentage .. '%' end
+  if progress.message then msg = ' ' .. progress.message end
+  if progress.percentage then msg = ' ' .. progress.percentage .. '%' end
 
   return string.format('%%#StatusLineLspMessages#%s%%* ', msg)
 end

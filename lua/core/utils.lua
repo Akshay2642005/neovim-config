@@ -1,7 +1,5 @@
 local M = {}
 
-
-
 --- @param filename string
 --- @param text string
 function M.write_file(filename, text)

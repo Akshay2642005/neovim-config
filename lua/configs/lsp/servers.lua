@@ -13,12 +13,13 @@ M.to_setup = {
   'denols',
   'dockerls',
   'elixirls',
+  'erlang-ls',
   -- 'eslint',
   'gopls',
   'html',
   'hls',
   'intelephense',
-  -- 'jdtls',
+  'jdtls',
   'jsonls',
   -- 'kotlin_language_server',
   'nushell',
@@ -28,6 +29,7 @@ M.to_setup = {
   -- 'pylance',
   -- 'pylyzer',
   -- 'phpactor',
+  'protols',
   'pyright',
   'ruff',
   'rust_analyzer',
@@ -41,7 +43,7 @@ M.to_setup = {
   'ts_ls',
   -- 'vtsls',
   'yamlls',
-  -- 'zls',
+  'zls',
 }
 
 return M

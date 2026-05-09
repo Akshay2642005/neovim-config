@@ -12,7 +12,7 @@ return {
       cmd = { "cmd.exe", "/c" },
       args = {
         string.format(
-          'cmake -S "%s" -B "%s" && cmake --build "%s"',
+          'cmake -S "%s" -B "%s" -G "Ninja" && cmake --build "%s"',
           root,
           build_dir,
           build_dir

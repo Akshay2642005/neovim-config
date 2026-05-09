@@ -5,6 +5,8 @@ return {
     event = "BufReadPre",
     ft = {
       "Avante",
+      "avante",
+      "codecompanion",
       "markdown"
     }
   }
