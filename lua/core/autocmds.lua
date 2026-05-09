@@ -18,17 +18,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd('VimLeave', {
-  group = vim.api.nvim_create_augroup(
-    'restore_cursor_shape_on_exit',
-    { clear = true }
-  ),
-  pattern = { '*' },
-  desc = 'Restores vertical shape cursor for Alacritty on exit',
-  callback = function()
-    vim.opt.guicursor = 'a:ver1'
-  end,
-})
 
 vim.api.nvim_create_autocmd('TermOpen', {
   group = vim.api.nvim_create_augroup(
@@ -248,24 +237,22 @@ vim.api.nvim_create_autocmd("VimLeave", {
   callback = cleanup_lsp_log,
 })
 
--- local function change_wezterm_bg(color)
---   local osc_seq = string.format('\27]11;%s\27\\', color)
---   vim.api.nvim_chan_send(vim.v.stderr, osc_seq)
--- end
---
--- local wez_group = vim.api.nvim_create_augroup('WeztermColors', { clear = true })
---
--- vim.api.nvim_create_autocmd('UIEnter', {
---   group = wez_group,
---   callback = function()
---     change_wezterm_bg('#0e0e0e')
---   end,
--- })
---
--- vim.api.nvim_create_autocmd('VimLeavePre', {
---   group = wez_group,
---   callback = function()
---     change_wezterm_bg('#000000')
---     io.write('\27[2J\27[1;1H') -- clear screen, cursor to top-left
---   end,
--- })
+vim.api.nvim_create_autocmd('ModeChanged', {
+  group = vim.api.nvim_create_augroup('cursor_shape', { clear = true }),
+  callback = function()
+    local mode = vim.api.nvim_get_mode().mode
+    if mode == 'i' or mode == 'ic' or mode == 'ix' then
+      io.write '\27[6 q' -- steady bar
+    elseif mode == 'r' or mode == 'rc' then
+      io.write '\27[4 q' -- steady underline
+    else
+      io.write '\27[2 q' -- steady block
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimLeave', {
+  callback = function()
+    io.write '\27[0 q' -- reset to terminal default
+  end,
+})

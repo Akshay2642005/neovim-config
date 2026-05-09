@@ -125,6 +125,7 @@ opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 opt.autoindent = true
 opt.smartindent = true
+opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 
 
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
