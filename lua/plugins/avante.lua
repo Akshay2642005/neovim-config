@@ -15,7 +15,6 @@ return {
       windows = {
         width = 45,
         height = 30,
-        border = "single", -- Add border to Avante's buffer
         sidebar_header = {
           enabled = false,
           rounded = false

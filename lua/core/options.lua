@@ -130,7 +130,7 @@ opt.smartindent = true
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 
 if vim.fn.has("win32") == 1 then
-  vim.opt.shell = "pwsh -NoLogo" -- or "powershell" depending on what you have installed
+  vim.opt.shell = "pwsh" -- or "powershell" depending on what you have installed
   vim.opt.shellcmdflag =
   "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
   vim.opt.shellredir = "2>&1 | Out-File -Encoding UTF8 %s"
