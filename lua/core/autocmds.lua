@@ -237,6 +237,28 @@ vim.api.nvim_create_autocmd("VimLeave", {
   callback = cleanup_lsp_log,
 })
 
+
+local function change_wezterm_bg(color)
+  local osc_seq = string.format('\27]11;%s\27\\', color)
+  vim.api.nvim_chan_send(vim.v.stderr, osc_seq)
+end
+
+local wez_group = vim.api.nvim_create_augroup('WeztermColors', { clear = true })
+
+vim.api.nvim_create_autocmd('UIEnter', {
+  group = wez_group,
+  callback = function()
+    change_wezterm_bg('#0e0e0e')
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  group = wez_group,
+  callback = function()
+    change_wezterm_bg('#000000')
+  end,
+})
+
 vim.api.nvim_create_autocmd('ModeChanged', {
   group = vim.api.nvim_create_augroup('cursor_shape', { clear = true }),
   callback = function()
