@@ -2,7 +2,7 @@ return {
   'neovim/nvim-lspconfig',
   lazy = true,
   cmd = { 'Start' },
-  event = { 'VeryLazy', 'BufReadPre', 'BufNewFile' },
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     { import = 'plugins.lazydev' },
     { 'b0o/SchemaStore.nvim' },
