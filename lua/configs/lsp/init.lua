@@ -1,22 +1,32 @@
 ---@diagnostic disable: undefined-field
 local M = {}
 
+-- Track which clients have had their `request` method wrapped, using weak
+-- keys so entries are garbage-collected when the client is freed.
+local wrapped_clients = setmetatable({}, { __mode = 'k' })
+
 --- @param client vim.lsp.Client
 --- @param bufnr integer
 function M.on_attach(client, bufnr)
-  local req = client.request
+  -- Guard: wrap client.request only once per client lifetime.
+  -- Without this guard, opening N buffers for the same server creates N nested
+  -- wrapper closures, progressively degrading LSP performance.
+  if not wrapped_clients[client] then
+    wrapped_clients[client] = true
+    local req = client.request
 
-  client.request = function(self, method, params, handler, bufnr_req)
-    if method == 'textDocument/definition' then
-      return req(
-        self,
-        method,
-        params,
-        require('configs.lsp.handlers').go_to_definition,
-        bufnr_req
-      )
-    else
-      return req(self, method, params, handler, bufnr_req)
+    client.request = function(self, method, params, handler, bufnr_req)
+      if method == 'textDocument/definition' then
+        return req(
+          self,
+          method,
+          params,
+          require('configs.lsp.handlers').go_to_definition,
+          bufnr_req
+        )
+      else
+        return req(self, method, params, handler, bufnr_req)
+      end
     end
   end
 
