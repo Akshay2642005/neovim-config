@@ -45,12 +45,44 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize +2<cr>', {
 })
 
 -- ============================================================================
--- Buffers
+-- Buffers / Tabs
 -- ============================================================================
 vim.keymap.set('n', '<leader>bd', ':bd!<cr>', {
   silent = true,
   desc = 'Delete current buffer',
 })
+
+vim.keymap.set('n', '<leader>bD', function()
+  require('bufferline').close_others()
+end, { silent = true, desc = 'Close other buffers' })
+
+vim.keymap.set('n', '<leader>bp', function()
+  require('bufferline').pick()
+end, { silent = true, desc = 'Pick buffer' })
+
+vim.keymap.set('n', '<Tab>', function()
+  require('bufferline').cycle(1)
+end, { silent = true, desc = 'Next buffer' })
+
+vim.keymap.set('n', '<S-Tab>', function()
+  require('bufferline').cycle(-1)
+end, { silent = true, desc = 'Previous buffer' })
+
+vim.keymap.set('n', ']b', function()
+  require('bufferline').cycle(1)
+end, { silent = true, desc = 'Next buffer' })
+
+vim.keymap.set('n', '[b', function()
+  require('bufferline').cycle(-1)
+end, { silent = true, desc = 'Previous buffer' })
+
+vim.keymap.set('n', '<leader>bh', function()
+  require('bufferline').move(-1)
+end, { silent = true, desc = 'Move buffer left' })
+
+vim.keymap.set('n', '<leader>bl', function()
+  require('bufferline').move(1)
+end, { silent = true, desc = 'Move buffer right' })
 
 -- ============================================================================
 -- Diagnostics

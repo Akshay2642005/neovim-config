@@ -123,6 +123,8 @@ opt.winborder = 'single'
 opt.wrap = false
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
+opt.fileformats = { "unix", "dos" }
+opt.fileformat = "unix"
 opt.autoindent = true
 opt.smartindent = true
 opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
@@ -140,6 +142,9 @@ if vim.fn.has("win32") == 1 then
   vim.opt.shellxquote = ""
 end
 
+-- vim.opt.shell = '"C:/Program Files/Git/bin/bash.exe"'
+-- vim.opt.shellcmdflag = "--login -i -c"
+--
 if vim.g.neovide then
   opt.linespace = -1
 

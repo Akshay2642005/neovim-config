@@ -49,14 +49,9 @@ return {
       { '<leader>t',       group = 'Terminal/TODO' },
       { '<leader>w',       group = 'Workspace/Wrap' },
 
-      -- Grapple group (semicolon prefix)
-      { ';',               group = 'Grapple' },
-      { ';;',              desc = 'Grapple open tags' },
-      { ';1',              desc = 'Grapple tag 1' },
-      { ';2',              desc = 'Grapple tag 2' },
-      { ';3',              desc = 'Grapple tag 3' },
-      { ';4',              desc = 'Grapple tag 4' },
-      { ';5',              desc = 'Grapple tag 5' },
+      -- Grapple
+      { '<leader>.',        desc = 'Grapple (toggle) file' },
+      { ';',               desc = 'Grapple tag menu' },
 
       -- LSP-related keymaps
       { 'g',               group = 'Go to' },
@@ -71,7 +66,15 @@ return {
 
       -- Buffer group
       { '<leader>bd',      desc = 'Delete buffer' },
+      { '<leader>bD',      desc = 'Close other buffers' },
       { '<leader>bf',      desc = 'Find buffers' },
+      { '<leader>bp',      desc = 'Pick buffer' },
+      { '<leader>bh',      desc = 'Move buffer left' },
+      { '<leader>bl',      desc = 'Move buffer right' },
+      { ']b',              desc = 'Next buffer' },
+      { '[b',              desc = 'Previous buffer' },
+      { '<Tab>',            desc = 'Next buffer',       mode = { 'n' } },
+      { '<S-Tab>',          desc = 'Previous buffer',   mode = { 'n' } },
 
       -- Find/Files group
       { '<leader><space>', desc = 'Find files' },

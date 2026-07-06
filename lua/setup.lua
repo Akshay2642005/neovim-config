@@ -17,6 +17,7 @@ local function add(plugin)
 end
 
 -- Plugin imports; these can be customized as needed for the user's configuration.
+add 'plugins.pi'
 add 'plugins.autopairs'
 add 'plugins.autotag'
 add 'plugins.blink-cmp'
@@ -27,8 +28,6 @@ add 'plugins.flash'
 add 'plugins.formatter'
 add 'plugins.grapple'
 add 'plugins.gitsigns'
-add 'plugins.avante'
-add 'plugins.codex'
 add 'plugins.jdtls' -- Example of a disabled plugin
 add 'plugins.lsp'
 add 'plugins.mason'
@@ -47,6 +46,7 @@ add 'plugins.zen-mode'
 add 'plugins.which-key'
 add 'plugins.overseer'
 add 'plugins.alpha'
+add 'plugins.bufferline'
 add 'plugins.preview'
 
 

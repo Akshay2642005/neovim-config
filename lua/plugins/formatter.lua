@@ -69,7 +69,7 @@ return {
 
     formatter_config['clang-format'] = {
       command = fmt_paths['clang-format'],
-      args = { '--style={IndentWidth: 2}' },
+      args = { '--style={IndentWidth: 4}' },
     }
 
     formatter_config['leptosfmt'] = {

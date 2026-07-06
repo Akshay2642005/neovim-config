@@ -7,7 +7,8 @@ return {
       "Avante",
       "avante",
       "codecompanion",
-      "markdown"
+      "markdown",
+      "opencode_output"
     }
   }
 }

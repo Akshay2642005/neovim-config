@@ -43,4 +43,5 @@ return {
   'typescript-language-server',
   'vetur-vls',
   'yaml-language-server',
+  'zls'
 }

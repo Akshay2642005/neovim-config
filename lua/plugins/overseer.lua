@@ -7,11 +7,12 @@ return {
   ---@type overseer.SetupOpts
   opts = {
     task_list = {
-      direction = "left"
+      direction = "bottom"
     },
     output = {
       use_terminal = false,
-      preserve_output = true
+
+      preserve_output = false
     }
   },
 }
