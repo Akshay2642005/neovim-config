@@ -13,23 +13,39 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   callback = highlights.setup,
 })
 
-StatusLine = {}
+-- keep the recording indicator responsive (mode changes alone don't redraw it)
+vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+  group = augroup,
+  callback = function()
+    vim.cmd.redrawstatus()
+  end,
+})
 
-StatusLine.active = function()
+_G.StatusLine = {}
+
+_G.StatusLine.active = function()
   local m = vim.api.nvim_get_mode().mode
   if m == 't' or vim.o.modifiable == false then
     return table.concat {
       mode.component(),
+      c.macro(),
       '%=',
       c.file_percentage(),
       c.total_lines(),
     }
   end
 
+  -- double '%=' centers the build segment; '%<' makes the right side
+  -- collapse first on narrow windows while mode/git stay visible
   return table.concat {
     mode.component(),
+    c.macro(),
+    c.git_branch(),
+    c.grapple_tag(),
+    '%=',
     build.component(),
     '%=',
+    '%<',
     '%S ',
     lsp_progress.component(),
     diag.error(),
@@ -42,5 +58,5 @@ StatusLine.active = function()
   }
 end
 
-vim.opt.laststatus = 3
 vim.opt.statusline = '%!v:lua.StatusLine.active()'
+vim.opt.laststatus = 3

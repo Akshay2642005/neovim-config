@@ -50,7 +50,7 @@ return {
       { '<leader>w',       group = 'Workspace/Wrap' },
 
       -- Grapple
-      { '<leader>.',        desc = 'Grapple (toggle) file' },
+      { '<leader>.',       desc = 'Grapple (toggle) file' },
       { ';',               desc = 'Grapple tag menu' },
 
       -- LSP-related keymaps
@@ -73,8 +73,8 @@ return {
       { '<leader>bl',      desc = 'Move buffer right' },
       { ']b',              desc = 'Next buffer' },
       { '[b',              desc = 'Previous buffer' },
-      { '<Tab>',            desc = 'Next buffer',       mode = { 'n' } },
-      { '<S-Tab>',          desc = 'Previous buffer',   mode = { 'n' } },
+      { '<Tab>',           desc = 'Next buffer',            mode = { 'n' } },
+      { '<S-Tab>',         desc = 'Previous buffer',        mode = { 'n' } },
 
       -- Find/Files group
       { '<leader><space>', desc = 'Find files' },

@@ -3,7 +3,6 @@ local HIDE_AFTER_SUCCESS = 3
 local HIDE_AFTER_FAILURE = 6
 local SPINNER_INTERVAL   = 120
 local spinner            = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-local spinner_idx        = 1
 local redraw_timer       = nil
 local hide_until_typing  = false
 local last_seen          = {}
@@ -30,16 +29,36 @@ local function pick_task(tasks)
   return running or last_done
 end
 
+local function stop_timer()
+  if redraw_timer then
+    pcall(vim.fn.timer_stop, redraw_timer)
+    redraw_timer = nil
+  end
+end
+
 local function ensure_timer()
   if redraw_timer then return end
   redraw_timer = vim.fn.timer_start(
     SPINNER_INTERVAL,
     function()
-      vim.schedule(function() vim.cmd("redrawstatus") end)
+      vim.schedule(function()
+        -- guard against a stray tick racing with stop_timer
+        if redraw_timer then vim.cmd("redrawstatus") end
+      end)
     end,
     { ["repeat"] = -1 }
   )
 end
+
+-- Overseer only fires these around task start/finish; without them the
+-- statusline would not notice a new RUNNING task once the timer is stopped.
+vim.api.nvim_create_autocmd("User", {
+  group = vim.api.nvim_create_augroup("statusline_overseer", { clear = true }),
+  pattern = { "OverseerTaskPre", "OverseerTaskPost" },
+  callback = function()
+    vim.cmd("redrawstatus")
+  end,
+})
 
 vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   callback = function()
@@ -67,16 +86,25 @@ end
 
 function M.component()
   local ok, task_list = pcall(require, "overseer.task_list")
-  if not ok then return "" end
+  if not ok then
+    stop_timer()
+    return ""
+  end
 
   local tasks = task_list.list_tasks({ include_ephemeral = true })
-  if #tasks == 0 then return "" end
+  if #tasks == 0 then
+    stop_timer()
+    return ""
+  end
 
   local task = pick_task(tasks)
-  if not task then return "" end
+  if not task then
+    stop_timer()
+    return ""
+  end
 
   local status = task.status
-  local now = vim.loop.now() / 1000
+  local now = vim.uv.now() / 1000
   local seen = last_seen[task.id]
 
   if status == "RUNNING" then
@@ -85,18 +113,23 @@ function M.component()
       last_seen[task.id] = nil
     end
     ensure_timer()
-    spinner_idx = (spinner_idx % #spinner) + 1
+    -- frame derived from wall-clock time so the animation stays smooth
+    -- no matter how often the statusline gets redrawn
+    local frame = math.floor(vim.uv.now() / SPINNER_INTERVAL) % #spinner + 1
     return table.concat({
       "%@v:lua.StatuslineBuildClick@",
       "%#StatusLineBuildRunning# ",
-      spinner[spinner_idx],
+      spinner[frame],
       " BUILD: RUNNING",
       "%*%T",
     })
   end
 
   if status == "SUCCESS" or status == "FAILURE" then
-    if hide_until_typing then return "" end
+    if hide_until_typing then
+      stop_timer()
+      return ""
+    end
 
     if not seen or seen.status ~= status then
       last_seen[task.id] = { status = status, done_at = now }
@@ -104,7 +137,9 @@ function M.component()
     end
 
     local timeout = status == "SUCCESS" and HIDE_AFTER_SUCCESS or HIDE_AFTER_FAILURE
-    if (now - seen.done_at) > timeout then
+    local elapsed = now - seen.done_at
+    if elapsed > timeout then
+      stop_timer()
       return ""
     end
 
@@ -125,6 +160,7 @@ function M.component()
     end
   end
 
+  stop_timer()
   return ""
 end
 

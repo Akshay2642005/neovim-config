@@ -190,7 +190,7 @@ return {
   },
   config = function()
     require('snacks').setup {
-      bigfile = { enabled = false },
+      bigfile = { enabled = true },
       dashboard = { enabled = false },
       lazygit = {
         enabled = true,
@@ -225,7 +225,7 @@ return {
         },
       },
       input = { enabled = true },
-      notifier = { enabled = false },
+      notifier = { enabled = true },
       quickfile = { enabled = true }, -- Fast file opening
       statuscolumn = { enabled = false },
       words = { enabled = false },
@@ -243,7 +243,7 @@ return {
           style = "terminal",
           fixed = true,
           wo = {
-            winbar = "",
+            winbar = " ",
             number = false,
             relativenumber = false,
             signcolumn = "no",
@@ -326,6 +326,38 @@ return {
       },
 
     }
+
+    -- Snacks reapplies wo (including winbar = " ") every time the terminal
+    -- window is shown; the winbar renders as an extra bar stacked on top of
+    -- the "top" border, which looks like a second statusline. Clear it after
+    -- snacks finishes applying its window options.
+    local function clear_terminal_winbar(buf)
+      vim.schedule(function()
+        if not vim.api.nvim_buf_is_valid(buf) then
+          return
+        end
+        for _, w in ipairs(vim.fn.win_findbuf(buf)) do
+          vim.wo[w].winbar = ''
+        end
+      end)
+    end
+
+    local term_augroup = vim.api.nvim_create_augroup('snacks_terminal_winbar', { clear = true })
+    vim.api.nvim_create_autocmd('FileType', {
+      group = term_augroup,
+      pattern = 'snacks_terminal',
+      callback = function(args)
+        clear_terminal_winbar(args.buf)
+      end,
+    })
+    vim.api.nvim_create_autocmd('WinEnter', {
+      group = term_augroup,
+      callback = function()
+        if vim.bo.filetype == 'snacks_terminal' then
+          clear_terminal_winbar(vim.api.nvim_get_current_buf())
+        end
+      end,
+    })
 
     vim.api.nvim_create_user_command('SnacksPickerFiles', function()
       Snacks.picker.files(layout_normal)

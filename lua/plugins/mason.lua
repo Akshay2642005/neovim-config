@@ -1,6 +1,6 @@
 return {
   'williamboman/mason.nvim',
-  cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUpdate', 'MasonLog' },
+  cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUpdate', 'MasonLog', 'MasonInstallAll' },
   event = 'BufReadPost',
   config = function()
     require('mason').setup {

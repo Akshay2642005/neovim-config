@@ -92,7 +92,6 @@ opt.foldmethod = 'expr'
 opt.foldtext = ''
 opt.grepprg = 'rg --vimgrep'
 opt.ignorecase = true
-opt.laststatus = 0
 opt.list = false
 opt.mouse = 'a'
 opt.number = true
@@ -107,9 +106,16 @@ opt.showcmdloc = 'statusline'
 opt.showmode = false
 opt.showtabline = 0
 opt.sidescroll = 0
+opt.shortmess:append 'W'
+
+-- With cmdheight=0, ex-command output (e.g. the "97L, 3083B" from :w) has
+-- nowhere to display and triggers "Press ENTER". Intercept bare :w / :w! so
+-- they run silently and never produce output in the first place.
+vim.cmd [[cnoreabbrev <expr> w  getcmdtype() == ':' && getcmdline() ==# 'w'  ? 'silent write'  : 'w']]
+vim.cmd [[cnoreabbrev <expr> w! getcmdtype() == ':' && getcmdline() ==# 'w!' ? 'silent write!' : 'w!']]
 opt.sidescrolloff = 0
 opt.signcolumn = 'yes'
-opt.smartcase = false
+opt.smartcase = true
 opt.smartindent = true
 opt.spell = false
 opt.spelllang = 'en_us'
@@ -125,8 +131,6 @@ opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 opt.fileformats = { "unix", "dos" }
 opt.fileformat = "unix"
-opt.autoindent = true
-opt.smartindent = true
 opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 
 
@@ -181,7 +185,7 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_far_lines = 0
   vim.g.neovide_scroll_animation_length = 0.00
 
-  vim.cmd [[
+    vim.cmd [[
         " system clipboard
         nmap <c-c> "+y
         vmap <c-c> "+y
@@ -193,30 +197,3 @@ if vim.g.neovide then
     ]]
 end
 
-
--- vim.g.rustaceanvim = {
---   -- Plugin configuration
---   tools = {
---   },
---   -- LSP configuration
---   server = {
---     on_attach = function(client, bufnr)
---       -- you can also put keymaps in here
---     end,
---     default_settings = {
---       -- rust-analyzer language server configuration
---       ['rust-analyzer'] = {
---         checkOnSave = true,
---         cargo = {
---           allFeatures = true,
---         },
---         pairsocMacro = {
---           enabled = true
---         }
---       },
---     },
---   },
---   -- DAP configuration
---   dap = {
---   },
--- }

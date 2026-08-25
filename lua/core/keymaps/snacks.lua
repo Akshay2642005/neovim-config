@@ -104,16 +104,16 @@ end, {
 -- ============================================================================
 -- Snacks Terminal
 -- ============================================================================
-vim.keymap.set({ 'n', 't' }, '<C-/>', function()
-  Snacks.terminal.toggle()
-end, {
-  silent = true,
-  desc = 'Toggle terminal',
-})
+-- vim.keymap.set({ 'n', 't' }, '<C-/>', function()
+--   Snacks.terminal.toggle()
+-- end, {
+--   silent = true,
+--   desc = 'Toggle terminal',
+-- })
 
-vim.keymap.set({ 'n', 't' }, '<C-_>', function()
-  Snacks.terminal.toggle()
-end, {
-  silent = true,
-  desc = 'Toggle terminal',
-})
+-- vim.keymap.set({ 'n', 't' }, '<C-_>', function()
+--   Snacks.terminal.toggle()
+-- end, {
+--   silent = true,
+--   desc = 'Toggle terminal',
+-- })

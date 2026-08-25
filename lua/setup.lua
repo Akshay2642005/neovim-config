@@ -18,13 +18,13 @@ end
 
 -- Plugin imports; these can be customized as needed for the user's configuration.
 add 'plugins.sidekick'
-add 'plugins.tpipline'
 add 'plugins.autopairs'
 add 'plugins.autotag'
 add 'plugins.blink-cmp'
 add 'plugins.colorizer'
 add 'plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly
 -- add 'plugins.colorschemes.base16'
+add 'plugins.dap'
 add 'plugins.flash'
 add 'plugins.formatter'
 add 'plugins.grapple'
@@ -33,6 +33,7 @@ add 'plugins.jdtls' -- Example of a disabled plugin
 add 'plugins.lsp'
 add 'plugins.mason'
 add 'plugins.mini-surround'
+add 'plugins.nvim-lint'
 add 'plugins.oil'
 add 'plugins.persistence'
 add 'plugins.snacks'

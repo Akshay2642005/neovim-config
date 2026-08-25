@@ -17,39 +17,40 @@ local winbar_filetype_exclude = {
   'Jaq',
   'harpoon',
   'lab',
-  'Markdown',
+  'markdown',
   'fzf',
   'dap-float',
   'dap-repl',
   '',
 }
 
+-- highlight groups are created once per extension, not on every redraw
+local icon_hl_cache = {}
+
 local function get_filename()
   local filename = vim.fn.expand '%:.'
   local extension = vim.fn.expand '%:e'
-  local utils = require 'core.utils'
-  if not utils.is_nil_or_empty_string(filename) then
-    local ok, web_devicons = pcall(require, 'nvim-web-devicons')
-    if not ok then
-      vim.notify 'nvim-web-devicons could not be loaded'
-      return
-    end
-    local file_icon, file_icon_color =
-        web_devicons.get_icon_color(filename, extension, { default = true })
-    local hl_group = 'WinBarFileIcon' .. extension
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
-    local readonly = ''
-    if vim.bo.readonly then
-      readonly = ' '
-    end
-    return string.format(
-      ' %%#%s#%s%%*%%#WarningMsg#%s%%* %%#WinBar#%s%%*',
-      hl_group,
-      file_icon,
-      readonly,
-      filename
-    )
+  if require('core.utils').is_nil_or_empty_string(filename) then
+    return nil
   end
+  local ok, web_devicons = pcall(require, 'nvim-web-devicons')
+  if not ok then
+    vim.notify 'nvim-web-devicons could not be loaded'
+    return nil
+  end
+  local file_icon, file_icon_color =
+      web_devicons.get_icon_color(filename, extension, { default = true })
+  local hl_group = 'WinBarFileIcon' .. extension
+  if not icon_hl_cache[extension] then
+    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+    icon_hl_cache[extension] = true
+  end
+  return string.format(
+    ' %%#%s#%s%%*%%#WinBar#%s%%*',
+    hl_group,
+    file_icon,
+    filename
+  )
 end
 
 local function get_git_status()
@@ -155,6 +156,18 @@ local function get_winbar()
   end
 end
 
+-- CursorMoved fires on every step; coalesce updates so navic/devicons work
+-- is done at most once per tick
+local update_pending = false
+local function debounced_update()
+  if update_pending then return end
+  update_pending = true
+  vim.defer_fn(function()
+    update_pending = false
+    get_winbar()
+  end, 60)
+end
+
 vim.api.nvim_create_autocmd({
   'CursorMoved',
   'CursorHold',
@@ -165,11 +178,15 @@ vim.api.nvim_create_autocmd({
   'TabClosed',
 }, {
   group = vim.api.nvim_create_augroup('winbar', { clear = true }),
-  callback = function()
+  callback = function(args)
     local status_ok, _
     = pcall(vim.api.nvim_buf_get_var, 0, 'lsp_floating_window')
     if not status_ok then
-      get_winbar()
+      if args.event == 'CursorMoved' then
+        debounced_update()
+      else
+        get_winbar()
+      end
     end
   end,
 })

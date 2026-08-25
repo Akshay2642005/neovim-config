@@ -96,20 +96,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
     'lsp_attach_conflicts',
     { clear = true }
   ),
-  desc = 'Prevent tsserver and volar conflict',
+  desc = 'Prevent ts_ls and denols from attaching to the same buffer',
   callback = function(args)
     if not (args.data and args.data.client_id) then
       return
     end
 
-    local active_clients = vim.lsp.get_clients()
     local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then
+      return
+    end
 
-    if client ~= nil and client.name == 'volar' then
-      for _, c in ipairs(active_clients) do
-        if c.name == 'tsserver' then
-          c.stop(vim.Lsp.client)
-        end
+    local conflict = nil
+    if client.name == 'denols' then
+      conflict = 'ts_ls'
+    elseif client.name == 'ts_ls' then
+      conflict = 'denols'
+    end
+
+    if conflict then
+      for _, c in ipairs(vim.lsp.get_clients({ bufnr = args.buf, name = conflict })) do
+        c.stop()
       end
     end
   end,
@@ -150,7 +157,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     'hide_message_after_write',
     { clear = true }
   ),
-  desc = 'Get rid of message after writing a file',
+  desc = 'Redraw statusline after writing',
   pattern = { '*' },
   command = 'redrawstatus',
 })
@@ -204,7 +211,7 @@ vim.api.nvim_create_autocmd("FileType", {
 local shada_group = vim.api.nvim_create_augroup("ShadaManager", { clear = true })
 
 local function cleanup_shada()
-  local shada_path = vim.fn.expand("$LOCALAPPDATA/nvim-data/shada/")
+  local shada_path = vim.fn.stdpath("state") .. "/shada/"
   local tmp_files = vim.fn.glob(shada_path .. "*.tmp*", true, true)
   if #tmp_files > 0 then
     for _, file in ipairs(tmp_files) do
@@ -222,12 +229,9 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 
 
 local function cleanup_lsp_log()
-  local lsp_log_path = vim.fn.expand("$LOCALAPPDATA/nvim-data/")
-  local log_files = vim.fn.glob(lsp_log_path .. "lsp.log", true, true)
-  if #log_files > 0 then
-    for _, file in ipairs(log_files) do
-      pcall(os.remove, file)
-    end
+  local lsp_log_path = vim.fn.glob(vim.fn.stdpath("log") .. "/lsp.log", true, true)
+  if #lsp_log_path > 0 then
+    pcall(os.remove, lsp_log_path)
   end
 end
 
