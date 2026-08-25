@@ -1,11 +1,11 @@
 return {
   'stevearc/overseer.nvim',
-  lazy = "true",
-  cmd = "Task",
-  event = { "BufReadPost", "VeryLazy" },
+  lazy = true,
+  cmd = { 'OverseerRun', 'OverseerOpen', 'OverseerToggle', 'OverseerInfo', 'OverseerBuild', 'OverseerQuickAction', 'OverseerTaskAction', 'OverseerClearCache' },
   ---@module 'overseer'
   ---@type overseer.SetupOpts
   opts = {
+    dap = false,
     task_list = {
       direction = "bottom"
     },

@@ -21,7 +21,7 @@ vim.keymap.set('n', '<leader>gd', ':SnacksPickerGitDiff<cr>', {
   desc = 'Git status',
 })
 
-vim.keymap.set('n', '<leader>lg', ':SnacksPickerGrep<cr>', {
+vim.keymap.set('n', '<leader>cg', ':SnacksPickerGrep<cr>', {
   silent = true,
   desc = 'Live grep',
 })
@@ -36,71 +36,20 @@ vim.keymap.set('n', '<leader>bf', ':SnacksPickerBuffers<cr>', {
   desc = 'Find buffers',
 })
 
-vim.keymap.set('n', '<leader>ls', ':SnacksPickerLspDocumentSymbols<cr>', {
+vim.keymap.set('n', '<leader>fp', ':SnacksPickerProjects<cr>', {
   silent = true,
-  desc = "LSP Symbols",
+  desc = 'Switch project',
 })
 
-vim.keymap.set('n', '<leader>li', ':SnacksPickerLspImplementations<cr>', {
+vim.keymap.set('n', '<leader>fd', ':SnacksPickerDiagnostics<cr>', {
+  silent = true,
+  desc = 'Diagnostics',
+})
+
+vim.keymap.set('n', '<leader>ci', ':SnacksPickerLspImplementations<cr>', {
   silent = true,
   desc = "LSP Implementations",
 })
-vim.keymap.set('n', '<leader>li', ':SnacksPickerLspReferences<cr>', {
-  silent = true,
-  desc = "LSP Referennces",
-})
--- ============================================================================
--- Snacks Lazygit
--- ============================================================================
-vim.keymap.set('n', '<leader>gg', function()
-  Snacks.lazygit.open {
-    win = {
-      position = 'float',
-      border = 'single',
-      width = 0.9,
-      height = 0.9,
-    },
-  }
-end, {
-  silent = true,
-  desc = 'Lazygit',
-})
-
-vim.keymap.set('n', '<leader>gl', function()
-  Snacks.lazygit.log {
-    win = {
-      position = 'float',
-      border = 'single',
-      width = 0.9,
-      height = 0.9,
-    },
-  }
-end, {
-  silent = true,
-  desc = 'Lazygit log (cwd)',
-})
-
-vim.keymap.set('n', '<leader>gf', function()
-  Snacks.lazygit.log_file {
-    win = {
-      position = 'float',
-      border = 'single',
-      width = 0.9,
-      height = 0.9,
-    },
-  }
-end, {
-  silent = true,
-  desc = 'Lazygit log (current file)',
-})
-
-vim.keymap.set('n', '<leader>gb', function()
-  Snacks.git.blame_line()
-end, {
-  silent = true,
-  desc = 'Git blame line',
-})
-
 -- ============================================================================
 -- Snacks Terminal
 -- ============================================================================

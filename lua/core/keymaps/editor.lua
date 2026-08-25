@@ -168,7 +168,7 @@ vim.keymap.set('n', '<leader>vt', [[<cmd>vsplit | term<cr>A]], {
   desc = 'Open terminal (vertical split)',
 })
 
-vim.keymap.set('n', '<leader>st', [[<cmd>split | term<cr>A]], {
+vim.keymap.set('n', '<leader>sh', [[<cmd>split | term<cr>A]], {
   desc = 'Open terminal (horizontal split)',
 })
 
@@ -182,6 +182,14 @@ vim.keymap.set('t', 'jk', '<C-\\><C-n>', {
 vim.keymap.set('i', 'jk', '<esc>', {
   desc = 'Exit insert mode',
 })
+
+-- ============================================================================
+-- Quickfix / Location List
+-- ============================================================================
+vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Previous quickfix' })
+vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
+vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Previous loclist' })
+vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
 
 -- ============================================================================
 -- Quality of Life

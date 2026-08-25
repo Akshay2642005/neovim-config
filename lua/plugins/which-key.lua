@@ -3,7 +3,7 @@ return {
   event = 'VeryLazy',
   opts = {
     preset = 'helix',
-    delay = 300,
+    delay = 100,
     plugins = {
       marks = true,
       registers = true,
@@ -36,18 +36,32 @@ return {
       -- Top-level groups
       { '<leader>b',       group = 'Buffer' },
       { '<leader>c',       group = 'Code/Colorizer' },
+      { '<leader>d',       group = 'Debug/DAP' },
       { '<leader>f',       group = 'Find/Files' },
       { '<leader>g',       group = 'Git' },
       { '<leader>h',       group = 'Hunk/Git' },
       { '<leader>i',       group = 'Inlay Hints' },
-      { '<leader>l',       group = 'LSP/Live Grep' },
+      { '<leader>l',       group = 'LSP (unused)' },
       { '<leader>n',       group = 'No Highlight' },
       { '<leader>o',       group = 'Organize' },
       { '<leader>q',       group = 'Session' },
       { '<leader>r',       group = 'Refresh/Rename' },
+      { '<leader>rn',      desc = 'Rename symbol (live)' },
       { '<leader>s',       group = 'Search/Switch' },
       { '<leader>t',       group = 'Terminal/TODO' },
       { '<leader>w',       group = 'Workspace/Wrap' },
+      { '<leader>a',       group = 'Avante/AI' },
+      { '<leader>aa',      desc = 'Show sidebar' },
+      { '<leader>at',      desc = 'Toggle sidebar' },
+      { '<leader>ar',      desc = 'Refresh sidebar' },
+      { '<leader>af',      desc = 'Switch sidebar focus' },
+      { '<leader>an',      desc = 'New ask' },
+      { '<leader>ae',      desc = 'Edit selected blocks' },
+      { '<leader>aS',      desc = 'Stop AI request' },
+      { '<leader>ah',      desc = 'Chat history' },
+      { '<leader>ac',      desc = 'Add buffer to files' },
+      { '<leader>aB',      desc = 'Add all buffers' },
+      { '<leader>z',       group = 'Zen' },
 
       -- Grapple
       { '<leader>.',       desc = 'Grapple (toggle) file' },
@@ -82,6 +96,8 @@ return {
       { '<leader>fm',      desc = 'Format buffer',          mode = { 'n', 'v' } },
       { '<leader>fc',      desc = 'Fold close' },
       { '<leader>fC',      desc = 'Fold open' },
+      { '<leader>fp',      desc = 'Switch project' },
+      { '<leader>fd',      desc = 'Diagnostics' },
 
       -- Git group
       { '<leader>gg',      desc = 'Lazygit' },
@@ -113,10 +129,9 @@ return {
       { '<leader>ih',      desc = 'Toggle inlay hints' },
 
       -- Live grep
-      { '<leader>lg',      desc = 'Live grep' },
-      { '<leader>ls',      desc = 'LSP Symbols' },
-      { '<leader>li',      desc = 'LSP Implementations' },
-      { '<leader>lr',      desc = 'LSP References' },
+      { '<leader>cg',      desc = 'Live grep' },
+      { '<leader>ci',      desc = 'LSP Implementations' },
+      { '<leader>cr',      desc = 'LSP References' },
       -- No highlight
       { '<leader>nh',      desc = 'Clear search highlight' },
 
@@ -140,6 +155,7 @@ return {
 
       -- Terminal/TODO group
       { '<leader>vt',      desc = 'Vertical terminal' },
+      { '<leader>sh',      desc = 'Horizontal terminal' },
       { '<leader>tq',      desc = 'TODOs to quickfix' },
       { '<leader>tl',      desc = 'TODOs to loclist' },
 
@@ -154,8 +170,14 @@ return {
       { '<leader>e',       desc = 'File explorer' },
       { '<leader>y',       desc = 'Yank to clipboard',      mode = { 'n', 'v' } },
       { '<leader>Y',       desc = 'Yank line to clipboard' },
-      { '<leader>D',       desc = 'Type definition' },
-      { '<leader>rn',      desc = 'Rename symbol' },
+      { '<leader>x',       group = 'Diagnostics/Extra' },
+
+      -- Debug (DAP)
+      { '<leader>db',      desc = 'Toggle breakpoint' },
+      { '<leader>dB',      desc = 'Clear breakpoints' },
+      { '<leader>du',      desc = 'Toggle DAP UI' },
+      { '<leader>dr',      desc = 'Run last debug session' },
+      { '<leader>dx',      desc = 'Terminate debug session' },
 
       -- Flash navigation
       { 's',               desc = 'Flash',                  mode = { 'n', 'x', 'o' } },
@@ -170,6 +192,10 @@ return {
       { ']c',              desc = 'Next hunk' },
       { '[d',              desc = 'Previous diagnostic' },
       { ']d',              desc = 'Next diagnostic' },
+      { '[q',              desc = 'Previous quickfix' },
+      { ']q',              desc = 'Next quickfix' },
+      { '[l',              desc = 'Previous loclist' },
+      { ']l',              desc = 'Next loclist' },
 
       -- LSP hover
       { 'J',               desc = 'Hover documentation' },
@@ -181,6 +207,20 @@ return {
 
       -- Text object for hunk
       { 'ih',              desc = 'Select hunk',            mode = { 'o', 'x' } },
+
+      -- Treesitter textobjects
+      { 'af',              desc = 'Function (around)',      mode = { 'o', 'x' } },
+      { 'if',              desc = 'Function (inner)',       mode = { 'o', 'x' } },
+      { 'ac',              desc = 'Class (around)',         mode = { 'o', 'x' } },
+      { 'ic',              desc = 'Class (inner)',          mode = { 'o', 'x' } },
+      { 'aa',              desc = 'Parameter (around)',     mode = { 'o', 'x' } },
+      { 'ia',              desc = 'Parameter (inner)',      mode = { 'o', 'x' } },
+      { ']f',              desc = 'Next function start' },
+      { ']F',              desc = 'Next function end' },
+      { '[f',              desc = 'Prev function start' },
+      { '[F',              desc = 'Prev function end' },
+      { '<leader>xp',      desc = 'Swap param forward' },
+      { '<leader>xP',      desc = 'Swap param backward' },
     },
   },
 }

@@ -1,7 +1,7 @@
 return {
   "xiyaowong/transparent.nvim",
   lazy = true,
-  event = { "VeryLazy", "VimEnter" },
+  event = "VeryLazy",
   config = function()
     require("transparent").setup({})
   end

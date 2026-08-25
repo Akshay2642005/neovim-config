@@ -17,9 +17,9 @@ local layout_normal = {
       },
     },
     win = {
-      input = { wo = { winbar = "" } },
-      list = { wo = { winbar = "" } },
-    }
+      input = { wo = { winbar = '' } },
+      list = { wo = { winbar = '' } },
+    },
   },
 }
 
@@ -49,10 +49,10 @@ local function get_layout_preview_image(width_preview)
         },
       },
       win = {
-        input = { wo = { winbar = "" } },
-        list = { wo = { winbar = "" } },
-        preview = { wo = { winbar = "" } },
-      }
+        input = { wo = { winbar = '' } },
+        list = { wo = { winbar = '' } },
+        preview = { wo = { winbar = '' } },
+      },
     },
   }
 end
@@ -109,7 +109,7 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = true,
-  event = { 'VeryLazy', 'VimEnter' },
+  event = 'VeryLazy',
   keys = {
     {
       '<C-/>',
@@ -130,42 +130,42 @@ return {
     {
       '<leader>gg',
       function()
-        Snacks.lazygit.open({
+        Snacks.lazygit.open {
           win = {
             position = 'float',
             border = 'single',
             width = 0.9,
             height = 0.9,
           },
-        })
+        }
       end,
       desc = 'Lazygit',
     },
     {
       '<leader>gl',
       function()
-        Snacks.lazygit.log({
+        Snacks.lazygit.log {
           win = {
             position = 'float',
             border = 'single',
             width = 0.9,
             height = 0.9,
           },
-        })
+        }
       end,
       desc = 'Lazygit log (cwd)',
     },
     {
       '<leader>gf',
       function()
-        Snacks.lazygit.log_file({
+        Snacks.lazygit.log_file {
           win = {
             position = 'float',
             border = 'single',
             width = 0.9,
             height = 0.9,
           },
-        })
+        }
       end,
       desc = 'Lazygit log (current file)',
     },
@@ -187,6 +187,8 @@ return {
     'SnacksPickerLspImplementations',
     'SnacksPickerLspDocumentSymbols',
     'SnacksPickerLspWorkspaceSymbols',
+    'SnacksPickerDiagnostics',
+    'SnacksPickerProjects',
   },
   config = function()
     require('snacks').setup {
@@ -198,6 +200,7 @@ return {
       },
       git = { enabled = true },
       image = { enabled = false }, -- Disable for performance, enable if needed
+      project = { enabled = true },
       indent = {
         width = 4,
         enabled = true,
@@ -206,19 +209,23 @@ return {
         },
         filter = function(buf)
           -- 1. Ensure buf is a valid number
-          if not buf or type(buf) ~= "number" or not vim.api.nvim_buf_is_valid(buf) then
+          if
+            not buf
+            or type(buf) ~= 'number'
+            or not vim.api.nvim_buf_is_valid(buf)
+          then
             return false
           end
 
           -- 2. Safely get filetype and buftype
-          local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-          local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+          local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+          local bt = vim.api.nvim_get_option_value('buftype', { buf = buf })
 
           -- 3. Run the logic
           return vim.g.snacks_indent ~= false
-              and vim.b[buf].snacks_indent ~= false
-              and bt == ""
-              and ft ~= "markdown"
+            and vim.b[buf].snacks_indent ~= false
+            and bt == ''
+            and ft ~= 'markdown'
         end,
         scope = {
           enabled = false, -- Disable scope for performance
@@ -237,16 +244,16 @@ return {
       profiler = { enabled = false },
       terminal = {
         win = {
-          position = "bottom",
+          position = 'bottom',
           height = 0.3,
-          border = "top",
-          style = "terminal",
+          border = 'vpad',
+          style = 'terminal',
           fixed = true,
           wo = {
-            winbar = " ",
+            winbar = ' ',
             number = false,
             relativenumber = false,
-            signcolumn = "no",
+            signcolumn = 'no',
           },
         },
       },
@@ -324,7 +331,6 @@ return {
           },
         },
       },
-
     }
 
     -- Snacks reapplies wo (including winbar = " ") every time the terminal
@@ -342,7 +348,8 @@ return {
       end)
     end
 
-    local term_augroup = vim.api.nvim_create_augroup('snacks_terminal_winbar', { clear = true })
+    local term_augroup =
+      vim.api.nvim_create_augroup('snacks_terminal_winbar', { clear = true })
     vim.api.nvim_create_autocmd('FileType', {
       group = term_augroup,
       pattern = 'snacks_terminal',
@@ -376,7 +383,7 @@ return {
     end, {})
 
     vim.api.nvim_create_user_command('SnacksPickerGitFiles', function()
-      Snacks.picker.git_diff(layout_fullscreen_vertical)
+      Snacks.picker.git_files(layout_fullscreen_vertical)
     end, {})
 
     vim.api.nvim_create_user_command('SnacksPickerGitLog', function()
@@ -393,16 +400,16 @@ return {
 
     vim.api.nvim_create_user_command('SnacksPickerGitStatus', function()
       local config =
-          vim.tbl_deep_extend('force', layout_fullscreen_horizontal, {
-            win = {
-              input = {
-                keys = {
-                  ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
-                  ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
-                },
+        vim.tbl_deep_extend('force', layout_fullscreen_horizontal, {
+          win = {
+            input = {
+              keys = {
+                ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+                ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
               },
             },
-          })
+          },
+        })
       Snacks.picker.git_status(config)
     end, {})
 
@@ -445,5 +452,13 @@ return {
       end,
       {}
     )
+
+    vim.api.nvim_create_user_command('SnacksPickerDiagnostics', function()
+      Snacks.picker.diagnostics(layout_fullscreen_horizontal)
+    end, {})
+
+    vim.api.nvim_create_user_command('SnacksPickerProjects', function()
+      Snacks.picker.projects(layout_normal)
+    end, {})
   end,
 }

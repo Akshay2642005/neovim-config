@@ -1,4 +1,3 @@
-local enable_navic = true
 local winbar_filetype_exclude = {
   'help',
   'startify',
@@ -73,29 +72,6 @@ local function get_git_status()
   return ' ' .. table.concat(parts, ' ') .. ' '
 end
 
-local get_navic = function()
-  if not rawget(vim, 'lsp') then
-    return ''
-  end
-  local ok, navic = pcall(require, 'nvim-navic')
-  if not ok then
-    return ''
-  end
-  local navic_location_loaded, navic_location = pcall(navic.get_location, {})
-  if not navic_location_loaded then
-    return ''
-  end
-  if not navic.is_available() or navic_location == 'error' then
-    return ''
-  end
-  if not require('core.utils').is_nil_or_empty_string(navic_location) then
-    return '' .. ' ' .. navic_location
-  end
-  return ''
-end
-
-
-
 local function excludes()
   local is_term = vim.bo.buftype == 'terminal' or string.find(vim.fn.bufname(), '^term://') ~= nil
   if is_term then
@@ -126,10 +102,6 @@ local function get_winbar()
     local mod = '%#WarningMsg#*%*'
     value = value .. mod
   end
-  if enable_navic and not utils.is_nil_or_empty_string(value) then
-    local navic_value = get_navic()
-    value = value .. ' ' .. navic_value
-  end
 
   -- Add git status to the right side
   local git_status = get_git_status()
@@ -156,7 +128,7 @@ local function get_winbar()
   end
 end
 
--- CursorMoved fires on every step; coalesce updates so navic/devicons work
+-- CursorMoved fires on every step; coalesce updates so devicons work
 -- is done at most once per tick
 local update_pending = false
 local function debounced_update()

@@ -1,3 +1,3 @@
 vim.keymap.set("n", "<leader>rw", function()
-  require("overseer").private_setup
+  require("overseer").toggle()
 end, { desc = "Tasks" })

@@ -45,8 +45,7 @@ vim.g.snacks_animate = false
 local opt = vim.opt
 
 -- Performance options
-opt.lazyredraw = false -- Don't use with noice.nvim
-opt.ttyfast = true     -- Faster terminal connection
+opt.lazyredraw = true    -- Buffer screen updates during macros
 opt.synmaxcol = 240    -- Only highlight first 240 columns
 -- opt.redrawtime = 1500  -- Time for redrawing the display (ms)
 
@@ -56,7 +55,7 @@ opt.timeoutlen = 400 -- Faster key sequence completion
 
 -- Reduce memory usage
 opt.history = 100     -- Reduce command history (default 10000)
-opt.undolevels = 1000 -- Reduce undo levels (was 10000)
+opt.undolevels = 10000
 
 -- Disable backup and swap for speed
 opt.backup = false

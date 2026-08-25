@@ -1,0 +1,63 @@
+return {
+  'saecki/crates.nvim',
+  event = { 'BufReadPost Cargo.toml' },
+  dependencies = { 'nvim-lua/plenary.nvim' },
+  opts = {
+    smart_insert = true,
+    insert_closing_brace = true,
+    autoload = true,
+    autoupdate = true,
+    autoupdate_throttle = 250,
+    date_search_format = '%Y-%m-%d',
+    collapseCJK = false,
+    process_emoji_headings = true,
+    thousands_separator = ',',
+    notification_title = 'Crates',
+    curl_args = { '-sL', '--fail' },
+    max_install_attempts = 3,
+    expand_crate_posts = {
+      enabled = true,
+      keymap = '<leader>cC',
+    },
+    popup = {
+      autofocus = true,
+      copy_register = '"',
+      style = 'minimal',
+      border = 'rounded',
+      max_width = 80,
+      min_width = 60,
+      max_height = 20,
+      min_height = 1,
+      padding = {},
+      title = 'Crates',
+      title_pos = 'center',
+      cursor_default = 'TOP',
+      keys = {
+        open_url = '<CR>',
+        openWebsite = { '<C-o>', 'o' },
+        openDocumentation = { '<C-d>', 'd' },
+        openCratesIO = { '<C-i>', 'i' },
+        toggle_feature = '<CR>',
+        copy_feature_value = '<C-y>',
+        goto_feature = 'gd',
+        jump_forward = '<C-i>',
+        jump_backward = '<C-b>',
+        features_goto_previous = '[f',
+        features_goto_next = ']f',
+        versions_goto_previous = '[v',
+        versions_goto_next = ']v',
+      },
+    },
+    src = {
+      cmp = {
+        enabled = true,
+      },
+      coq = {
+        enabled = false,
+      },
+    },
+  },
+  config = function(_, opts)
+    require('crates').setup(opts)
+  end,
+}

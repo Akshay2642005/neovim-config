@@ -3,10 +3,10 @@ return {
     'zbirenbaum/copilot.lua',
     lazy = true,
     cmd = 'Copilot',
-    event = { 'VeryLazy', 'InsertEnter' },
+    event = 'InsertEnter',
     opts = {
-      suggestion = { enabled = true },
-      panel = { enabled = true },
+      suggestion = { enabled = false },
+      panel = { enabled = false },
       filetypes = {
         markdown = true,
         help = true,
@@ -15,16 +15,16 @@ return {
   },
   {
     'Saghen/blink.cmp',
-    event = { 'VeryLazy', 'InsertEnter' },
+    event = { 'InsertEnter', 'CmdlineEnter' },
     lazy = true,
     version = '*',
     dependencies = {
       'fang2hou/blink-copilot',
+      'Kaiser-Yang/blink-cmp-avante',
     },
     opts = {
       enabled = function()
-        return not vim.list_contains({ 'AvanteInput' }, vim.bo.filetype)
-            and vim.bo.buftype ~= 'prompt'
+        return vim.bo.buftype ~= 'prompt'
             and vim.b.completion ~= false
       end,
       keymap = {
@@ -70,7 +70,7 @@ return {
         use_nvim_cmp_as_default = false,
       },
       sources = {
-        default = { 'copilot', 'lsp', 'path', 'buffer' },
+        default = { 'copilot', 'lsp', 'path', 'buffer', 'avante' },
         per_filetype = {
           lua = { 'lsp', 'path', 'buffer' },
         },
@@ -99,6 +99,10 @@ return {
             opts = {
               max_completions = 5,
             },
+          },
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
           },
         },
       },

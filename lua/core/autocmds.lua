@@ -240,3 +240,14 @@ vim.api.nvim_create_autocmd("VimLeave", {
   group = vim.api.nvim_create_augroup("LogManager", { clear = true }),
   callback = cleanup_lsp_log,
 })
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('auto_mkdir', { clear = true }),
+  desc = 'Create parent directories on save',
+  callback = function(args)
+    local dir = vim.fn.fnamemodify(args.match, ':p:h')
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, 'p')
+    end
+  end,
+})

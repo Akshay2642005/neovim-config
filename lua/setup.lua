@@ -17,7 +17,7 @@ local function add(plugin)
 end
 
 -- Plugin imports; these can be customized as needed for the user's configuration.
-add 'plugins.sidekick'
+add 'plugins.avante'
 add 'plugins.autopairs'
 add 'plugins.autotag'
 add 'plugins.blink-cmp'
@@ -50,6 +50,9 @@ add 'plugins.overseer'
 add 'plugins.alpha'
 add 'plugins.bufferline'
 add 'plugins.preview'
+add 'plugins.dap-virtual-text'
+add 'plugins.inc-rename'
+add 'plugins.crates'
 
 
 --- Compute the installation path for 'lazy.nvim'.

@@ -84,6 +84,7 @@ function M.on_attach(client, bufnr)
   -- Symbols
   -- ============================================================================
   keymap('<leader>cd', vim.lsp.buf.type_definition, 'Type definition')
+
   keymap('<leader>cs', ':SnacksPickerLspDocumentSymbols<cr>', 'Document symbols')
   keymap('<leader>cw', ':SnacksPickerLspWorkspaceSymbols<cr>', 'Workspace symbols')
 
