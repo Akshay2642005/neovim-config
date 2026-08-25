@@ -3,4 +3,5 @@ plugin
 .luarc.json
 .env
 specs/
+.DS_Store
 
