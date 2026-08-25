@@ -248,8 +248,8 @@ end, {
   desc = 'Open parent directory',
 })
 
-vim.keymap.set('n', '<A-t>', "<CMD>OverseerRun<CR>", { desc = 'Run Build Task' })
-vim.keymap.set('n', '<F5>', "<CMD>OverseerOpen<CR>", { desc = 'Toggle Task List' })
+vim.keymap.set('n', '<D-r>', "<CMD>OverseerRun<CR>", { desc = 'Run Build Task' })
+vim.keymap.set('n', '<D-o>', "<CMD>OverseerOpen<CR>", { desc = 'Toggle Task List' })
 
 
 

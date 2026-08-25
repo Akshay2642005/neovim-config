@@ -133,18 +133,17 @@ opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 
 if vim.fn.has("win32") == 1 then
-  vim.opt.shell = "pwsh" -- or "powershell" depending on what you have installed
-  vim.opt.shellcmdflag =
-  "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-  vim.opt.shellredir = "2>&1 | Out-File -Encoding UTF8 %s"
-  vim.opt.shellpipe = "| Out-File -Encoding UTF8 %s"
+  -- vim.opt.shell = "zsh" -- or "powershell" depending on what you have installed
   vim.opt.shellquote = ""
   vim.opt.shellxquote = ""
 end
 
--- vim.opt.shell = '"C:/Program Files/Git/bin/bash.exe"'
--- vim.opt.shellcmdflag = "--login -i -c"
---
+
+vim.opt.shell = "/bin/zsh"
+vim.opt.shellcmdflag = "-ic"
+vim.opt.shellquote = ""
+vim.opt.shellxquote = ""
+
 if vim.g.neovide then
   opt.linespace = -1
 
@@ -156,7 +155,7 @@ if vim.g.neovide then
 
   -- gui font
   vim.opt.guifont = ""
-  vim.opt.guifont = "GeistMono_Nerd_Font:h13"
+  vim.opt.guifont = "ZedMono NF:h18"
 
   -- padding
   vim.g.neovide_padding_top = 5

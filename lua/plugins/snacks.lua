@@ -197,7 +197,7 @@ return {
         configure = true,
       },
       git = { enabled = true },
-      image = { enabled = false },       -- Disable for performance, enable if needed
+      image = { enabled = false }, -- Disable for performance, enable if needed
       indent = {
         width = 4,
         enabled = true,
@@ -221,12 +221,12 @@ return {
               and ft ~= "markdown"
         end,
         scope = {
-          enabled = false,           -- Disable scope for performance
+          enabled = false, -- Disable scope for performance
         },
       },
       input = { enabled = true },
       notifier = { enabled = false },
-      quickfile = { enabled = true },       -- Fast file opening
+      quickfile = { enabled = true }, -- Fast file opening
       statuscolumn = { enabled = false },
       words = { enabled = false },
       animate = { enabled = false },
@@ -238,8 +238,8 @@ return {
       terminal = {
         win = {
           position = "bottom",
-          height = 0.5,
-          border = "vpad",
+          height = 0.3,
+          border = "top",
           style = "terminal",
           fixed = true,
           wo = {

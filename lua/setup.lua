@@ -17,7 +17,8 @@ local function add(plugin)
 end
 
 -- Plugin imports; these can be customized as needed for the user's configuration.
-add 'plugins.pi'
+add 'plugins.sidekick'
+add 'plugins.tpipline'
 add 'plugins.autopairs'
 add 'plugins.autotag'
 add 'plugins.blink-cmp'

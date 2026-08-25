@@ -1,4 +1,3 @@
-vim.keymap.set("n", "<leader>ob", function()
-  require("overseer").run_template({ name = "CMake Build (Visual Studio Debug)" })
-  require("overseer").toggle()
-end)
+vim.keymap.set("n", "<leader>rw", function()
+  require("overseer").private_setup
+end, { desc = "Tasks" })
