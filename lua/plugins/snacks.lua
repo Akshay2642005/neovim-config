@@ -232,7 +232,7 @@ return {
         },
       },
       input = { enabled = true },
-      notifier = { enabled = true },
+      notifier = { enabled = false },
       quickfile = { enabled = true }, -- Fast file opening
       statuscolumn = { enabled = false },
       words = { enabled = false },
@@ -245,7 +245,7 @@ return {
       terminal = {
         win = {
           position = 'bottom',
-          height = 0.3,
+          height = 0.4,
           border = 'vpad',
           style = 'terminal',
           fixed = true,
