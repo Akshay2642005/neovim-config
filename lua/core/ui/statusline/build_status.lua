@@ -120,7 +120,7 @@ function M.component()
       "%@v:lua.StatuslineBuildClick@",
       "%#StatusLineBuildRunning# ",
       spinner[frame],
-      " BUILD: RUNNING",
+      " " .. task.name:upper(),
       "%*%T",
     })
   end
@@ -148,13 +148,13 @@ function M.component()
     if status == "SUCCESS" then
       return table.concat({
         "%@v:lua.StatuslineBuildClick@",
-        "%#StatusLineBuildSuccess# ✔ BUILD: OK",
+        "%#StatusLineBuildSuccess# ✔ " .. task.name:upper() .. ": OK",
         "%*%T",
       })
     else
       return table.concat({
         "%@v:lua.StatuslineBuildClick@",
-        "%#StatusLineBuildFailure# ✘ BUILD: FAILURE",
+        "%#StatusLineBuildFailure# ✘ " .. task.name:upper() .. ": FAILURE",
         "%*%T",
       })
     end
