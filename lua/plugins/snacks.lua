@@ -232,7 +232,7 @@ return {
         },
       },
       input = { enabled = true },
-      notifier = { enabled = false },
+      notifier = { enabled = true },
       quickfile = { enabled = true }, -- Fast file opening
       statuscolumn = { enabled = false },
       words = { enabled = false },

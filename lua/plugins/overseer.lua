@@ -14,9 +14,9 @@ return {
   ---@module 'overseer'
   ---@type overseer.SetupOpts
   opts = {
-    dap = false,
+    dap = true,
     task_list = {
-      direction = 'bottom',
+      direction = 'left',
     },
     output = {
       use_terminal = false,
