@@ -54,9 +54,6 @@ return {
       args = args,
       cwd = root,
       components = {
-        { "on_output_quickfix", open = true },
-        { "on_exit_set_status" },
-        { "on_complete_notify", statuses = {} },
         "default"
       },
     }

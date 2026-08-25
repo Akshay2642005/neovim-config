@@ -17,9 +17,7 @@ return {
       args = { "build" },
       cwd = root,
       components = {
-        { "on_output_quickfix", open = false },
-        { "on_exit_set_status" },
-        { "on_complete_notify", statuses = {} },
+        "default"
       },
     }
   end,
