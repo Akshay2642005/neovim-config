@@ -41,7 +41,6 @@ return {
       { '<leader>g', group = 'Git' },
       { '<leader>h', group = 'Hunk/Git' },
       { '<leader>i', group = 'Inlay Hints' },
-      { '<leader>l', group = 'LSP (unused)' },
       { '<leader>n', group = 'No Highlight' },
       { '<leader>o', group = 'Organize' },
       { '<leader>q', group = 'Session' },
@@ -130,11 +129,11 @@ return {
       { '<leader>hh', desc = 'Help tags' },
 
       -- Inlay hints
-      { '<leader>ci',      desc = 'Toggle inlay hints' },
+      { '<leader>ci', desc = 'Toggle inlay hints' },
 
       -- Live grep
-      { '<leader>cg',      desc = 'Live grep' },
-      { '<leader>cr',      desc = 'LSP References' },
+      { '<leader>cg', desc = 'Live grep' },
+      { '<leader>cr', desc = 'LSP References' },
       -- No highlight
       { '<leader>nh', desc = 'Clear search highlight' },
 
@@ -185,16 +184,6 @@ return {
       { '<leader>ml', desc = 'Load macro' },
       { '<leader>md', desc = 'Delete macro' },
       { '<leader>mp', desc = 'Preview macros' },
-
-      -- Search & replace
-      { '<leader>sr', desc = 'Search & replace (project)' },
-      { '<leader>sR', desc = 'Search & replace (file)' },
-
-      -- Workspace
-      { '<leader>ws', desc = 'Workspace stats' },
-
-      -- Smart delete
-      { '<leader>D', desc = 'Trash current file' },
 
       -- Debug (DAP)
       { '<leader>db', desc = 'Toggle breakpoint' },
