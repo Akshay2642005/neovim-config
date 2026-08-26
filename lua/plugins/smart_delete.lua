@@ -42,6 +42,7 @@ local function trash_buffer()
 end
 
 return {
+  name = 'smart-delete',
   keys = {
     { '<leader>D', trash_buffer, desc = 'Trash current file' },
   },

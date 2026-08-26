@@ -260,6 +260,7 @@ function apply_replacements(selected, search, replace)
 end
 
 return {
+  name = 'search-replace',
   keys = {
     { '<leader>sr', replace, desc = 'Search & replace (project)' },
     { '<leader>sR', file_replace, desc = 'Search & replace (file)' },

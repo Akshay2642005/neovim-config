@@ -105,6 +105,7 @@ local function stats()
 end
 
 return {
+  name = 'workspace-stats',
   keys = {
     { '<leader>ws', stats, desc = 'Workspace stats' },
   },

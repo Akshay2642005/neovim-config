@@ -62,6 +62,7 @@ function M.list()
 end
 
 return {
+  name = 'cmd-aliases',
   init = function()
     apply_aliases()
 

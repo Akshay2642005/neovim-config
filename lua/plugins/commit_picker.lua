@@ -1,4 +1,5 @@
 return {
+  name = 'commit-picker',
   ft = 'gitcommit',
   config = function()
     local group = vim.api.nvim_create_augroup('commit_picker', { clear = true })
