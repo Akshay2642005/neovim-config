@@ -130,12 +130,11 @@ return {
       { '<leader>hh', desc = 'Help tags' },
 
       -- Inlay hints
-      { '<leader>ih', desc = 'Toggle inlay hints' },
+      { '<leader>ci',      desc = 'Toggle inlay hints' },
 
       -- Live grep
-      { '<leader>cg', desc = 'Live grep' },
-      { '<leader>ci', desc = 'LSP Implementations' },
-      { '<leader>cr', desc = 'LSP References' },
+      { '<leader>cg',      desc = 'Live grep' },
+      { '<leader>cr',      desc = 'LSP References' },
       -- No highlight
       { '<leader>nh', desc = 'Clear search highlight' },
 

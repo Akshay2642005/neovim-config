@@ -46,10 +46,7 @@ vim.keymap.set('n', '<leader>fd', ':SnacksPickerDiagnostics<cr>', {
   desc = 'Diagnostics',
 })
 
-vim.keymap.set('n', '<leader>ci', ':SnacksPickerLspImplementations<cr>', {
-  silent = true,
-  desc = "LSP Implementations",
-})
+
 -- ============================================================================
 -- Snacks Terminal
 -- ============================================================================
