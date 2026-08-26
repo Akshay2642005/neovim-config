@@ -53,6 +53,12 @@ add 'plugins.preview'
 add 'plugins.dap-virtual-text'
 add 'plugins.inc-rename'
 add 'plugins.crates'
+add 'plugins.macro_manager'
+add 'plugins.search_replace'
+add 'plugins.commit_picker'
+add 'plugins.workspace_stats'
+add 'plugins.smart_delete'
+add 'plugins.cmd_aliases'
 
 
 --- Compute the installation path for 'lazy.nvim'.

@@ -179,6 +179,23 @@ return {
       { '<leader>Y', desc = 'Yank line to clipboard' },
       { '<leader>x', group = 'Diagnostics/Extra' },
 
+      -- Macro manager
+      { '<leader>m', group = 'Macro' },
+      { '<leader>ms', desc = 'Save macro' },
+      { '<leader>ml', desc = 'Load macro' },
+      { '<leader>md', desc = 'Delete macro' },
+      { '<leader>mp', desc = 'Preview macros' },
+
+      -- Search & replace
+      { '<leader>sr', desc = 'Search & replace (project)' },
+      { '<leader>sR', desc = 'Search & replace (file)' },
+
+      -- Workspace
+      { '<leader>ws', desc = 'Workspace stats' },
+
+      -- Smart delete
+      { '<leader>D', desc = 'Trash current file' },
+
       -- Debug (DAP)
       { '<leader>db', desc = 'Toggle breakpoint' },
       { '<leader>dB', desc = 'Clear breakpoints' },
