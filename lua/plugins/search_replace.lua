@@ -34,7 +34,35 @@ local function get_rg_matches(search, opts)
   return matches
 end
 
-function replace()
+local function apply_replacements(selected, search, replace)
+  table.sort(selected, function(a, b)
+    if a.file == b.file then return a.lnum > b.lnum end
+    return a.file > b.file
+  end)
+
+  local by_file = {}
+  for _, s in ipairs(selected) do
+    if not by_file[s.file] then by_file[s.file] = {} end
+    by_file[s.file][#by_file[s.file] + 1] = s
+  end
+
+  local count = 0
+  for file, file_matches in pairs(by_file) do
+    local lines = vim.fn.readfile(file)
+    for _, m in ipairs(file_matches) do
+      local line = lines[m.lnum]
+      if line then
+        lines[m.lnum] = line:gsub(vim.pesc(m.match), m.replace, 1)
+        count = count + 1
+      end
+    end
+    vim.fn.writefile(lines, file)
+  end
+
+  vim.notify(count .. ' replacements applied across ' .. #vim.tbl_keys(by_file) .. ' files')
+end
+
+local function replace()
   vim.ui.input({ prompt = 'Search: ' }, function(search)
     if not search or search == '' then return end
     local matches = get_rg_matches(search, { dir = vim.fn.getcwd() })
@@ -128,7 +156,7 @@ function replace()
   end)
 end
 
-function file_replace()
+local function file_replace()
   local file = vim.api.nvim_buf_get_name(0)
   if file == '' then
     vim.notify('No file', vim.log.levels.WARN)
@@ -231,38 +259,5 @@ function file_replace()
   end)
 end
 
-function apply_replacements(selected, search, replace)
-  table.sort(selected, function(a, b)
-    if a.file == b.file then return a.lnum > b.lnum end
-    return a.file > b.file
-  end)
-
-  local by_file = {}
-  for _, s in ipairs(selected) do
-    if not by_file[s.file] then by_file[s.file] = {} end
-    by_file[s.file][#by_file[s.file] + 1] = s
-  end
-
-  local count = 0
-  for file, file_matches in pairs(by_file) do
-    local lines = vim.fn.readfile(file)
-    for _, m in ipairs(file_matches) do
-      local line = lines[m.lnum]
-      if line then
-        lines[m.lnum] = line:gsub(vim.pesc(m.match), m.replace, 1)
-        count = count + 1
-      end
-    end
-    vim.fn.writefile(lines, file)
-  end
-
-  vim.notify(count .. ' replacements applied across ' .. #vim.tbl_keys(by_file) .. ' files')
-end
-
-return {
-  name = 'search-replace',
-  keys = {
-    { '<leader>sr', replace, desc = 'Search & replace (project)' },
-    { '<leader>sR', file_replace, desc = 'Search & replace (file)' },
-  },
-}
+vim.keymap.set('n', '<leader>sr', replace, { desc = 'Search & replace (project)' })
+vim.keymap.set('n', '<leader>sR', file_replace, { desc = 'Search & replace (file)' })

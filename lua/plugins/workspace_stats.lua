@@ -104,9 +104,4 @@ local function stats()
   end)
 end
 
-return {
-  name = 'workspace-stats',
-  keys = {
-    { '<leader>ws', stats, desc = 'Workspace stats' },
-  },
-}
+vim.keymap.set('n', '<leader>ws', stats, { desc = 'Workspace stats' })

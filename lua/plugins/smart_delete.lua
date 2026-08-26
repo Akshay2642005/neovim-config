@@ -30,7 +30,7 @@ local function trash_buffer()
     return
   end
 
-  if not vim.fn.filereadable(name) == 1 then
+  if vim.fn.filereadable(name) ~= 1 then
     vim.notify('File not found: ' .. name, vim.log.levels.WARN)
     return
   end
@@ -41,15 +41,8 @@ local function trash_buffer()
   end
 end
 
-return {
-  name = 'smart-delete',
-  keys = {
-    { '<leader>D', trash_buffer, desc = 'Trash current file' },
-  },
-  cmd = { 'Trash' },
-  init = function()
-    vim.api.nvim_create_user_command('Trash', function(opts)
-      trash_file(opts.fargs[1])
-    end, { nargs = 1, complete = 'file' })
-  end,
-}
+vim.keymap.set('n', '<leader>D', trash_buffer, { desc = 'Trash current file' })
+
+vim.api.nvim_create_user_command('Trash', function(opts)
+  trash_file(opts.fargs[1])
+end, { nargs = 1, complete = 'file' })

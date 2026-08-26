@@ -5,7 +5,7 @@ local function load_aliases()
   if not f then
     return {
       W = 'w', Q = 'q', Wq = 'wq', Qa = 'qa',
-      Qa = 'qa', WA = 'wa', WQ = 'wq',
+      WA = 'wa', WQ = 'wq',
     }
   end
   local content = f:read('*a')
@@ -29,9 +29,7 @@ local function apply_aliases()
   end
 end
 
-local M = {}
-
-function M.add(short, full)
+local function add(short, full)
   local aliases = load_aliases()
   aliases[short] = full
   save_aliases(aliases)
@@ -39,7 +37,7 @@ function M.add(short, full)
   vim.notify(string.format('Alias: %s → %s', short, full))
 end
 
-function M.remove(short)
+local function remove(short)
   local aliases = load_aliases()
   aliases[short] = nil
   save_aliases(aliases)
@@ -47,7 +45,7 @@ function M.remove(short)
   vim.notify(string.format('Removed alias: %s', short))
 end
 
-function M.list()
+local function list()
   local aliases = load_aliases()
   local lines = { 'Command Aliases:', '' }
   local sorted = {}
@@ -61,26 +59,21 @@ function M.list()
   print(table.concat(lines, '\n'))
 end
 
-return {
-  name = 'cmd-aliases',
-  init = function()
-    apply_aliases()
+apply_aliases()
 
-    vim.api.nvim_create_user_command('Alias', function(opts)
-      local parts = vim.split(opts.args, '%s+')
-      if #parts < 2 then
-        vim.notify('Usage: :Alias <short> <full>', vim.log.levels.WARN)
-        return
-      end
-      M.add(parts[1], parts[2])
-    end, { nargs = '+' })
+vim.api.nvim_create_user_command('Alias', function(opts)
+  local parts = vim.split(opts.args, '%s+')
+  if #parts < 2 then
+    vim.notify('Usage: :Alias <short> <full>', vim.log.levels.WARN)
+    return
+  end
+  add(parts[1], parts[2])
+end, { nargs = '+' })
 
-    vim.api.nvim_create_user_command('Unalias', function(opts)
-      M.remove(opts.args)
-    end, { nargs = 1 })
+vim.api.nvim_create_user_command('Unalias', function(opts)
+  remove(opts.args)
+end, { nargs = 1 })
 
-    vim.api.nvim_create_user_command('AliasList', function()
-      M.list()
-    end, {})
-  end,
-}
+vim.api.nvim_create_user_command('AliasList', function()
+  list()
+end, {})

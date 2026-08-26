@@ -54,11 +54,6 @@ add 'plugins.dap-virtual-text'
 add 'plugins.inc-rename'
 add 'plugins.crates'
 add 'plugins.macro_manager'
-add 'plugins.search_replace'
-add 'plugins.commit_picker'
-add 'plugins.workspace_stats'
-add 'plugins.smart_delete'
-add 'plugins.cmd_aliases'
 
 
 --- Compute the installation path for 'lazy.nvim'.
@@ -139,3 +134,10 @@ require('lazy').setup(plugin_specs, {
     },
   },
 })
+
+-- Load utility modules (not lazy plugins, just keymaps/commands)
+require 'plugins.search_replace'
+require 'plugins.commit_picker'
+require 'plugins.workspace_stats'
+require 'plugins.smart_delete'
+require 'plugins.cmd_aliases'
