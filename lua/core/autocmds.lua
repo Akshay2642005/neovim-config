@@ -8,22 +8,18 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function()
     local line = vim.fn.line '\'"'
     if
-        line >= 1
-        and line <= vim.fn.line '$'
-        and vim.bo.filetype ~= 'commit'
-        and vim.fn.index({ 'xxd', 'gitrebase' }, vim.bo.filetype) == -1
+      line >= 1
+      and line <= vim.fn.line '$'
+      and vim.bo.filetype ~= 'commit'
+      and vim.fn.index({ 'xxd', 'gitrebase' }, vim.bo.filetype) == -1
     then
       vim.cmd 'normal! g`"'
     end
   end,
 })
 
-
 vim.api.nvim_create_autocmd('TermOpen', {
-  group = vim.api.nvim_create_augroup(
-    'clean_term_mode',
-    { clear = true }
-  ),
+  group = vim.api.nvim_create_augroup('clean_term_mode', { clear = true }),
   pattern = { '*' },
   desc = 'Disable line numbers, relative numbers, and signcolumn in terminal buffers',
   callback = function()
@@ -34,10 +30,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup(
-    'json_conceal_level_0',
-    { clear = true }
-  ),
+  group = vim.api.nvim_create_augroup('json_conceal_level_0', { clear = true }),
   desc = 'Disable conceallevel and spell for JSON and JSONC',
   pattern = { 'json', 'jsonc' },
   callback = function()
@@ -81,10 +74,7 @@ vim.api.nvim_create_autocmd('CmdlineLeave', {
 })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-  group = vim.api.nvim_create_augroup(
-    'highlight_on_yank',
-    { clear = true }
-  ),
+  group = vim.api.nvim_create_augroup('highlight_on_yank', { clear = true }),
   desc = 'Highlight on yank',
   callback = function()
     vim.highlight.on_yank { higroup = 'Search' }
@@ -92,10 +82,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup(
-    'lsp_attach_conflicts',
-    { clear = true }
-  ),
+  group = vim.api.nvim_create_augroup('lsp_attach_conflicts', { clear = true }),
   desc = 'Prevent ts_ls and denols from attaching to the same buffer',
   callback = function(args)
     if not (args.data and args.data.client_id) then
@@ -115,7 +102,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     if conflict then
-      for _, c in ipairs(vim.lsp.get_clients({ bufnr = args.buf, name = conflict })) do
+      for _, c in
+        ipairs(vim.lsp.get_clients { bufnr = args.buf, name = conflict })
+      do
         c.stop()
       end
     end
@@ -141,10 +130,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup(
-    'config_for_markdown',
-    { clear = true }
-  ),
+  group = vim.api.nvim_create_augroup('config_for_markdown', { clear = true }),
   pattern = { 'markdown' },
   desc = 'Config for Git Markdown',
   callback = function()
@@ -179,40 +165,40 @@ vim.api.nvim_create_autocmd('FileType', {
   command = 'setlocal iskeyword-=-',
 })
 
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "grapple",
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'grapple',
   callback = function(ev)
     local opts = { buffer = ev.buf, silent = true }
     local function cycle_next()
-      local line = vim.fn.line(".")
-      local last = vim.fn.line("$")
+      local line = vim.fn.line '.'
+      local last = vim.fn.line '$'
 
       if line >= last then
-        vim.cmd("normal! gg")
+        vim.cmd 'normal! gg'
       else
-        vim.cmd("normal! j")
+        vim.cmd 'normal! j'
       end
     end
     local function cycle_prev()
-      local line = vim.fn.line(".")
+      local line = vim.fn.line '.'
 
       if line <= 1 then
-        vim.cmd("normal! G")
+        vim.cmd 'normal! G'
       else
-        vim.cmd("normal! k")
+        vim.cmd 'normal! k'
       end
     end
-    vim.keymap.set("n", "<Tab>", cycle_next, opts)
-    vim.keymap.set("n", "<S-Tab>", cycle_prev, opts)
+    vim.keymap.set('n', '<Tab>', cycle_next, opts)
+    vim.keymap.set('n', '<S-Tab>', cycle_prev, opts)
   end,
 })
 
-local shada_group = vim.api.nvim_create_augroup("ShadaManager", { clear = true })
+local shada_group =
+  vim.api.nvim_create_augroup('ShadaManager', { clear = true })
 
 local function cleanup_shada()
-  local shada_path = vim.fn.stdpath("state") .. "/shada/"
-  local tmp_files = vim.fn.glob(shada_path .. "*.tmp*", true, true)
+  local shada_path = vim.fn.stdpath 'state' .. '/shada/'
+  local tmp_files = vim.fn.glob(shada_path .. '*.tmp*', true, true)
   if #tmp_files > 0 then
     for _, file in ipairs(tmp_files) do
       pcall(os.remove, file)
@@ -220,24 +206,21 @@ local function cleanup_shada()
   end
 end
 
-
-
-vim.api.nvim_create_autocmd("VimLeavePre", {
+vim.api.nvim_create_autocmd('VimLeavePre', {
   group = shada_group,
   callback = cleanup_shada,
 })
 
-
 local function cleanup_lsp_log()
-  local lsp_log_path = vim.fn.glob(vim.fn.stdpath("log") .. "/lsp.log", true, true)
+  local lsp_log_path =
+    vim.fn.glob(vim.fn.stdpath 'log' .. '/lsp.log', true, true)
   if #lsp_log_path > 0 then
     pcall(os.remove, lsp_log_path)
   end
 end
 
-
-vim.api.nvim_create_autocmd("VimLeave", {
-  group = vim.api.nvim_create_augroup("LogManager", { clear = true }),
+vim.api.nvim_create_autocmd('VimLeave', {
+  group = vim.api.nvim_create_augroup('LogManager', { clear = true }),
   callback = cleanup_lsp_log,
 })
 
@@ -245,6 +228,22 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup('auto_mkdir', { clear = true }),
   desc = 'Create parent directories on save',
   callback = function(args)
+    local dir = vim.fn.fnamemodify(args.match, ':p:h')
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, 'p')
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('auto_mkdir', { clear = true }),
+  desc = 'Create parent directories on save',
+  callback = function(args)
+    -- Skip virtual buffers like oil://, dap://, etc.
+    if args.match:match '^%w%w+://' then
+      return
+    end
+
     local dir = vim.fn.fnamemodify(args.match, ':p:h')
     if vim.fn.isdirectory(dir) == 0 then
       vim.fn.mkdir(dir, 'p')

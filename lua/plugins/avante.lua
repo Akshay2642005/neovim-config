@@ -2,14 +2,13 @@ return {
   'yetone/avante.nvim',
   lazy = true,
   event = 'VeryLazy',
-  build = vim.fn.has('win32') ~= 0
+  build = vim.fn.has 'win32' ~= 0
       and 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false'
     or 'make',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     'folke/snacks.nvim',
-    'MeanderingProgrammer/render-markdown.nvim',
   },
   ---@module 'avante'
   ---@type avante.Config
@@ -24,8 +23,14 @@ return {
       provider_opts = {
         get_filepaths = function(params)
           local cwd = params.cwd
-          local handle = io.popen('git -C "' .. cwd .. '" ls-files --cached --others --exclude-standard 2>/dev/null')
-          if not handle then return {} end
+          local handle = io.popen(
+            'git -C "'
+              .. cwd
+              .. '" ls-files --cached --others --exclude-standard 2>/dev/null'
+          )
+          if not handle then
+            return {}
+          end
           local result = {}
           for line in handle:lines() do
             table.insert(result, line)
@@ -140,7 +145,7 @@ return {
     require('avante').setup(opts)
 
     vim.api.nvim_create_user_command('AvanteClear', function()
-      local avante = require('avante')
+      local avante = require 'avante'
       if avante.clear_history then
         avante.clear_history()
       end
