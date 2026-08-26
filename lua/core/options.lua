@@ -45,8 +45,8 @@ vim.g.snacks_animate = false
 local opt = vim.opt
 
 -- Performance options
-opt.lazyredraw = true    -- Buffer screen updates during macros
-opt.synmaxcol = 240    -- Only highlight first 240 columns
+opt.lazyredraw = true -- Buffer screen updates during macros
+opt.synmaxcol = 240 -- Only highlight first 240 columns
 -- opt.redrawtime = 1500  -- Time for redrawing the display (ms)
 
 -- Reduce updatetime for faster CursorHold
@@ -54,7 +54,7 @@ opt.updatetime = 200
 opt.timeoutlen = 400 -- Faster key sequence completion
 
 -- Reduce memory usage
-opt.history = 100     -- Reduce command history (default 10000)
+opt.history = 100 -- Reduce command history (default 10000)
 opt.undolevels = 10000
 
 -- Disable backup and swap for speed
@@ -89,7 +89,8 @@ opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldmethod = 'expr'
 opt.foldtext = ''
-opt.grepprg = 'rg --vimgrep'
+opt.grepprg =
+  'rg --vimgrep --hidden --glob "!.git" --glob "!node_modules" --glob "!*.lock" --glob "!package-lock.json" --glob "!Cargo.lock" --glob "!*.min.js" --glob "!*.min.css"'
 opt.ignorecase = true
 opt.list = false
 opt.mouse = 'a'
@@ -126,39 +127,37 @@ opt.tabstop = 2
 opt.virtualedit = 'block'
 opt.winborder = 'single'
 opt.wrap = false
-opt.encoding = "utf-8"
-opt.fileencoding = "utf-8"
-opt.fileformats = { "unix", "dos" }
-opt.fileformat = "unix"
+opt.encoding = 'utf-8'
+opt.fileencoding = 'utf-8'
+opt.fileformats = { 'unix', 'dos' }
+opt.fileformat = 'unix'
 opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
-
 
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 
-if vim.fn.has("win32") == 1 then
+if vim.fn.has 'win32' == 1 then
   -- vim.opt.shell = "zsh" -- or "powershell" depending on what you have installed
-  vim.opt.shellquote = ""
-  vim.opt.shellxquote = ""
+  vim.opt.shellquote = ''
+  vim.opt.shellxquote = ''
 end
 
-
-vim.opt.shell = "/bin/zsh"
-vim.opt.shellcmdflag = "-ic"
-vim.opt.shellquote = ""
-vim.opt.shellxquote = ""
+vim.opt.shell = '/bin/zsh'
+vim.opt.shellcmdflag = '-ic'
+vim.opt.shellquote = ''
+vim.opt.shellxquote = ''
 
 if vim.g.neovide then
   opt.linespace = -1
 
-  vim.g.neovide_title_background_color = "#0e0e0e"
-  vim.g.neovide_title_text_color = "#0e0e0e"
+  vim.g.neovide_title_background_color = '#0e0e0e'
+  vim.g.neovide_title_text_color = '#0e0e0e'
   -- emulate alacritty font rendering
   vim.g.neovide_text_gamma = 0.8
   vim.g.neovide_text_contrast = 0.1
 
   -- gui font
-  vim.opt.guifont = ""
-  vim.opt.guifont = "ZedMono NF:h18"
+  vim.opt.guifont = ''
+  vim.opt.guifont = 'ZedMono NF:h18'
 
   -- padding
   vim.g.neovide_padding_top = 5
@@ -167,7 +166,7 @@ if vim.g.neovide then
   -- enable blur
   vim.g.neovide_window_blurred = true
   vim.g.neovide_floating_shadow = false
-  vim.g.neovide_decorations = "none"
+  vim.g.neovide_decorations = 'none'
 
   -- other options
   vim.g.neovide_hide_mouse_when_typing = true
@@ -184,7 +183,7 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_far_lines = 0
   vim.g.neovide_scroll_animation_length = 0.00
 
-    vim.cmd [[
+  vim.cmd [[
         " system clipboard
         nmap <c-c> "+y
         vmap <c-c> "+y
@@ -195,4 +194,3 @@ if vim.g.neovide then
         inoremap <c-r> <c-v>
     ]]
 end
-
