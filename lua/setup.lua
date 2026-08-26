@@ -55,7 +55,6 @@ add 'plugins.inc-rename'
 add 'plugins.crates'
 add 'plugins.macro_manager'
 
-
 --- Compute the installation path for 'lazy.nvim'.
 --- This is used to ensure the plugin manager itself is installed locally.
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -82,11 +81,11 @@ require('lazy').setup(plugin_specs, {
   },
   ui = {
     border = 'single', -- Use a single-line border for plugin manager UI.
-    backdrop = 100,    -- Set backdrop transparency for UI.
+    backdrop = 100, -- Set backdrop transparency for UI.
   },
   checker = {
     enabled = false, -- Disable automatic update checking by default.
-    notify = false,  -- Suppress update notifications.
+    notify = false, -- Suppress update notifications.
   },
   change_detection = {
     enabled = true, -- Disable auto-reloading on configuration changes.
@@ -97,11 +96,11 @@ require('lazy').setup(plugin_specs, {
   },
   performance = {
     cache = {
-      enabled = true,      -- Enable caching to improve startup times.
+      enabled = true, -- Enable caching to improve startup times.
     },
     reset_packpath = true, -- Reset default package paths to optimize startup performance.
     rtp = {
-      reset = true,        -- Reset runtime paths for improved startup consistency.
+      reset = true, -- Reset runtime paths for improved startup consistency.
       disabled_plugins = { -- List of default plugins disabled for better performance.
         '2html_plugin',
         'bugreport',
@@ -136,8 +135,5 @@ require('lazy').setup(plugin_specs, {
 })
 
 -- Load utility modules (not lazy plugins, just keymaps/commands)
-require 'plugins.search_replace'
 require 'plugins.commit_picker'
-require 'plugins.workspace_stats'
-require 'plugins.smart_delete'
 require 'plugins.cmd_aliases'
