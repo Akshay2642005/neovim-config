@@ -56,5 +56,13 @@ _G.StatusLine.active = function()
   }
 end
 
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = 'qf',
+  callback = function()
+    vim.wo.statusline = '%!v:lua.StatusLine.active()'
+  end,
+})
+
 vim.opt.statusline = '%!v:lua.StatusLine.active()'
 vim.opt.laststatus = 3

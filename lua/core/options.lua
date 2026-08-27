@@ -73,6 +73,7 @@ opt.conceallevel = 3
 opt.confirm = true
 opt.cursorline = true
 opt.expandtab = true
+opt.inccommand = 'split'
 
 vim.opt.fillchars = {
   horiz = '─',
@@ -132,6 +133,9 @@ opt.fileencoding = 'utf-8'
 opt.fileformats = { 'unix', 'dos' }
 opt.fileformat = 'unix'
 opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
+
+-- Make Neovim use system clipboard
+opt.clipboard:append 'unnamedplus'
 
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 

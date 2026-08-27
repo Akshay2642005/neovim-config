@@ -1,3 +1,4 @@
+require('vim._core.ui2').enable {}
 -- Optimize startup: load options first (includes vim.loader.enable())
 require 'core.options'
 require 'core.utils'
