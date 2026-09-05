@@ -5,6 +5,10 @@ return {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   event = { 'VeryLazy' },
   config = function()
+    -- Enable the tabline only now that bufferline owns it. Setting
+    -- showtabline = 2 in options.lua instead would flash Vim's native
+    -- [No Name] tabline during startup, before this plugin loads.
+    vim.opt.showtabline = 2
     require('bufferline').setup({
       options = {
         mode = 'buffers',
@@ -35,6 +39,13 @@ return {
         -- tab. (help/quickfix/terminal buftypes cover qf, :help and raw
         -- :term splits; the list below covers edgy-managed fts.)
         custom_filter = function(buf_number)
+          -- Skip the transient startup scratch buffer: at launch there
+          -- are briefly two listed buffers ([No Name] + alpha), which
+          -- makes the tabline flash before alpha takes over. Unnamed
+          -- buffers get a tab again once they have a name (i.e. on save).
+          if vim.fn.bufname(buf_number) == '' then
+            return false
+          end
           local ft = vim.bo[buf_number].filetype
           if
             ft == 'alpha'
@@ -43,6 +54,7 @@ return {
             or ft == 'snacks_terminal'
             or ft == 'undotree'
             or ft == 'neotest-summary'
+            or ft == 'neotest-output'
             or ft == 'dap-repl'
             or ft:match '^dapui_' ~= nil
           then

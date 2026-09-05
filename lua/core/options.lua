@@ -105,10 +105,11 @@ opt.softtabstop = 2
 opt.showcmd = true
 opt.showcmdloc = 'statusline'
 opt.showmode = false
--- 2 = always show the tabline: the bufferline.nvim config (tabs) only
--- renders when the tabline is visible; 0 kept it permanently hidden.
--- Single-buffer clutter is still avoided via always_show_bufferline = false
-opt.showtabline = 2
+-- 0 here on purpose: showtabline = 2 would draw Vim's NATIVE tabline
+-- ([No Name]) from the first millisecond until bufferline.nvim loads at
+-- VeryLazy and replaces it -- that native frame is the startup flash.
+-- bufferline's own config turns the tabline on once it's ready.
+opt.showtabline = 0
 opt.sidescroll = 0
 opt.shortmess:append 'W'
 

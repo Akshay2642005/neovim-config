@@ -36,9 +36,11 @@ return {
       { ft = 'man', size = { height = 20 } },
       { ft = 'checkhealth', title = 'Checkhealth', size = { height = 20 } },
       { ft = 'lspinfo', title = 'LspInfo', size = { height = 20 } },
-    },
-    right = {
-      { ft = 'neotest-summary', title = 'Tests', size = { width = 30 } },
+      -- neotest summary opens via `summary.open` below as a bottom split;
+      -- docked here at the same height so edgy owns it, not a free split.
+      { ft = 'neotest-summary', title = 'Tests', size = { height = 15 } },
+      -- <leader>to output uses a custom open_win (bottom split, h15).
+      { ft = 'neotest-output', title = 'Test Output', size = { height = 15 } },
     },
     left = {
       { ft = 'undotree', title = 'Undo', size = { width = 30 } },

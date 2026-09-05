@@ -15,6 +15,7 @@ function M.install_automatically()
     'astro',
     'c',
     'c_sharp',
+    'cpp', -- required by the neotest CTest/gtest adapters
     'css',
     'diff',
     'dockerfile',
