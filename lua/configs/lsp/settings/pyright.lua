@@ -5,16 +5,22 @@ local config = {
       disableLanguageServices = false,
       disableOrganizeImports = false,
     },
+
     python = {
       analysis = {
         autoImportCompletions = true,
         autoSearchPaths = true,
-        diagnosticMode = 'workspace',         -- openFilesOnly, workspace
-        typeCheckingMode = 'basic',           -- off, basic, strict
+        diagnosticMode = 'workspace',
+        typeCheckingMode = 'basic',
         useLibraryCodeForTypes = true,
+
+        extraPaths = {
+          '/Users/akshay/.local/share/uv/tools/conan/lib/python3.12/site-packages',
+        },
       },
     },
   },
+
   single_file_support = true,
 }
 

@@ -30,6 +30,14 @@ return {
       '<cmd>Trouble loclist toggle<cr>',
       desc = 'Location list (Trouble)',
     },
+    {
+      -- Provided by todo-comments.nvim (`Trouble todo ...` under the
+      -- hood); inherits the flat opts above, so TODO/FIX/NOTE show as
+      -- single-line rows just like diagnostics.
+      '<leader>xt',
+      '<cmd>TodoTrouble<cr>',
+      desc = 'TODOs / FIXMEs (Trouble)',
+    },
   },
   opts = {
     indent_guides = false,

@@ -100,7 +100,6 @@ vim.keymap.set('n', '<leader>nh', ':nohlsearch<cr>', {
   desc = 'Clear search highlight',
 })
 
-
 -- ============================================================================
 -- Text Objects (simulate ci{ ci( etc. with _ - . <)
 -- ============================================================================
@@ -225,12 +224,12 @@ vim.keymap.set('x', '/', '<Esc>/\\%V', {
   desc = 'Search within visual selection',
 })
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {
-  desc = "Shift visual line down"
+vim.keymap.set('v', 'J', ':m \'>+1<CR>gv=gv', {
+  desc = 'Shift visual line down',
 })
 
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {
-  desc = "Shift visual line up"
+vim.keymap.set('v', 'K', ':m \'<-2<CR>gv=gv', {
+  desc = 'Shift visual line up',
 })
 
 vim.keymap.set('n', 'dd', function()
@@ -239,7 +238,6 @@ vim.keymap.set('n', 'dd', function()
   end
   return 'dd'
 end, { expr = true, desc = 'Delete line (no yank if empty)' })
-
 
 vim.keymap.set('n', '<leader>e', function()
   require('oil').toggle_float()
@@ -253,11 +251,29 @@ end, {
   desc = 'Open parent directory',
 })
 
-vim.keymap.set('n', '<D-r>', "<CMD>OverseerRun<CR>", { desc = 'Run Build Task' })
-vim.keymap.set('n', '<D-o>', "<CMD>OverseerOpen<CR>", { desc = 'Toggle Task List' })
+vim.keymap.set(
+  'n',
+  '<D-r>',
+  '<CMD>OverseerRun<CR>',
+  { desc = 'Run Build Task' }
+)
+vim.keymap.set(
+  'n',
+  '<D-o>',
+  '<CMD>OverseerToggle<CR>',
+  { desc = 'Toggle Task List' }
+)
 
+vim.keymap.set(
+  'n',
+  '<leader>dt',
+  require('core.utils').setup_docker_mode,
+  { desc = 'Toggle Docker Terminal' }
+)
 
-
-vim.keymap.set('n', '<leader>dt', require('core.utils').setup_docker_mode, { desc = 'Toggle Docker Terminal' })
-
-vim.keymap.set('n', '<leader>rc', require('core.utils').reload_config, { desc = 'Reload nvim config' })
+vim.keymap.set(
+  'n',
+  '<leader>rc',
+  require('core.utils').reload_config,
+  { desc = 'Reload nvim config' }
+)

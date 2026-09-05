@@ -21,9 +21,9 @@ return {
           args = { '--indent', '2' },
         },
         ['clang-format'] = {
-          args = {
-            '--style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never, IndentCaseLabels: true, ColumnLimit: 0, AlignAfterOpenBracket: DontAlign, ContinuationIndentWidth: 4, BinPackParameters: false, BinPackArguments: false, AllowShortFunctionsOnASingleLine: Empty, AllowShortIfStatementsOnASingleLine: false, AllowShortLoopsOnASingleLine: false, PointerAlignment: Left, BreakBeforeBraces: Attach, SpaceBeforeAssignmentOperators: true, AccessModifierOffset: -4, NamespaceIndentation: None}',
-          },
+          -- args = {
+          --   '--style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never, IndentCaseLabels: true, ColumnLimit: 0, AlignAfterOpenBracket: DontAlign, ContinuationIndentWidth: 4, BinPackParameters: false, BinPackArguments: false, AllowShortFunctionsOnASingleLine: Empty, AllowShortIfStatementsOnASingleLine: false, AllowShortLoopsOnASingleLine: false, PointerAlignment: Left, BreakBeforeBraces: Attach, SpaceBeforeAssignmentOperators: true, AccessModifierOffset: -4, NamespaceIndentation: All}',
+          -- },
         },
         leptosfmt = {
           args = { '--stdin', '--rustfmt' },
@@ -56,8 +56,18 @@ return {
         html = { 'prettierd', 'prettier', stop_after_first = true },
         htmldjango = { 'djlint' },
         java = { 'google-java-format' },
-        javascript = { 'prettierd', 'prettier', 'biome', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', 'biome', stop_after_first = true },
+        javascript = {
+          'prettierd',
+          'prettier',
+          'biome',
+          stop_after_first = true,
+        },
+        javascriptreact = {
+          'prettierd',
+          'prettier',
+          'biome',
+          stop_after_first = true,
+        },
         json = { 'prettierd', 'prettier', 'biome', stop_after_first = true },
         jsonc = { 'prettierd', 'prettier', 'biome', stop_after_first = true },
         kotlin = { 'ktlint' },
@@ -85,8 +95,18 @@ return {
         svelte = { 'prettierd', 'prettier', stop_after_first = true },
         template = { 'djlint' },
         toml = { 'taplo' },
-        typescript = { 'prettierd', 'prettier', 'biome', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', 'biome', stop_after_first = true },
+        typescript = {
+          'prettierd',
+          'prettier',
+          'biome',
+          stop_after_first = true,
+        },
+        typescriptreact = {
+          'prettierd',
+          'prettier',
+          'biome',
+          stop_after_first = true,
+        },
         yaml = { 'yamlfmt' },
         zig = { 'zigfmt' },
       },
@@ -109,13 +129,18 @@ return {
     vim.api.nvim_create_user_command('Format', function(args)
       local range = nil
       if args.count ~= -1 then
-        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+        local end_line =
+          vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
         range = {
           start = { args.line1, 0 },
           ['end'] = { args.line2, end_line:len() },
         }
       end
-      require('conform').format { async = true, lsp_format = 'fallback', range = range }
+      require('conform').format {
+        async = true,
+        lsp_format = 'fallback',
+        range = range,
+      }
     end, { range = true, desc = 'Format buffer or range' })
 
     -- Keymap for manual formatting

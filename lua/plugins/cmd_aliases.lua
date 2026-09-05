@@ -1,23 +1,31 @@
-local STORE_PATH = vim.fn.stdpath('data') .. '/cmd_aliases.json'
+local STORE_PATH = vim.fn.stdpath 'data' .. '/cmd_aliases.json'
 
 local function load_aliases()
   local f = io.open(STORE_PATH, 'r')
   if not f then
     return {
-      W = 'w', Q = 'q', Wq = 'wq', Qa = 'qa',
-      WA = 'wa', WQ = 'wq',
+      W = 'w',
+      Q = 'q',
+      Wq = 'wq',
+      Qa = 'qa',
+      WA = 'wa',
+      WQ = 'wq',
     }
   end
-  local content = f:read('*a')
+  local content = f:read '*a'
   f:close()
-  if content == '' then return {} end
+  if content == '' then
+    return {}
+  end
   local ok, data = pcall(vim.json.decode, content)
   return ok and data or {}
 end
 
 local function save_aliases(aliases)
   local f = io.open(STORE_PATH, 'w')
-  if not f then return end
+  if not f then
+    return
+  end
   f:write(vim.json.encode(aliases))
   f:close()
 end
@@ -25,7 +33,15 @@ end
 local function apply_aliases()
   local aliases = load_aliases()
   for short, full in pairs(aliases) do
-    vim.cmd(string.format('cnoreabbrev <expr> %s getcmdtype() == ":" && getcmdline() ==# "%s" ? "%s" : "%s"', short, short, full, short))
+    vim.cmd(
+      string.format(
+        'cnoreabbrev <expr> %s getcmdtype() == ":" && getcmdline() ==# "%s" ? "%s" : "%s"',
+        short,
+        short,
+        full,
+        short
+      )
+    )
   end
 end
 
@@ -52,7 +68,9 @@ local function list()
   for short, full in pairs(aliases) do
     sorted[#sorted + 1] = { short = short, full = full }
   end
-  table.sort(sorted, function(a, b) return a.short < b.short end)
+  table.sort(sorted, function(a, b)
+    return a.short < b.short
+  end)
   for _, a in ipairs(sorted) do
     lines[#lines + 1] = string.format('  %s → %s', a.short, a.full)
   end
