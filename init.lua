@@ -18,4 +18,5 @@ require 'core.commands'
 
 -- UI components (statusline needs to load after colorscheme)
 require 'core.ui.statusline'
+require 'core.ui.qflist'
 require 'core.terminalcolors'

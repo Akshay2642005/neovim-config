@@ -5,7 +5,26 @@ return {
     cmd = 'Copilot',
     event = 'InsertEnter',
     opts = {
-      suggestion = { enabled = false },
+      -- Inline ghost-text mode (Zed-style Tab completion). Copilot shows
+      -- dimmed text at the cursor; <Tab> (wired in blink.cmp's keymap
+      -- below) accepts it. hide_during_completion avoids doubling with
+      -- the blink popup menu. No blink-copilot source: running both
+      -- shows every suggestion twice (once inline, once in the menu).
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        hide_during_completion = true,
+        debounce = 75,
+        trigger_on_accept = true,
+        keymap = {
+          accept = false, -- accepted via blink.cmp <Tab> handler instead
+          accept_word = '<M-w>',
+          accept_line = '<M-l>',
+          next = '<M-]>',
+          prev = '<M-[>',
+          dismiss = '<C-]>',
+        },
+      },
       panel = { enabled = false },
       filetypes = {
         markdown = true,
@@ -19,7 +38,6 @@ return {
     lazy = true,
     version = '*',
     dependencies = {
-      'fang2hou/blink-copilot',
       'Kaiser-Yang/blink-cmp-avante',
     },
     opts = {
@@ -31,7 +49,22 @@ return {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
         ['<C-e>'] = { 'hide' },
         ['<CR>'] = { 'fallback' },
-        ['<Tab>'] = { 'snippet_forward', 'accept', 'select_next', 'fallback' },
+        -- <Tab>: Copilot ghost text first, then blink popup. One key for
+        -- both keeps Zed-style muscle memory; copilot is hidden while the
+        -- popup menu is open (hide_during_completion) so they rarely race.
+        ['<Tab>'] = {
+          function(cmp)
+            local ok, suggestion = pcall(require, 'copilot.suggestion')
+            if ok and suggestion.is_visible() then
+              suggestion.accept()
+              return true
+            end
+          end,
+          'snippet_forward',
+          'accept',
+          'select_next',
+          'fallback',
+        },
         ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
       },
       completion = {
@@ -70,7 +103,7 @@ return {
         use_nvim_cmp_as_default = false,
       },
       sources = {
-        default = { 'copilot', 'lsp', 'path', 'buffer', 'avante' },
+        default = { 'lsp', 'path', 'buffer', 'avante' },
         per_filetype = {
           lua = { 'lsp', 'path', 'buffer' },
         },
@@ -89,16 +122,6 @@ return {
             max_items = 3,
             score_offset = 30,
             min_keyword_length = 3,
-          },
-          copilot = {
-            name = 'copilot',
-            module = 'blink-copilot',
-            score_offset = 80,
-            async = true,
-            timeout_ms = 500,
-            opts = {
-              max_completions = 5,
-            },
           },
           avante = {
             module = 'blink-cmp-avante',

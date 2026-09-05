@@ -35,20 +35,22 @@ _G.StatusLine.active = function()
     }
   end
 
+  -- Diagnostics sit left after the git branch so the LSP progress
+  -- spinner (center-right) can never overlap or visually crowd them.
   -- double '%=' centers the build segment; '%<' makes the right side
-  -- collapse first on narrow windows while mode/git stay visible
+  -- collapse first on narrow windows while mode/git/diag stay visible
   return table.concat {
     mode.component(),
     c.macro(),
     c.git_branch(),
-    '%=',
-    '%<',
-    '%S ',
-    lsp_progress.component(),
     diag.error(),
     diag.warn(),
     diag.hint(),
     diag.info(),
+    '%=',
+    '%<',
+    '%S ',
+    lsp_progress.component(),
     build.icon(),
     c.lsp_active(),
     c.python_env(),

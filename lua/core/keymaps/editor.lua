@@ -87,13 +87,10 @@ end, { silent = true, desc = 'Move buffer right' })
 -- ============================================================================
 -- Diagnostics
 -- ============================================================================
-vim.keymap.set('n', '<leader>dd', function()
-  vim.diagnostic.setloclist()
-end, { desc = 'Buffer diagnostics (loclist)' })
-
-vim.keymap.set('n', '<leader>wd', function()
-  vim.diagnostic.setqflist()
-end, { desc = 'Workspace diagnostics (qflist)' })
+-- NOTE: <leader>dd / <leader>wd are owned by plugins.trouble (lazy keys).
+-- Defining them here too would shadow Trouble's toggle, so they live
+-- only in lua/plugins/trouble.lua. Raw :copen / :lopen windows still use
+-- the beautified `file:lnum:col [type]: message` format from core.ui.qflist.
 
 -- ============================================================================
 -- Search

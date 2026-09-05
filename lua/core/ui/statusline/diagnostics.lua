@@ -5,13 +5,14 @@ local counts = {}
 
 local augroup = vim.api.nvim_create_augroup('statusline_diagnostics', { clear = true })
 
-local function recount(bufnr, diagnostics)
-  local c = {}
-  for _, d in ipairs(diagnostics or {}) do
-    local sev = d.severity or vim.diagnostic.severity.ERROR
-    c[sev] = (c[sev] or 0) + 1
+local function recount(bufnr)
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return
   end
-  counts[bufnr] = c
+  -- Read counts from the buffer itself, not the event payload: the
+  -- DiagnosticChanged payload shape varies across Neovim versions, and a
+  -- stale empty cache pinned counts at zero even with visible diagnostics.
+  counts[bufnr] = vim.diagnostic.count(bufnr)
   vim.cmd.redrawstatus()
 end
 
@@ -19,7 +20,7 @@ vim.api.nvim_create_autocmd('DiagnosticChanged', {
   group = augroup,
   desc = 'Cache diagnostic counts for the statusline',
   callback = function(args)
-    recount(args.buf, args.data and args.data.diagnostics)
+    recount(args.buf)
   end,
 })
 
