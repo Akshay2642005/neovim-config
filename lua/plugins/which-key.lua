@@ -47,7 +47,7 @@ return {
       { '<leader>r', group = 'Refresh/Rename' },
       { '<leader>rn', desc = 'Rename symbol (live)' },
       { '<leader>s', group = 'Search/Switch' },
-      { '<leader>t', group = 'Terminal/TODO' },
+      { '<leader>t', group = 'Test/Terminal/TODO' },
       { '<leader>w', group = 'Workspace/Wrap' },
       { '<leader>a', group = 'Avante/AI' },
       { '<leader>aa', desc = 'Show sidebar' },

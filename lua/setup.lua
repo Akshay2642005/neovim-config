@@ -58,6 +58,9 @@ add 'plugins.macro_manager'
 add 'plugins.grug-far'
 add 'plugins.diffview'
 add 'plugins.trouble'
+add 'plugins.mason-dap'
+add 'plugins.edgy'
+add 'plugins.neotest'
 
 --- Compute the installation path for 'lazy.nvim'.
 --- This is used to ensure the plugin manager itself is installed locally.

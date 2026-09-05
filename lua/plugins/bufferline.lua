@@ -30,8 +30,22 @@ return {
         separator_style = { '', '' },
         always_show_bufferline = false,
         sort_by = 'insert_at_end',
+        -- Edgy-docked sidebars must never become tabs: opening Trouble,
+        -- Overseer, the terminal or a DAP panel should dock, not add a
+        -- tab. (help/quickfix/terminal buftypes cover qf, :help and raw
+        -- :term splits; the list below covers edgy-managed fts.)
         custom_filter = function(buf_number)
-          if vim.bo[buf_number].filetype == 'alpha' then
+          local ft = vim.bo[buf_number].filetype
+          if
+            ft == 'alpha'
+            or ft == 'trouble'
+            or ft == 'OverseerList'
+            or ft == 'snacks_terminal'
+            or ft == 'undotree'
+            or ft == 'neotest-summary'
+            or ft == 'dap-repl'
+            or ft:match '^dapui_' ~= nil
+          then
             return false
           end
           local buftype = vim.bo[buf_number].buftype

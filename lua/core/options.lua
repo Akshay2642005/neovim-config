@@ -105,7 +105,10 @@ opt.softtabstop = 2
 opt.showcmd = true
 opt.showcmdloc = 'statusline'
 opt.showmode = false
-opt.showtabline = 0
+-- 2 = always show the tabline: the bufferline.nvim config (tabs) only
+-- renders when the tabline is visible; 0 kept it permanently hidden.
+-- Single-buffer clutter is still avoided via always_show_bufferline = false
+opt.showtabline = 2
 opt.sidescroll = 0
 opt.shortmess:append 'W'
 
