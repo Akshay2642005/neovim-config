@@ -20,6 +20,7 @@ end
 add 'plugins.avante'
 add 'plugins.autopairs'
 add 'plugins.autotag'
+add 'plugins.leetcode'
 add 'plugins.blink-cmp'
 add 'plugins.colorizer'
 add 'plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly

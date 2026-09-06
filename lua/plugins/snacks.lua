@@ -199,7 +199,7 @@ return {
         configure = true,
       },
       git = { enabled = true },
-      image = { enabled = false }, -- Disable for performance, enable if needed
+      image = { enabled = true }, -- Disable for performance, enable if needed
       project = { enabled = true },
       indent = {
         width = 4,

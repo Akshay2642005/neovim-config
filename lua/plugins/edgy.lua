@@ -32,7 +32,13 @@ return {
       -- (absolute height: fractions would track tall screens worse.)
       { ft = 'snacks_terminal', title = 'Terminal', size = { height = 12 } },
       { ft = 'dap-repl', title = 'DAP Repl', size = { height = 10 } },
-      { ft = 'help', size = { height = 20 }, filter = function(buf) return vim.bo[buf].buftype == 'help' end },
+      {
+        ft = 'help',
+        size = { height = 20 },
+        filter = function(buf)
+          return vim.bo[buf].buftype == 'help'
+        end,
+      },
       { ft = 'man', size = { height = 20 } },
       { ft = 'checkhealth', title = 'Checkhealth', size = { height = 20 } },
       { ft = 'lspinfo', title = 'LspInfo', size = { height = 20 } },

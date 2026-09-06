@@ -1,5 +1,6 @@
-local build_status = require("core.ui.build_status")
-local statusline_augroup = vim.api.nvim_create_augroup('statusline', { clear = true })
+local build_status = require 'core.ui.build_status'
+local statusline_augroup =
+  vim.api.nvim_create_augroup('statusline', { clear = true })
 
 -- Statusline highlight groups
 local function set_statusline_hl()
@@ -9,42 +10,100 @@ local function set_statusline_hl()
 
   -- Copilot
   vim.api.nvim_set_hl(0, 'StatusLineCopilot', { fg = '#6CC644', bg = bg })
-  vim.api.nvim_set_hl(0, 'StatusLineCopilotInactive', { fg = '#555555', bg = bg })
+  vim.api.nvim_set_hl(
+    0,
+    'StatusLineCopilotInactive',
+    { fg = '#555555', bg = bg }
+  )
 
   -- OverSeer
-  vim.api.nvim_set_hl(0, "StatusLineBuildRunning", { fg = "#e5c07b", bg = bg })
-  vim.api.nvim_set_hl(0, "StatusLineBuildSuccess", { fg = "#98c379", bg = bg })
-  vim.api.nvim_set_hl(0, "StatusLineBuildFailure", { fg = "#e06c75", bg = bg })
+  vim.api.nvim_set_hl(0, 'StatusLineBuildRunning', { fg = '#e5c07b', bg = bg })
+  vim.api.nvim_set_hl(0, 'StatusLineBuildSuccess', { fg = '#98c379', bg = bg })
+  vim.api.nvim_set_hl(0, 'StatusLineBuildFailure', { fg = '#e06c75', bg = bg })
 
   -- Git - don't set bg to let it inherit from StatusLine
-  if vim.fn.hlexists('StatusLineMedium') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMedium' })) then
+  if
+    vim.fn.hlexists 'StatusLineMedium' == 0
+    or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMedium' }))
+  then
     vim.api.nvim_set_hl(0, 'StatusLineMedium', { fg = '#abb2bf', bg = bg })
   end
-  if vim.fn.hlexists('StatusLineGitDiffAdded') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffAdded' })) then
-    vim.api.nvim_set_hl(0, 'StatusLineGitDiffAdded', { fg = '#98c379', bg = bg })
+  if
+    vim.fn.hlexists 'StatusLineGitDiffAdded' == 0
+    or vim.tbl_isempty(
+      vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffAdded' })
+    )
+  then
+    vim.api.nvim_set_hl(
+      0,
+      'StatusLineGitDiffAdded',
+      { fg = '#98c379', bg = bg }
+    )
   end
-  if vim.fn.hlexists('StatusLineGitDiffChanged') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffChanged' })) then
-    vim.api.nvim_set_hl(0, 'StatusLineGitDiffChanged', { fg = '#e5c07b', bg = bg })
+  if
+    vim.fn.hlexists 'StatusLineGitDiffChanged' == 0
+    or vim.tbl_isempty(
+      vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffChanged' })
+    )
+  then
+    vim.api.nvim_set_hl(
+      0,
+      'StatusLineGitDiffChanged',
+      { fg = '#e5c07b', bg = bg }
+    )
   end
-  if vim.fn.hlexists('StatusLineGitDiffRemoved') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffRemoved' })) then
-    vim.api.nvim_set_hl(0, 'StatusLineGitDiffRemoved', { fg = '#e06c75', bg = bg })
+  if
+    vim.fn.hlexists 'StatusLineGitDiffRemoved' == 0
+    or vim.tbl_isempty(
+      vim.api.nvim_get_hl(0, { name = 'StatusLineGitDiffRemoved' })
+    )
+  then
+    vim.api.nvim_set_hl(
+      0,
+      'StatusLineGitDiffRemoved',
+      { fg = '#e06c75', bg = bg }
+    )
   end
-  if vim.fn.hlexists('StatusLineMode') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMode' })) then
-    vim.api.nvim_set_hl(0, 'StatusLineMode', { fg = '#000000', bg = '#61afef', bold = true })
+  if
+    vim.fn.hlexists 'StatusLineMode' == 0
+    or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineMode' }))
+  then
+    vim.api.nvim_set_hl(
+      0,
+      'StatusLineMode',
+      { fg = '#000000', bg = '#61afef', bold = true }
+    )
   end
-  if vim.fn.hlexists('StatusLineLspError') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspError' })) then
+  if
+    vim.fn.hlexists 'StatusLineLspError' == 0
+    or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspError' }))
+  then
     vim.api.nvim_set_hl(0, 'StatusLineLspError', { fg = '#e06c75', bg = bg })
   end
-  if vim.fn.hlexists('StatusLineLspWarn') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspWarn' })) then
+  if
+    vim.fn.hlexists 'StatusLineLspWarn' == 0
+    or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspWarn' }))
+  then
     vim.api.nvim_set_hl(0, 'StatusLineLspWarn', { fg = '#e5c07b', bg = bg })
   end
-  if vim.fn.hlexists('StatusLineLspHint') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspHint' })) then
+  if
+    vim.fn.hlexists 'StatusLineLspHint' == 0
+    or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspHint' }))
+  then
     vim.api.nvim_set_hl(0, 'StatusLineLspHint', { fg = '#98c379', bg = bg })
   end
-  if vim.fn.hlexists('StatusLineLspInfo') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspInfo' })) then
+  if
+    vim.fn.hlexists 'StatusLineLspInfo' == 0
+    or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspInfo' }))
+  then
     vim.api.nvim_set_hl(0, 'StatusLineLspInfo', { fg = '#61afef', bg = bg })
   end
-  if vim.fn.hlexists('StatusLineLspMessages') == 0 or vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = 'StatusLineLspMessages' })) then
+  if
+    vim.fn.hlexists 'StatusLineLspMessages' == 0
+    or vim.tbl_isempty(
+      vim.api.nvim_get_hl(0, { name = 'StatusLineLspMessages' })
+    )
+  then
     vim.api.nvim_set_hl(0, 'StatusLineLspMessages', { fg = '#888888', bg = bg })
   end
 end
@@ -244,7 +303,9 @@ local function lsp_status()
   end
 
   local title = lsp_progress.title or ''
-  local percentage = (lsp_progress.percentage and (lsp_progress.percentage .. '%%')) or ''
+  local percentage = (
+    lsp_progress.percentage and (lsp_progress.percentage .. '%%')
+  ) or ''
   local message = lsp_progress.message or ''
 
   local lsp_message = string.format('%s', title)
@@ -265,7 +326,10 @@ local function file_percentage()
   local current_line = vim.api.nvim_win_get_cursor(0)[1]
   local lines = vim.api.nvim_buf_line_count(0)
 
-  return string.format('%%#StatusLineMedium#  %d%%%% %%*', math.ceil(current_line / lines * 100))
+  return string.format(
+    '%%#StatusLineMedium#  %d%%%% %%*',
+    math.ceil(current_line / lines * 100)
+  )
 end
 
 --- @return string
