@@ -27,8 +27,7 @@ return {
     },
     opts = {
       enabled = function()
-        return vim.bo.buftype ~= 'prompt'
-            and vim.b.completion ~= false
+        return vim.bo.buftype ~= 'prompt' and vim.b.completion ~= false
       end,
       keymap = {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
@@ -74,7 +73,7 @@ return {
         use_nvim_cmp_as_default = false,
       },
       sources = {
-        default = { 'copilot', 'lsp', 'path', 'buffer', 'avante' },
+        default = { 'copilot', 'lsp', 'path', 'buffer' },
         per_filetype = {
           lua = { 'lsp', 'path', 'buffer' },
         },

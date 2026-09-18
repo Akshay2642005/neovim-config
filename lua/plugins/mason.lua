@@ -1,9 +1,20 @@
 return {
   'williamboman/mason.nvim',
-  cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUpdate', 'MasonLog', 'MasonInstallAll' },
+  cmd = {
+    'Mason',
+    'MasonInstall',
+    'MasonUninstall',
+    'MasonUpdate',
+    'MasonLog',
+    'MasonInstallAll',
+  },
   event = 'BufReadPost',
   config = function()
     require('mason').setup {
+      registries = {
+        'github:Crashdummyy/mason-registry',
+        'github:mason-org/mason-registry',
+      },
       ui = {
         border = 'single',
         backdrop = 100,

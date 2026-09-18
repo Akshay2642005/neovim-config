@@ -30,7 +30,7 @@ return {
       { ft = 'OverseerList', title = 'Tasks', size = { height = 12 } },
       -- Snacks toggle-terminal docks here; toggle off/on re-docks it.
       -- (absolute height: fractions would track tall screens worse.)
-      { ft = 'snacks_terminal', title = 'Terminal', size = { height = 12 } },
+      { ft = 'snacks_terminal', title = 'Terminal', size = { height = 16 } },
       { ft = 'dap-repl', title = 'DAP Repl', size = { height = 10 } },
       {
         ft = 'help',

@@ -245,7 +245,7 @@ return {
       terminal = {
         win = {
           position = 'bottom',
-          height = 0.4,
+          height = 0.6,
           border = 'vpad',
           style = 'terminal',
           fixed = true,

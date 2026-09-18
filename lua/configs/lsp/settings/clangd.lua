@@ -16,6 +16,8 @@ local config = {
     'objc',
     'objcpp',
     'cuda',
+    'h',
+    'hpp',
   },
 
   on_init = function(client)

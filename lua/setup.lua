@@ -17,7 +17,6 @@ local function add(plugin)
 end
 
 -- Plugin imports; these can be customized as needed for the user's configuration.
-add 'plugins.avante'
 add 'plugins.autopairs'
 add 'plugins.autotag'
 add 'plugins.leetcode'

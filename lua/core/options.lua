@@ -136,7 +136,7 @@ opt.encoding = 'utf-8'
 opt.fileencoding = 'utf-8'
 opt.fileformats = { 'unix', 'dos' }
 opt.fileformat = 'unix'
-opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
+-- opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 
 -- Make Neovim use system clipboard
 opt.clipboard:append 'unnamedplus'
