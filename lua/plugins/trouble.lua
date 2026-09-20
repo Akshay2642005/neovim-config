@@ -1,7 +1,7 @@
--- Trouble as a flat diagnostics list (no tree UI).
--- `indent_guides` is what draws the tree-like nesting lines; `multiline`
--- keeps every message on one quickfix-style row. Fold actions are unbound
--- so nothing can nest visually (diagnostics are flat items anyway).
+-- Trouble as a tree diagnostics list (Image 2 style).
+-- `indent_guides` draws the tree-like nesting lines; `multiline`
+-- keeps every message on one quickfix-style row. Folds are enabled
+-- so filename groups can expand/collapse.
 -- NOTE: <leader>dd / <leader>wd live here (not in core/keymaps/editor.lua)
 -- so lazy.nvim's key handler owns them; defining them in both places
 -- would shadow the Trouble toggle.
@@ -32,35 +32,35 @@ return {
     },
     {
       -- Provided by todo-comments.nvim (`Trouble todo ...` under the
-      -- hood); inherits the flat opts above, so TODO/FIX/NOTE show as
-      -- single-line rows just like diagnostics.
+      -- hood); inherits the tree opts above, so TODO/FIX/NOTE show with
+      -- indent guides just like diagnostics.
       '<leader>xt',
       '<cmd>TodoTrouble<cr>',
       desc = 'TODOs / FIXMEs (Trouble)',
     },
   },
   opts = {
-    indent_guides = false,
+    indent_guides = true,
     multiline = false,
     max_items = 200,
     focus = false,
     win = { position = 'bottom', size = 10 },
-    keys = {
-      zo = false,
-      zO = false,
-      zc = false,
-      zC = false,
-      za = false,
-      zA = false,
-      zm = false,
-      zM = false,
-      zr = false,
-      zR = false,
-      zx = false,
-      zX = false,
-      zn = false,
-      zN = false,
-      zi = false,
+    icons = {
+      indent = {
+        top = '│ ',
+        middle = '├╴',
+        last = '└╴',
+        fold_open = ' ',
+        fold_closed = ' ',
+        ws = '  ',
+      },
+    },
+    modes = {
+      diagnostics = {
+        groups = {
+          { 'filename', format = '{file_icon} {basename:Title} {count}' },
+        },
+      },
     },
   },
 }

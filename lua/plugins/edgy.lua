@@ -19,6 +19,9 @@ return {
   event = 'VeryLazy',
   opts = {
     animate = { enabled = false },
+    -- No open/closed chevron in the winbar (removes the down arrow on
+    -- the Trouble/Diagnostics title); edgy still docks the windows.
+    icons = { open = '', closed = '' },
     options = {
       left = { size = 30 },
       bottom = { size = 10 },
