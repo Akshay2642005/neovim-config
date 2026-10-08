@@ -3,8 +3,48 @@ return {
   lazy = true,
   priority = 1000,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  init = function()
+    -- oil's default_file_explorer (kept enabled) owns directory buffers, and its
+    -- WinNew handler looks for a parent window via `vim.w.oil_did_enter` to copy
+    -- window state when splitting. During startup / session restore a new window can
+    -- be created on an oil buffer before *any* window has been "entered", which makes
+    -- oil spam the spurious "Oil split could not find parent window" warning. Register
+    -- this handler before oil's own (this augroup is created in `init`, before oil's
+    -- setup runs) and only act when that race really happened: no window has
+    -- oil_did_enter set. When a real parent exists we do nothing, so oil's original
+    -- handler still copies the window variables.
+    local augroup = vim.api.nvim_create_augroup('oil_winnew_fix', { clear = true })
+    vim.api.nvim_create_autocmd('WinNew', {
+      group = augroup,
+      pattern = '*',
+      desc = 'Pre-seed oil window state to avoid spurious parent-window warning',
+      callback = function(params)
+        local name = vim.api.nvim_buf_get_name(params.buf)
+        local is_oil = vim.bo[params.buf].filetype == 'oil'
+          or vim.startswith(name, 'oil://')
+          or vim.startswith(name, 'oil-ssh://')
+        if not is_oil then
+          return
+        end
+        -- If any window has already entered oil, a real parent exists: let oil's
+        -- original WinNew handler find it and copy the window variables.
+        local winids = vim.list_extend(
+          vim.api.nvim_tabpage_list_wins(0),
+          vim.api.nvim_list_wins()
+        )
+        for _, wid in ipairs(winids) do
+          if vim.api.nvim_win_is_valid(wid) and vim.w[wid].oil_did_enter then
+            return
+          end
+        end
+        -- Startup race: no parent to find. Mark this window as an entered oil
+        -- window so oil's handler early-returns instead of warning.
+        vim.w.oil_did_enter = true
+      end,
+    })
+  end,
   opts = {
-    default_file_explorer = false,
+    default_file_explorer = true,
     columns = {
       'icon',
     },

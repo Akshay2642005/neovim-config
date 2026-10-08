@@ -23,6 +23,12 @@ local layout_normal = {
   },
 }
 
+local explorer_layout = {
+  layout = {
+    hidden = { 'input' },
+  },
+}
+
 local function get_layout_preview_image(width_preview)
   return {
     layout = {
@@ -189,17 +195,24 @@ return {
     'SnacksPickerLspWorkspaceSymbols',
     'SnacksPickerDiagnostics',
     'SnacksPickerProjects',
+    'Explorer',
   },
   config = function()
     require('snacks').setup {
       bigfile = { enabled = true },
       dashboard = { enabled = false },
+      explorer = {
+        -- oil.nvim is the default file explorer; keep snacks explorer available
+        -- for its picker-based file browser without taking over directory buffers.
+        replace_netrw = true,
+        trash = true,
+      },
       lazygit = {
         enabled = true,
         configure = true,
       },
       git = { enabled = true },
-      image = { enabled = true }, -- Disable for performance, enable if needed
+      image = { enabled = false }, -- Disable for performance, enable if needed
       project = { enabled = true },
       indent = {
         width = 4,
@@ -260,6 +273,15 @@ return {
       picker = {
         prompt = ' ',
         ui_select = true,
+        sources = {
+          explorer = {
+            layout = {
+              -- Hide the search/filter bar at the top of the snacks explorer;
+              -- the list window is focused directly instead.
+              hidden = { 'input' },
+            },
+          },
+        },
         formatters = {
           file = {
             filename_first = true,
@@ -366,6 +388,26 @@ return {
       end,
     })
 
+    -- The explorer's search bar is hidden by default (layout.hidden = { "input" }),
+    -- but pressing `/` in the list reveals it and it lingers afterwards. Re-hide it
+    -- whenever focus leaves the input window (e.g. back to browsing), so it only
+    -- appears while you're actually searching. Scoped to the explorer source so
+    -- regular pickers (files, grep, ...) are unaffected.
+    vim.api.nvim_create_autocmd('WinEnter', {
+      group = vim.api.nvim_create_augroup('snacks_explorer_autohide_input', {
+        clear = true,
+      }),
+      callback = function()
+        local cur = vim.api.nvim_get_current_win()
+        for _, p in ipairs(Snacks.picker.get { source = 'explorer' }) do
+          local input = p.input and p.input.win
+          if input and input.win ~= cur and not p.layout:is_hidden 'input' then
+            p:toggle('input', { enable = false })
+          end
+        end
+      end,
+    })
+
     vim.api.nvim_create_user_command('SnacksPickerFiles', function()
       Snacks.picker.files(layout_normal)
     end, {})
@@ -411,6 +453,10 @@ return {
           },
         })
       Snacks.picker.git_status(config)
+    end, {})
+
+    vim.api.nvim_create_user_command('Explorer', function()
+      Snacks.explorer(explorer_layout)
     end, {})
 
     vim.api.nvim_create_user_command('SnacksPickerGrep', function()

@@ -11,9 +11,19 @@ vim.keymap.set('n', '<leader>ff', ':SnacksPickerFiles<cr>', {
   desc = 'Find files',
 })
 
+vim.keymap.set('n', '<leader>fe', ':Explorer<cr>', {
+  silent = true,
+  desc = 'File Explorer',
+})
+
 vim.keymap.set('n', '<leader>gs', ':SnacksPickerGitStatus<cr>', {
   silent = true,
   desc = 'Git status',
+})
+
+vim.keymap.set('n', '<leader>gB', ':SnacksPickerGitBranches<cr>', {
+  silent = true,
+  desc = 'Git Branches',
 })
 
 vim.keymap.set('n', '<leader>gd', ':SnacksPickerGitDiff<cr>', {
@@ -46,20 +56,19 @@ vim.keymap.set('n', '<leader>fd', ':SnacksPickerDiagnostics<cr>', {
   desc = 'Diagnostics',
 })
 
-
 -- ============================================================================
 -- Snacks Terminal
 -- ============================================================================
--- vim.keymap.set({ 'n', 't' }, '<C-/>', function()
---   Snacks.terminal.toggle()
--- end, {
---   silent = true,
---   desc = 'Toggle terminal',
--- })
+vim.keymap.set({ 'n', 't' }, '<C-/>', function()
+  Snacks.terminal.toggle()
+end, {
+  silent = true,
+  desc = 'Toggle terminal',
+})
 
--- vim.keymap.set({ 'n', 't' }, '<C-_>', function()
---   Snacks.terminal.toggle()
--- end, {
---   silent = true,
---   desc = 'Toggle terminal',
--- })
+vim.keymap.set({ 'n', 't' }, '<C-_>', function()
+  Snacks.terminal.toggle()
+end, {
+  silent = true,
+  desc = 'Toggle terminal',
+})

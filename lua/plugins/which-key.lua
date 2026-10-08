@@ -101,6 +101,7 @@ return {
       { '<leader>fC', desc = 'Fold open' },
       { '<leader>fp', desc = 'Switch project' },
       { '<leader>fd', desc = 'Diagnostics' },
+      { '<leader>fe', desc = 'Snacks explorer' },
 
       -- Git group
       { '<leader>gg', desc = 'Lazygit' },
@@ -109,6 +110,7 @@ return {
       { '<leader>gb', desc = 'Git blame line' },
       { '<leader>gs', desc = 'Git status' },
       { '<leader>gd', desc = 'Git diff' },
+      { '<leader>gB', desc = 'Git branch' },
 
       -- Hunk/Git group (gitsigns)
       { '<leader>hs', desc = 'Stage hunk' },
@@ -136,9 +138,6 @@ return {
       { '<leader>cr', desc = 'LSP References' },
       -- No highlight
       { '<leader>nh', desc = 'Clear search highlight' },
-
-      -- Organize imports
-      { '<leader>oi', desc = 'Organize imports' },
 
       -- Session group
       { '<leader>qs', desc = 'Restore session' },
