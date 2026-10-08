@@ -165,7 +165,7 @@ if vim.g.neovide then
 
   -- gui font
   vim.opt.guifont = ''
-  vim.opt.guifont = 'ZedMono NF:h18'
+  vim.opt.guifont = 'ZedMono Nerd Font:h18'
 
   -- padding
   vim.g.neovide_padding_top = 5

@@ -19,7 +19,7 @@ end
 -- Plugin imports; these can be customized as needed for the user's configuration.
 add 'plugins.autopairs'
 add 'plugins.autotag'
-add 'plugins.leetcode'
+add 'plugins.codeforces'
 add 'plugins.blink-cmp'
 add 'plugins.colorizer'
 add 'plugins.colorschemes.cold' -- Load 'cold' colorscheme explicitly

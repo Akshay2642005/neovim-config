@@ -43,7 +43,8 @@ return {
     indent_guides = true,
     multiline = false,
     max_items = 200,
-    focus = false,
+    focus = true,
+    auto_preview = false,
     win = { position = 'bottom', size = 10 },
     icons = {
       indent = {

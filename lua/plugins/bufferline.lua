@@ -3,13 +3,13 @@ return {
   version = '*',
   lazy = true,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  event = { 'VeryLazy' },
+  event = { 'VeryLazy', 'InsertEnter' },
   config = function()
     -- Enable the tabline only now that bufferline owns it. Setting
     -- showtabline = 2 in options.lua instead would flash Vim's native
     -- [No Name] tabline during startup, before this plugin loads.
     vim.opt.showtabline = 2
-    require('bufferline').setup({
+    require('bufferline').setup {
       options = {
         mode = 'buffers',
         numbers = 'none',
@@ -61,7 +61,11 @@ return {
             return false
           end
           local buftype = vim.bo[buf_number].buftype
-          if buftype == 'help' or buftype == 'quickfix' or buftype == 'terminal' then
+          if
+            buftype == 'help'
+            or buftype == 'quickfix'
+            or buftype == 'terminal'
+          then
             return false
           end
           return true
@@ -126,6 +130,6 @@ return {
           fg = '#5a5a5a',
         },
       },
-    })
+    }
   end,
 }
