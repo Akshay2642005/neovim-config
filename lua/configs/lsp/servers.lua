@@ -33,7 +33,7 @@ M.to_setup = {
   'ruff',
   'rust_analyzer',
   'templ',
-  'terraformls',
+  'terraform_ls',
   'svelte',
   'lua_ls',
   'tailwindcss',
