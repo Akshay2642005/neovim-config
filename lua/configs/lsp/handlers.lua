@@ -9,10 +9,11 @@ function M.go_to_definition(err, result, context, config)
   local running_linux = vim.uv.os_uname().sysname == 'Linux'
   local desktop_session = os.getenv 'DESKTOP_SESSION'
   local running_hyprland = desktop_session == 'hyprland'
-      or desktop_session == 'hyprland-uwsm'
+    or desktop_session == 'hyprland-uwsm'
 
   if running_linux and running_hyprland then
     local output_hyprctl = vim.fn.system 'hyprctl -j activewindow'
+
     --- @class HyprlandWindow
     --- @field size number[]
     local json = vim.json.decode(output_hyprctl)
@@ -50,8 +51,8 @@ function M.go_to_definition(err, result, context, config)
     end
 
     if
-        line_definition < first_visible_line
-        or line_definition > last_visible_line
+      line_definition < first_visible_line
+      or line_definition > last_visible_line
     then
       vim.cmd(split_cmd)
     end
@@ -76,6 +77,21 @@ function M.go_to_definition(err, result, context, config)
       { focus = true, reuse_win = false }
     )
   end
+end
+
+function M.filter_diagnostics(err, result, context, config)
+  if result and result.diagnostics then
+    result.diagnostics = vim.tbl_filter(function(diagnostic)
+      return diagnostic.code ~= 'C0301'
+    end, result.diagnostics)
+  end
+
+  return vim.lsp.handlers['textDocument/publishDiagnostics'](
+    err,
+    result,
+    context,
+    config
+  )
 end
 
 return M

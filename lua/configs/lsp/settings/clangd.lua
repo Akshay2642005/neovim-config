@@ -4,6 +4,7 @@ local config = {
     -- 'clangd',
     '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clangd',
     '--query-driver=**',
+    '--compile-commands-dir=.',
   },
 
   init_options = {

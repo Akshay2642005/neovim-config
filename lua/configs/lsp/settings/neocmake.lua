@@ -1,3 +1,5 @@
+local handlers = require 'lsp.handlers'
+
 --- @class vim.lsp.Config
 local config = {
   cmd = {
@@ -16,6 +18,10 @@ local config = {
 
   settings = {
     line_max_words = 9999,
+  },
+
+  handlers = {
+    ['textDocument/publishDiagnostics'] = handlers.filter_diagnostics,
   },
 }
 
