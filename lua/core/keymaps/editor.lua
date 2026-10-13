@@ -277,3 +277,6 @@ vim.keymap.set(
   require('core.utils').reload_config,
   { desc = 'Reload nvim config' }
 )
+
+vim.keymap.set({ 'n', 'v' }, '<ScrollWheelRight>', '6zl')
+vim.keymap.set({ 'n', 'v' }, '<ScrollWheelLeft>', '6zh')

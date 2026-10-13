@@ -13,7 +13,8 @@ return {
     -- setup runs) and only act when that race really happened: no window has
     -- oil_did_enter set. When a real parent exists we do nothing, so oil's original
     -- handler still copies the window variables.
-    local augroup = vim.api.nvim_create_augroup('oil_winnew_fix', { clear = true })
+    local augroup =
+      vim.api.nvim_create_augroup('oil_winnew_fix', { clear = true })
     vim.api.nvim_create_autocmd('WinNew', {
       group = augroup,
       pattern = '*',

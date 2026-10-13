@@ -32,6 +32,8 @@ M.to_setup = {
   'basedpyright',
   'ruff',
   'rust_analyzer',
+  'rubocop',
+  'helm_ls',
   'templ',
   'terraform_ls',
   'svelte',

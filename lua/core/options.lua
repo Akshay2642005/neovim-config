@@ -110,7 +110,7 @@ opt.showmode = false
 -- VeryLazy and replaces it -- that native frame is the startup flash.
 -- bufferline's own config turns the tabline on once it's ready.
 opt.showtabline = 0
-opt.sidescroll = 0
+opt.sidescroll = 1
 opt.shortmess:append 'W'
 
 -- With cmdheight=0, ex-command output (e.g. the "97L, 3083B" from :w) has
@@ -118,7 +118,7 @@ opt.shortmess:append 'W'
 -- they run silently and never produce output in the first place.
 vim.cmd [[cnoreabbrev <expr> w  getcmdtype() == ':' && getcmdline() ==# 'w'  ? 'silent write'  : 'w']]
 vim.cmd [[cnoreabbrev <expr> w! getcmdtype() == ':' && getcmdline() ==# 'w!' ? 'silent write!' : 'w!']]
-opt.sidescrolloff = 0
+opt.sidescrolloff = 8
 opt.signcolumn = 'yes'
 opt.smartcase = true
 opt.smartindent = true
@@ -165,7 +165,7 @@ if vim.g.neovide then
 
   -- gui font
   vim.opt.guifont = ''
-  vim.opt.guifont = 'ZedMono Nerd Font:h18'
+  vim.opt.guifont = 'ZedMono NF:h18'
 
   -- padding
   vim.g.neovide_padding_top = 5

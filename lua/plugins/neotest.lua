@@ -29,22 +29,29 @@ return {
     'nvim-neotest/neotest-jest',
     'marilari88/neotest-vitest',
     'lawrence-laz/neotest-zig',
+    'Issafalcon/neotest-dotnet',
     'orjangj/neotest-ctest',
   },
   keys = {
     {
       '<leader>tt',
-      function() require('neotest').run.run() end,
+      function()
+        require('neotest').run.run()
+      end,
       desc = 'Test: run nearest',
     },
     {
       '<leader>tf',
-      function() require('neotest').run.run(vim.fn.expand '%') end,
+      function()
+        require('neotest').run.run(vim.fn.expand '%')
+      end,
       desc = 'Test: run file',
     },
     {
       '<leader>ta',
-      function() require('neotest').run.run(vim.fn.getcwd()) end,
+      function()
+        require('neotest').run.run(vim.fn.getcwd())
+      end,
       desc = 'Test: run all (cwd)',
     },
     {
@@ -66,18 +73,24 @@ return {
     },
     {
       '<leader>ts',
-      function() require('neotest').summary.toggle() end,
+      function()
+        require('neotest').summary.toggle()
+      end,
       desc = 'Test: toggle summary',
     },
     {
       '<leader>tx',
-      function() require('neotest').run.stop() end,
+      function()
+        require('neotest').run.stop()
+      end,
       desc = 'Test: stop',
     },
     {
       -- DAP strategy: debug the nearest test under codelldb/delve.
       '<leader>td',
-      function() require('neotest').run.run { strategy = 'dap' } end,
+      function()
+        require('neotest').run.run { strategy = 'dap' }
+      end,
       desc = 'Test: debug nearest',
     },
   },
@@ -94,12 +107,13 @@ return {
       output = { open_on_run = false },
       adapters = {
         require 'neotest-rust',
-        require('neotest-go') {},
+        require 'neotest-go' {},
         require 'neotest-python',
-        require('neotest-jest') { jestCommand = 'npx jest' },
+        require 'neotest-jest' { jestCommand = 'npx jest' },
         require 'neotest-vitest',
-        require('neotest-zig') {},
+        require 'neotest-zig' {},
         require('neotest-ctest').setup { dap_adapter = 'codelldb' },
+        require 'neotest-dotnet',
       },
     }
     -- The buffer open at setup already fired BufAdd/BufEnter before
@@ -116,10 +130,15 @@ return {
     -- in its mappings table, so this FileType key does it instead;
     -- output is a plain split, plain :close suffices there.
     vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('neotest_close_key', { clear = true }),
+      group = vim.api.nvim_create_augroup(
+        'neotest_close_key',
+        { clear = true }
+      ),
       pattern = 'neotest-summary',
       callback = function()
-        vim.keymap.set('n', 'q', function() require('neotest').summary.close() end, {
+        vim.keymap.set('n', 'q', function()
+          require('neotest').summary.close()
+        end, {
           buffer = true,
           silent = true,
           desc = 'Close test summary',
@@ -127,7 +146,10 @@ return {
       end,
     })
     vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('neotest_output_close_key', { clear = true }),
+      group = vim.api.nvim_create_augroup(
+        'neotest_output_close_key',
+        { clear = true }
+      ),
       pattern = 'neotest-output',
       callback = function()
         vim.keymap.set('n', 'q', '<cmd>close<cr>', {

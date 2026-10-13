@@ -13,7 +13,63 @@ return {
   },
   dependencies = { 'Saghen/blink.lib' },
   config = function()
-    require('kubectl').setup()
+    require('kubectl').setup {
+      log_level = vim.log.levels.INFO,
+      auto_refresh = {
+        enabled = true,
+        interval = 300, -- milliseconds
+      },
+      diff = {
+        bin = 'kubediff', -- or any other binary
+      },
+      kubectl_cmd = { cmd = 'kubectl', env = {}, args = {} },
+      terminal_cmd = nil, -- Exec will launch in a terminal if set, i.e. "ghostty -e"
+      namespace = 'All',
+      namespace_fallback = {}, -- If you have limited access you can list all the namespaces here
+      headers = {
+        enabled = true,
+        hints = true,
+        context = true,
+        heartbeat = true,
+        blend = 20,
+        skew = {
+          enabled = true,
+          log_level = vim.log.levels.OFF,
+        },
+      },
+      lineage = {
+        enabled = true, -- This feature is in beta at the moment
+      },
+      logs = {
+        prefix = true,
+        timestamps = true,
+        since = '5m',
+      },
+      alias = {
+        apply_on_select_from_history = true,
+        max_history = 5,
+      },
+      filter = {
+        apply_on_select_from_history = true,
+        max_history = 10,
+      },
+      filter_label = {
+        max_history = 20,
+      },
+      float_size = {
+        width = 0.8,
+        height = 0.5,
+
+        -- Might need to tweak these to get it centered when float is smaller
+        col = 10,
+        row = 5,
+      },
+      statusline = {
+        enabled = true,
+      },
+      obj_fresh = 5, -- highlight if creation newer than number (in minutes)
+      api_resources_cache_ttl = 60 * 60 * 3, -- 3 hours in seconds
+    }
 
     local layout = require 'kubectl.actions.layout'
     local original_float_framed_windows = layout.float_framed_windows

@@ -20,3 +20,19 @@ require 'core.commands'
 require 'core.ui.statusline'
 require 'core.ui.qflist'
 require 'core.terminalcolors'
+
+-- Gutter hierarchy: dim relative numbers, bright bold absolute number on the
+-- cursor line. Must run after the colorscheme is set (or re-set).
+do
+  local hl = require 'core.ui.highlights'
+  hl.setup()
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    group = vim.api.nvim_create_augroup(
+      'user_gutter_highlights',
+      { clear = true }
+    ),
+    callback = function()
+      hl.setup()
+    end,
+  })
+end

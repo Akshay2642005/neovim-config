@@ -250,3 +250,16 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.yaml',
+  callback = function(args)
+    local file = vim.api.nvim_buf_get_name(args.buf)
+    local dir = vim.fs.dirname(file)
+    local root = vim.fs.root(dir, 'Chart.yaml')
+
+    if root then
+      vim.bo[args.buf].filetype = 'helm'
+    end
+  end,
+})
