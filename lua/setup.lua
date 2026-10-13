@@ -30,6 +30,7 @@ add 'plugins.formatter'
 add 'plugins.grapple'
 add 'plugins.gitsigns'
 add 'plugins.jdtls' -- Example of a disabled plugin
+add 'plugins.kubectl'
 add 'plugins.lsp'
 add 'plugins.mason'
 add 'plugins.mini-surround'

@@ -41,6 +41,7 @@ return {
       { '<leader>g', group = 'Git' },
       { '<leader>h', group = 'Hunk/Git' },
       { '<leader>i', group = 'Inlay Hints' },
+      { '<leader>k', group = 'Kubernetes' },
       { '<leader>n', group = 'No Highlight' },
       { '<leader>o', group = 'Organize' },
       { '<leader>q', group = 'Session' },
@@ -132,6 +133,7 @@ return {
 
       -- Inlay hints
       { '<leader>ci', desc = 'Toggle inlay hints' },
+      { '<leader>k', desc = 'Toggle kubectl' },
 
       -- Live grep
       { '<leader>cg', desc = 'Live grep' },
