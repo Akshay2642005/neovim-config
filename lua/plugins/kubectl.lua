@@ -76,7 +76,7 @@ return {
 
     layout.float_framed_windows = function(bufs, opts)
       local pane_name = vim.api.nvim_buf_get_name(bufs.pane_bufs[1])
-      if #opts.panes ~= 1 or not pane_name:match 'kubectl://pods_pane_1$' then
+      if #opts.panes ~= 1 or not pane_name:match 'kubectl://k8s_pods_pane_1$' then
         return original_float_framed_windows(bufs, opts)
       end
 
