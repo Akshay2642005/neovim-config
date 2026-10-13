@@ -65,7 +65,7 @@ return {
         row = 5,
       },
       statusline = {
-        enabled = true,
+        enabled = false,
       },
       obj_fresh = 5, -- highlight if creation newer than number (in minutes)
       api_resources_cache_ttl = 60 * 60 * 3, -- 3 hours in seconds
