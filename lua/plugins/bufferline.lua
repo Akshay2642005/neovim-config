@@ -56,6 +56,7 @@ return {
             or ft == 'neotest-summary'
             or ft == 'neotest-output'
             or ft == 'dap-repl'
+            or ft:match '^k8s_' ~= nil
             or ft:match '^dapui_' ~= nil
           then
             return false

@@ -34,6 +34,7 @@ return {
       -- Snacks toggle-terminal docks here; toggle off/on re-docks it.
       -- (absolute height: fractions would track tall screens worse.)
       { ft = 'snacks_terminal', title = 'Terminal', size = { height = 16 } },
+      { ft = 'k8s_pods', title = 'Kubernetes', size = { height = 20 } },
       { ft = 'dap-repl', title = 'DAP Repl', size = { height = 10 } },
       {
         ft = 'help',
