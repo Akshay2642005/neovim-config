@@ -133,7 +133,6 @@ return {
 
       -- Inlay hints
       { '<leader>ci', desc = 'Toggle inlay hints' },
-      { '<leader>k', desc = 'Toggle kubectl' },
 
       -- Live grep
       { '<leader>cg', desc = 'Live grep' },
